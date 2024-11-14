@@ -1,16 +1,13 @@
 package com.example.Utils;
 
-import com.example.Hotel.Clases.Reserva;
 import com.example.Login.Clases.Usuario;
-import com.example.Personas.Clases.Administrador.Administrador;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.FileWriter;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.*;
-import org.json.JSONTokener;
+
+import java.util.ArrayList;
+import java.util.TreeSet;
+
 
 public class JsonManager {
 
@@ -33,6 +30,8 @@ public class JsonManager {
         return jsonArray;
     }
 
+    public static JSONArray habitacionesAJsonArray(ArrayList<Usuario> listaUsuarios) {}
+
     //Convertir JSONArray en TreeSet
     public TreeSet<Usuario> JsonArrayAlistaUsuarios(JSONArray jarray){
         TreeSet<Usuario> listaUsuarios = new TreeSet<>();
@@ -53,24 +52,3 @@ public class JsonManager {
 
     }
 
-
-    public static JSONArray listaReservasAJsonArray(ArrayList<Reserva> listaReservas) {
-
-        JSONArray jsonArray = new JSONArray();
-
-        for (Reserva r: listaReservas){
-            JSONObject obj = new JSONObject();
-
-            obj.put("", r.getNombreApellido());
-            obj.put("fechaIngreso", r.ge());
-            obj.put("fechaSalida", r.getFechaSalida());
-            obj.put("precio", r.getPrecio);
-
-            jsonArray.put(obj);
-        }
-        return jsonArray;
-    }
-
-
-
-}
