@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.TreeSet;
 
-public abstract class LoginManager {
+public class LoginManager {
 
     public LoginManager(){
     }
@@ -33,7 +33,7 @@ public abstract class LoginManager {
 
 
     //Metodo para iniciar sesion
-    public Usuario iniciarSesion(String username,String password){
+    public Usuario iniciarSesion(String username, String password){
         Usuario usuario1 = null;
 
         TreeSet<Usuario> listaUsuarios = new TreeSet<>();
@@ -93,25 +93,6 @@ public abstract class LoginManager {
         return "Usuario eliminado exitosamente";
     }
 
-
-    public JSONArray convertirAJson(){
-
-        JSONArray jsonArray = new JSONArray();
-
-        for(Usuario usuario: listaUsuarios){
-
-            JSONObject json = new JSONObject();
-
-            json.put("username", usuario.getUsername());
-            json.put("password", usuario.getPasswordHash());
-            json.put("tipoIngreso", usuario.getTipoIngreso());
-            json.put("nombreApellido", usuario.getNombreApellido());
-            jsonArray.put(json);
-
-        }
-
-        return jsonArray;
-    }
 
     public boolean aniadirArchivo(JSONArray jsonArray) {
 
