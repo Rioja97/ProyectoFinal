@@ -1,6 +1,7 @@
 package com.example.Hotel.Clases;
 import java.util.*;
 
+import com.example.Hotel.Clases.enumeradores.Estado;
 import com.example.Login.Clases.Usuario;
 
 
@@ -8,7 +9,7 @@ public class Hotel {
     private String nombre;
     private String direccion;
     private List<Habitacion> habitaciones;
-    private Map<String,Reserva> reservas;
+    private Map<Habitacion,Reserva> reservas;
     private TreeSet usuarios;
 
     public Hotel(String nombre, String direccion) {
@@ -36,21 +37,55 @@ public class Hotel {
     }
 
     public void realizarReserva(Reserva reserva) {
-        reservas.put();
+        reservas.put(reserva.getHabitacion(),reserva);
     }
 
     public void cancerlarReserva(Reserva reserva) {
         reservas.remove(reserva);
     }
 
-    public Map<String, String> obtenerEstadoHabitaciones() {
-        Map<String, String> estados = new HashMap<>();
+    public void verHabitacionesDisponibles() {
         for (Habitacion habitacion : habitaciones) {
-            estados.put("Habitación " + habitacion.getNumero(), habitacion.getEstado());
+            if(habitacion.getEstado().equals(Estado.DISPONIBLE)){
+                System.out.println(habitacion.toString());
+            };
         }
-        return estados;
     }
 
+    public void verHabitacionesNoDisponibles() {
+        for (Habitacion habitacion : habitaciones) {
+            if(habitacion.getEstado().equals(Estado.OCUPADO)){
+                System.out.println(habitacion.toString());
+            };
+        }
+    }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public List<Habitacion> getHabitaciones() {
+        return habitaciones;
+    }
+
+    public Map<Habitacion, Reserva> getReservas() {
+        return reservas;
+    }
+
+    public TreeSet getUsuarios() {
+        return usuarios;
+    }
 }
 
