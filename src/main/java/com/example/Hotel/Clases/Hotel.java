@@ -13,6 +13,8 @@ public class Hotel {
     private HashMap<Habitacion,Reserva> reservas;
     private TreeSet<Usuario> usuarios;
 
+    public Hotel(){}
+
     public Hotel(String nombre, String direccion) {
         this.nombre = nombre;
         this.direccion = direccion;

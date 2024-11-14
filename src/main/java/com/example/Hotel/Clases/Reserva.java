@@ -11,6 +11,8 @@ public class Reserva {
     private LocalDate fechaFin;
     private Habitacion habitacion;
 
+    public Reserva(){}
+
     public Reserva(Pasajero pasajero, LocalDate fechaInicio, LocalDate fechaFin, double precio, String estado, Habitacion habitacion) {
         this.pasajero = pasajero;
         this.fechaInicio = fechaInicio;
