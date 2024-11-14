@@ -4,6 +4,7 @@ import com.example.Hotel.Clases.Reserva;
 import com.example.Login.Clases.Usuario;
 import com.example.Personas.Clases.Administrador.Administrador;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.FileWriter;
 import java.io.FileReader;
@@ -31,6 +32,27 @@ public class JsonManager {
         }
         return jsonArray;
     }
+
+    //Convertir JSONArray en TreeSet
+    public TreeSet<Usuario> JsonArrayAlistaUsuarios(JSONArray jarray){
+        TreeSet<Usuario> listaUsuarios = new TreeSet<>();
+
+        try {
+            for(int i = 0; i< jarray.length();i++){
+                if()
+                Usuario usuario = gestor.deserializar(jarray.getJSONObject(i));
+
+                curso.agregarPersonaACurso(persona);
+            }
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        return curso;
+    }
+
+    }
+
 
     public static JSONArray listaReservasAJsonArray(ArrayList<Reserva> listaReservas) {
 

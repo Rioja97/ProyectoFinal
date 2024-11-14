@@ -2,6 +2,8 @@ package com.example.Login.Clases;
 
 import com.example.Login.Enums.Rol;
 import com.example.Login.Exceptions.UsuarioRepetidoException;
+import com.example.Personas.Clases.Pasajero.Pasajero;
+import com.example.Personas.Clases.Personal.Personal;
 import com.example.Utils.JsonManager;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,9 +34,9 @@ public class LoginManager {
     }
 
 
-    //Metodo para iniciar sesion
-    public Usuario iniciarSesion(String username, String password){
-        Usuario usuario1 = null;
+    //Metodo para iniciar sesion como Pasajero
+    public Pasajero iniciarSesionCliente(String username, String password){
+        Pasajero pasajero1 = null;
 
         TreeSet<Usuario> listaUsuarios = new TreeSet<>();
 
@@ -43,14 +45,40 @@ public class LoginManager {
 
         password = Usuario.hashPassword(password);
 
-        for(Usuario u: listaUsuarios){
-            if(u.getUsername().equals(username) && u.getPasswordHash().equals(password)){
-                usuario1 = u;
-            }else{
-                throw new NoSuchElementException("Nombre de usuario o contraseña incorrectos.");
+        for(Usuario u : listaUsuarios){
+            if(u instanceof Pasajero){
+                if(u.getUsername().equals(username) && u.getPasswordHash().equals(password)){
+                    pasajero1 = (Pasajero) u;
+                }else{
+                    throw new NoSuchElementException("Nombre de usuario o contraseña incorrectos.");
+                }
+            }
+
+        }
+        return pasajero1;
+    }
+
+    //Metodo para iniciar sesion como Pasajero
+    public Personal iniciarSesionPersonal(String username, String password){
+        Personal personal1 = null;
+
+        TreeSet<Usuario> listaUsuarios = new TreeSet<>();
+
+        //CARGAR TREESET DESDE ARCHIVO
+        listaUsuarios = ;
+
+        password = Usuario.hashPassword(password);
+
+        for(Usuario u : listaUsuarios){
+            if(u instanceof Personal){
+                if(u.getUsername().equals(username) && u.getPasswordHash().equals(password)){
+                    personal1 = (Personal) u;
+                }else{
+                    throw new NoSuchElementException("Nombre de usuario o contraseña incorrectos.");
+                }
             }
         }
-        return usuario1;
+        return personal1;
     }
 
 
@@ -114,8 +142,5 @@ public class LoginManager {
         
         return true;
     }
-
-
-    public TreeSet<Usuario> getListaUsuarios() {return listaUsuarios;}
 
 }

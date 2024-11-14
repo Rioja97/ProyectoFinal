@@ -3,6 +3,8 @@ package com.example;
 import com.example.Login.Clases.LoginManager;
 import com.example.Login.Clases.Usuario;
 import com.example.Login.Enums.Rol;
+import com.example.Personas.Clases.Pasajero.Pasajero;
+import com.example.Personas.Clases.Personal.Personal;
 import com.example.Utils.JsonManager;
 
 import java.util.Scanner;
@@ -27,8 +29,9 @@ public class App
         while (op != 0){
             System.out.println("-----------------------------------");
             System.out.println("Bienvenido al HOTEL:");
-            System.out.println("    1. Iniciar Sesion");
-            System.out.println("    2. Registrarse");
+            System.out.println("    1. Iniciar Sesion como cliente");
+            System.out.println("    2. Iniciar Sesion como personal del hotel");
+            System.out.println("    3. Registrarse");
             System.out.println("    0. Salir del programa.");
             System.out.println("");
             System.out.println("Ingrese una opcion:");
@@ -44,10 +47,10 @@ public class App
                     System.out.println("Ingrese su contraseña:");
                     String password = leer.nextLine();
 
-                    Usuario usuario1 = null;
-                    usuario1 = gestorLogin.iniciarSesion(username, password);
+                    Pasajero pasajero = null;
+                    pasajero = gestorLogin.iniciarSesionCliente(username, password);
 
-                    if (usuario1.getTipoIngreso() == Rol.ADMINISTRADOR) {
+                    if (pasajero.getTipoIngreso() == Rol.ADMINISTRADOR) {
 
                         while (opcionMenu != 0) {
                             System.out.println("---------------------------------------");
@@ -80,7 +83,41 @@ public class App
                             }
                         }
                     }
-                    if (usuario1.getTipoIngreso() == Rol.PERSONAL_LIMPIEZA) {
+                    if (pasajero.getTipoIngreso() == Rol.CLIENTE) {
+                        while (opcionMenu != 0){
+
+                            System.out.println("---------------------------------------");
+                            System.out.println("1. Realizar reserva");
+                            System.out.println("2. Realizar consumo");
+                            System.out.println("0. Cerrar sesión");
+                            System.out.println("---------------------------------------");
+
+                            opcionMenu = leer.nextInt();
+                            leer.nextLine();
+
+                            switch (opcionMenu) {
+                                case 1:
+                                    ;
+
+                                case 2:
+                                    ;
+
+                                case 0:
+                                    ;
+                            }
+                        }
+
+                    }
+                case 2:
+                    System.out.println("Ingrese su nombre de usuario:");
+                    username = leer.nextLine();
+
+                    System.out.println("Ingrese su contraseña:");
+                    password = leer.nextLine();
+
+                    Personal personal = null;
+                    personal = gestorLogin.iniciarSesionPersonal(username, password);
+                    if (personal.getTipoIngreso() == Rol.PERSONAL_LIMPIEZA) {
                         while (opcionMenu != 0){
 
                             System.out.println("---------------------------------------");
@@ -118,62 +155,67 @@ public class App
                         }
                     }
 
-                    if (usuario1.getTipoIngreso() == Rol.CLIENTE) {
-                        while (opcionMenu != 0){
-
-                            System.out.println("---------------------------------------");
-                            System.out.println("1. Realizar reserva");
-                            System.out.println("2. Realizar consumo");
-                            System.out.println("0. Cerrar sesión");
-                            System.out.println("---------------------------------------");
-
-                            opcionMenu = leer.nextInt();
-                            leer.nextLine();
-
-                            switch (opcionMenu) {
-                                case 1:
-                                    ;
-
-                                case 2:
-                                    ;
-
-                                case 0:
-                                    ;
-                            }
-                        }
-
-                    }
-                case 2:
+                case 3:
                     JsonManager gestorJSON = new JsonManager();
 
-                    Usuario usuario = new Usuario();
-
-                    System.out.println("Ingrese su nombre de usuario:");
-                    usuario.setUsername(leer.nextLine());
-
-                    System.out.println("Ingrese su contraseña:");
-                    usuario.setPasswordHash((Usuario.hashPassword(leer.nextLine())));
-
-                    System.out.println("Ingrese el rol del usuario (PERSONAL_LIMPIEZA o CLIENTE):");
-                    usuario.setTipoIngreso(gestorLogin.agregarRol(leer.nextLine()));
-
-                    System.out.println("Ingrese su nombre y apellido:");
-                    usuario.setNombreApellido(leer.nextLine());
-
-                    System.out.println("Ingrese su DNI:");
-                    usuario.setDni(leer.nextInt());
+                    System.out.println("Ingrese el tipo de usuario a registrar:");
+                    System.out.println("1. Cliente");
+                    System.out.println("2. Personal de hotel");
+                    int rol = leer.nextInt();
                     leer.nextLine();
 
-                    System.out.println("Ingrese su sexo:");
-                    usuario.setSexo(leer.next().charAt(0));
+                    if(rol == 1){
+                        Pasajero pasajero1 = new Pasajero();
 
-                    //AGREGAR METODO PARA CARGAR TREESET DESDE ARCHIVO
-                    gestorLogin = gestorJSON.cargarSetDesdeArchivo(usuarios.json);
-                    gestorLogin.agregarUsuario(usuario);
+                        System.out.println("Ingrese su nombre de usuario:");
+                        pasajero1.setUsername(leer.nextLine());
 
-                    //SOBREESCRIBIR ARCHIVO CON EL USUARIO YA AGREGADO
-                    JsonManager.cargarArchivoDesdeSet(gestorLogin);
+                        System.out.println("Ingrese su contraseña:");
+                        pasajero1.setPasswordHash((Usuario.hashPassword(leer.nextLine())));
 
+                        System.out.println("Ingrese el rol del usuario (PERSONAL_LIMPIEZA o CLIENTE):");
+                        pasajero1.setTipoIngreso(gestorLogin.agregarRol(leer.nextLine()));
+
+                        System.out.println("Ingrese su nombre y apellido:");
+                        pasajero1.setNombreApellido(leer.nextLine());
+
+                        System.out.println("Ingrese su DNI:");
+                        pasajero1.setDni(leer.nextInt());
+                        leer.nextLine();
+
+
+                        //AGREGAR METODO PARA CARGAR TREESET DESDE ARCHIVO
+                        gestorLogin = gestorJSON.cargarSetDesdeArchivo("usuarios.json");
+                        gestorLogin.agregarUsuario(pasajero1);
+
+                        //SOBREESCRIBIR ARCHIVO CON EL USUARIO YA AGREGADO
+                        JsonManager.cargarArchivoDesdeSet(gestorLogin);
+                    }else{
+                        Personal personal1 = new Personal();
+
+                        System.out.println("Ingrese su nombre de usuario:");
+                        personal1.setUsername(leer.nextLine());
+
+                        System.out.println("Ingrese su contraseña:");
+                        personal1.setPasswordHash((Usuario.hashPassword(leer.nextLine())));
+
+                        System.out.println("Ingrese el rol del usuario (PERSONAL_LIMPIEZA o CLIENTE):");
+                        personal1.setTipoIngreso(gestorLogin.agregarRol(leer.nextLine()));
+
+                        System.out.println("Ingrese su nombre y apellido:");
+                        personal1.setNombreApellido(leer.nextLine());
+
+                        System.out.println("Ingrese su DNI:");
+                        personal1.setDni(leer.nextInt());
+                        leer.nextLine();
+
+                        //AGREGAR METODO PARA CARGAR TREESET DESDE ARCHIVO
+                        gestorLogin = gestorJSON.cargarSetDesdeArchivo("usuarios.json");
+                        gestorLogin.agregarUsuario(personal1);
+
+                        //SOBREESCRIBIR ARCHIVO CON EL USUARIO YA AGREGADO
+                        JsonManager.cargarArchivoDesdeSet(gestorLogin);
+                    }
                 case 0:
                     break;
             }
