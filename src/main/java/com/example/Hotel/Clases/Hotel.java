@@ -66,10 +66,6 @@ public class Hotel {
         }
     }
 
-    public void cancelarReserva(Reserva x){
-        reservas.remove(x.getHabitacion(),x);
-    }
-
     public String getNombre() {
         return nombre;
     }

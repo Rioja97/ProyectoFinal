@@ -1,5 +1,6 @@
 package com.example.Hotel.Clases;
 import com.example.Hotel.Clases.enumeradores.Estado;
+import com.example.Hotel.Clases.enumeradores.Tipo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,13 +9,13 @@ import static com.example.Hotel.Clases.enumeradores.Estado.DISPONIBLE;
 
 public class Habitacion {
     private int numero;
-    private String tipo;
+    private Tipo tipo;
     private Estado estado;
     private double precio;
     private boolean limpia;
     private boolean reparacion;
 
-    public Habitacion(int numero, String tipo, double precio) {
+    public Habitacion(int numero, Tipo tipo, double precio) {
         this.numero = numero;
         this.tipo = tipo;
         this.estado = DISPONIBLE;
@@ -43,11 +44,11 @@ public class Habitacion {
 
     public void setLimpia(boolean limpia) {this.limpia = limpia;}
 
-    public String getTipo() {
+    public Tipo getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(Tipo tipo) {
         this.tipo = tipo;
     }
 
