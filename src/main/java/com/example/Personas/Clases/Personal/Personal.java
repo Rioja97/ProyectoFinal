@@ -16,7 +16,8 @@ public class Personal extends Usuario {
     }
 
     public String limpiarHabitacion(Habitacion habitacion){
-        habitacion.limpiarHabitacion();
+
+        
 
         return "La habitacion se ha limpiado";
     }
