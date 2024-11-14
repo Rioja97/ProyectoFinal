@@ -115,7 +115,4 @@ public class LoginManager {
         return true;
     }
 
-
-    public TreeSet<Usuario> getListaUsuarios() {return listaUsuarios;}
-
 }
