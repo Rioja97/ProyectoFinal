@@ -4,12 +4,8 @@ import com.example.Login.Enums.Rol;
 import com.example.Login.Exceptions.UsuarioRepetidoException;
 import com.example.Personas.Clases.Pasajero.Pasajero;
 import com.example.Personas.Clases.Personal.Personal;
-import com.example.Utils.JsonManager;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.NoSuchElementException;
