@@ -10,7 +10,7 @@ public class Hotel {
     private String nombre;
     private String direccion;
     private ArrayList<Habitacion> habitaciones;
-    private HashMap<Habitacion,Reserva> reservas;
+    private HashMap<Integer,Reserva> reservas;
     private TreeSet<Usuario> usuarios;
 
     public Hotel(){}
@@ -40,7 +40,7 @@ public class Hotel {
     }
 
     public void realizarReserva(Reserva reserva) {
-        reservas.put(reserva.getHabitacion(),reserva);
+        reservas.put(reserva.getHabitacion().getNumero(),reserva);
     }
 
     public void cancerlarReserva(Reserva reserva) {
@@ -56,12 +56,11 @@ public class Hotel {
     }
 
     public void verHabitacionesNoDisponibles() {
-        for (Map.Entry<Habitacion, Reserva> entrada : reservas.entrySet()) {
+        for (Map.Entry<Integer, Reserva> entrada : reservas.entrySet()) {
             Reserva reserva = entrada.getValue();
-            Habitacion habitacion = entrada.getKey();
-
-            if (habitacion.getEstado().equals(Estado.OCUPADO)) {
-                System.out.println(habitacion.toString());
+            
+            if (reserva.getHabitacion().getEstado().equals(Estado.OCUPADO)) {
+                System.out.println(reserva.getHabitacion().toString());
                 System.out.println("Información pasajero: ");
                 System.out.println(reserva.getPasajero().toString());
             }
@@ -88,7 +87,7 @@ public class Hotel {
         return habitaciones;
     }
 
-    public Map<Habitacion, Reserva> getReservas() {
+    public Map<Integer, Reserva> getReservas() {
         return reservas;
     }
 
