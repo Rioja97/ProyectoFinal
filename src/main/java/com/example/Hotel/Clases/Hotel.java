@@ -53,11 +53,20 @@ public class Hotel {
     }
 
     public void verHabitacionesNoDisponibles() {
-        for (Habitacion habitacion : habitaciones) {
-            if(habitacion.getEstado().equals(Estado.OCUPADO)){
+        for (Map.Entry<Habitacion, Reserva> entrada : reservas.entrySet()) {
+            Reserva reserva = entrada.getValue();
+            Habitacion habitacion = entrada.getKey();
+
+            if (habitacion.getEstado().equals(Estado.OCUPADO)) {
                 System.out.println(habitacion.toString());
-            };
+                System.out.println("Información pasajero: ");
+                System.out.println(reserva.getPasajero().toString());
+            }
         }
+    }
+
+    public void cancelarReserva(Reserva x){
+        reservas.remove(x.getHabitacion(),x);
     }
 
     public String getNombre() {
