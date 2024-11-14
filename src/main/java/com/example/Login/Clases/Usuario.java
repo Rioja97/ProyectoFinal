@@ -5,6 +5,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 import com.example.Login.Enums.Rol;
+import com.example.Personas.Clases.Administrador.Administrador;
+import com.example.Personas.Clases.Personal.Personal;
+import org.json.JSONObject;
 
 public abstract class Usuario implements Comparable<Usuario>{
 
@@ -29,6 +32,33 @@ public abstract class Usuario implements Comparable<Usuario>{
     public Usuario() {
         this.tipoIngreso = Rol.CLIENTE;
     }
+
+
+    private Usuario crearUsuarioDesdeJson(JSONObject jsonObject) {
+        LoginManager gestorLogin = new LoginManager();
+
+        String username = jsonObject.getString("username");
+
+        String passwordHash = jsonObject.getString("passwordHash");
+
+        Rol tipoIngreso = gestorLogin.agregarRol(jsonObject.getString("tipoIngreso"));
+
+        
+        switch (jsonObject.getString("tipoIngreso")) {
+            case "ADMINISTRADOR":
+                String nombreApellido = jsonObject.getString("nombreApellido");
+                return new Administrador(username, passwordHash, tipoIngreso,nombreApellido);
+
+            case "CLIENTE":
+                String nombreApellido = jsonObject.getString("nombreApellido");
+
+                return new Personal(username, passwordHash, tipoIngreso,);
+
+            default:
+                throw new IllegalArgumentException("Tipo de usuario desconocido: " + tipo);
+        }
+    }
+
 
     //Metodo para verificar la contraseña ingresada.
     public boolean verificarPassword(String passwordIngresada){
