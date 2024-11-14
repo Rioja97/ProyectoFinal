@@ -1,32 +1,30 @@
 package com.example.Hotel.Clases;
+import com.example.Hotel.Clases.enumeradores.Estado;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.Hotel.Clases.enumeradores.Estado.DISPONIBLE;
 
 public class Habitacion {
     private int numero;
     private String tipo;
-    private String estado;
-    private double precioPorNoche;
-    private List<Reserva> historialReservas;
+    private Estado estado;
+    private double precio;
+    private boolean limpia;
+    private boolean reparacion;
 
-    public Habitacion(int numero, String tipo, double precioPorNoche) {
+    public Habitacion(int numero, String tipo, double precio) {
         this.numero = numero;
         this.tipo = tipo;
-        this.estado = "disponible";
-        this.precioPorNoche = precioPorNoche;
-        this.historialReservas = new ArrayList<>();
+        this.estado = DISPONIBLE;
+        this.precio = precio;
+        this.limpia=true;
+        this.reparacion=false;
     }
 
-    public void agregarReserva(Reserva reserva) {
-        historialReservas.add(reserva);
-    }
-
-    public List<Reserva> mostrarHistorialReservas() {
-        return historialReservas;
-    }
-
-    public void actualizarEstadoReserva(Reserva reserva, String nuevoEstado) {
-        reserva.setEstado(nuevoEstado);
+    public void actualizarEstadoReserva(Reserva reserva, Estado nuevoEstado) {
+        reserva.getHabitacion().setEstado(nuevoEstado);
     }
 
     public int getNumero() {
@@ -37,6 +35,14 @@ public class Habitacion {
         this.numero = numero;
     }
 
+    public boolean isReparacion() {return reparacion;}
+
+    public void setReparacion(boolean reparacion) {this.reparacion = reparacion;}
+
+    public boolean isLimpia() {return limpia;}
+
+    public void setLimpia(boolean limpia) {this.limpia = limpia;}
+
     public String getTipo() {
         return tipo;
     }
@@ -45,19 +51,30 @@ public class Habitacion {
         this.tipo = tipo;
     }
 
-    public String getEstado() {
+    public Estado getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(Estado estado) {
         this.estado = estado;
     }
 
     public double getPrecioPorNoche() {
-        return precioPorNoche;
+        return precio;
     }
 
     public void setPrecioPorNoche(double precioPorNoche) {
-        this.precioPorNoche = precioPorNoche;
+        this.precio = precioPorNoche;
+    }
+
+    @Override
+    public String toString() {
+        return "Habitacion{" +
+                "numero=" + numero +
+                ", tipo='" + tipo + '\'' +
+                ", estado='" + estado + '\'' +
+                ", precio=" + precio +
+                ", limpia=" + limpia +
+                ", reparacion=" + reparacion +'}';
     }
 }
