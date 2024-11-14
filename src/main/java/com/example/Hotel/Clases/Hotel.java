@@ -1,4 +1,5 @@
 package com.example.Hotel.Clases;
+import java.lang.reflect.Array;
 import java.util.*;
 
 import com.example.Hotel.Clases.enumeradores.Estado;
@@ -8,9 +9,9 @@ import com.example.Login.Clases.Usuario;
 public class Hotel {
     private String nombre;
     private String direccion;
-    private List<Habitacion> habitaciones;
-    private Map<Habitacion,Reserva> reservas;
-    private TreeSet usuarios;
+    private ArrayList<Habitacion> habitaciones;
+    private HashMap<Habitacion,Reserva> reservas;
+    private TreeSet<Usuario> usuarios;
 
     public Hotel(String nombre, String direccion) {
         this.nombre = nombre;
