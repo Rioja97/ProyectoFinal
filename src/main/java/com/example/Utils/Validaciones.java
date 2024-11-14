@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import com.example.Excepciones.*;
 import com.example.Hotel.Clases.Habitacion;
 import com.example.Hotel.Clases.Reserva;
+import com.example.Hotel.Clases.enumeradores.Estado;
 import com.example.Login.Clases.Usuario;
 import com.example.Personas.Clases.Administrador.Administrador;
 
@@ -55,7 +56,7 @@ public class Validaciones{
     }
     public static void validarDisponibilidadReserva(List<Reserva> reservas, LocalDate fechaInicio, LocalDate fechaFin, Habitacion habitacion) throws ReservaSolapadaException {
         for (Reserva reserva : reservas) {
-            if (reserva.getHabitacion().equals(habitacion)) {
+            if (reserva.getHabitacion().getEstado().equals("Disponible")) {
                 // Verifica que no haya solapamiento de fechas
                 if ((fechaInicio.isBefore(reserva.getFechaFin()) && fechaInicio.isAfter(reserva.getFechaInicio())) ||
                         (fechaFin.isAfter(reserva.getFechaInicio()) && fechaFin.isBefore(reserva.getFechaFin())) ||
@@ -70,7 +71,7 @@ public class Validaciones{
         if (habitacion == null) {
             throw new HabitacionNoDisponibleException("La habitación no puede ser nula.");
         }
-        if (!habitacion.getEstado().) {
+        if (!habitacion.getEstado().equals(Estado.OCUPADO) && !habitacion.getEstado().equals(Estado.RESERVADO)) {
             throw new HabitacionNoDisponibleException("La habitación no está disponible.");
         }
     }
