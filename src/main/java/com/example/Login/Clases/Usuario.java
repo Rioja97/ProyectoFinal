@@ -43,7 +43,7 @@ public abstract class Usuario implements Comparable<Usuario>{
 
         Rol tipoIngreso = gestorLogin.agregarRol(jsonObject.getString("tipoIngreso"));
 
-        
+
         switch (jsonObject.getString("tipoIngreso")) {
             case "ADMINISTRADOR":
                 String nombreApellido = jsonObject.getString("nombreApellido");

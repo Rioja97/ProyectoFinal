@@ -1,12 +1,15 @@
 package com.example;
 
+import com.example.Hotel.Clases.Habitacion;
 import com.example.Login.Clases.LoginManager;
 import com.example.Login.Clases.Usuario;
 import com.example.Login.Enums.Rol;
 import com.example.Personas.Clases.Pasajero.Pasajero;
 import com.example.Personas.Clases.Personal.Personal;
 import com.example.Utils.JsonManager;
+import org.json.JSONArray;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.TreeSet;
 
@@ -18,7 +21,11 @@ public class App
 {
     public static void main( String[] args )
     {
-        TreeSet<Usuario> listaUsuarios;
+        TreeSet<Usuario> listaUsuarios = new TreeSet<>();
+        ArrayList<Habitacion> listaHabitaciones = new ArrayList<>();
+
+
+
         LoginManager gestorLogin = new LoginManager();
 
         Scanner leer = new Scanner(System.in);
@@ -97,6 +104,7 @@ public class App
 
                             switch (opcionMenu) {
                                 case 1:
+
                                     ;
 
                                 case 2:
@@ -123,7 +131,6 @@ public class App
                             System.out.println("---------------------------------------");
                             System.out.println("1. Limpiar habitación");
                             System.out.println("2. Reparar habitación");
-                            System.out.println("3. Desinfectar habitación");
                             System.out.println("4. Realizar Check-In");
                             System.out.println("5. Realizar Check-Out");
                             System.out.println("6. Ver reservas");
@@ -135,9 +142,61 @@ public class App
 
                             switch (opcionMenu) {
                                 case 1:
+                                    //funciones para pasar archivo de habitaciones a lista de habitaciones
+                                    JSONArray arr1 = JsonManager.FileAJsonTokener("habitaciones.json");
+                                    listaHabitaciones = JsonManager.jsonArrayAHabitaciones(arr1);
+
+                                    //ver habitaciones sucias
+                                    for(Habitacion h : listaHabitaciones){
+                                        if(h.isLimpia() == false){
+                                            System.out.println(h.toString());
+                                        }
+                                    }
+
+
+                                    System.out.println("Ingrese el numero de la habitacion a limpiar:");
+                                    int numHab = leer.nextInt();
+                                    leer.nextLine();
+
+                                    for(Habitacion h : listaHabitaciones){
+                                        if(h.getNumero()== numHab){
+                                            h.setLimpia(true);
+                                        }
+                                    }
+
+                                    //funciones para guardar lista de habitaciones en archivo
+                                    arr1 = JsonManager.habitacionesAJsonArray(listaHabitaciones);
+                                    JsonManager.JsonArrayAFile(arr1,"habitaciones.json");
+
                                     ;
 
                                 case 2:
+                                    JSONArray arr2 = JsonManager.FileAJsonTokener("habitaciones.json");
+                                    listaHabitaciones = JsonManager.jsonArrayAHabitaciones(arr2);
+
+
+                                    //ver habitaciones que necesitan ser reparadas
+                                    for(Habitacion h : listaHabitaciones){
+                                        if(h.isReparacion() == false){
+                                            System.out.println(h.toString());
+                                        }
+                                    }
+
+
+                                    System.out.println("Ingrese el numero de la habitacion a reparar:");
+                                    int numHab1 = leer.nextInt();
+                                    leer.nextLine();
+
+                                    for(Habitacion h : listaHabitaciones){
+                                        if(h.getNumero()== numHab1){
+                                            h.setReparacion(true);
+                                        }
+                                    }
+
+
+                                    arr2 = JsonManager.habitacionesAJsonArray(listaHabitaciones);
+                                    JsonManager.JsonArrayAFile(arr2,"habitaciones.json");
+
                                     ;
 
                                 case 3:
