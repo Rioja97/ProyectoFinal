@@ -1,5 +1,6 @@
 package com.example.Utils;
 
+import com.example.Hotel.Clases.Reserva;
 import com.example.Login.Clases.Usuario;
 import com.example.Personas.Clases.Administrador.Administrador;
 import org.json.JSONArray;
@@ -38,8 +39,8 @@ public class JsonManager {
         for (Reserva r: listaReservas){
             JSONObject obj = new JSONObject();
 
-            obj.put("", u.getNombreApellido());
-            obj.put("fechaIngreso", r.getFechaIngreso());
+            obj.put("", r.getNombreApellido());
+            obj.put("fechaIngreso", r.ge());
             obj.put("fechaSalida", r.getFechaSalida());
             obj.put("precio", r.getPrecio);
 

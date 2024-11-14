@@ -6,28 +6,30 @@ import com.example.Personas.Clases.Pasajero.Pasajero;
 
 public class Reserva {
     private Pasajero pasajero;
-    private LocalDate fechaInicio;
-    private LocalDate fechaFin;
+    private Date fechaInicio;
+    private Date fechaFin;
     private double precio;
     private String estado;
+    private Habitacion habitacion;
 
-    public Reserva(Pasajero pasajero, LocalDate fechaInicio, LocalDate fechaFin, double precio) {
+    public Reserva(Pasajero pasajero, Date fechaInicio, Date fechaFin, double precio, String estado, Habitacion habitacion) {
         this.pasajero = pasajero;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.precio = precio;
-        this.estado = "pendiente";
+        this.estado = estado;
+        this.habitacion = habitacion;
     }
 
     public Pasajero getPasajero() {
         return pasajero;
     }
 
-    public LocalDate getFechaInicio() {
+    public Date getFechaInicio() {
         return fechaInicio;
     }
 
-    public LocalDate getFechaFin() {
+    public Date getFechaFin() {
         return fechaFin;
     }
 
