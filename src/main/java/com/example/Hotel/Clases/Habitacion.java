@@ -7,6 +7,8 @@ public class Habitacion {
     private String tipo;
     private String estado;
     private double precioPorNoche;
+    private boolean limpia;
+    private boolean reparacion;
     private List<Reserva> historialReservas;
 
     public Habitacion(int numero, String tipo, double precioPorNoche) {
@@ -14,6 +16,8 @@ public class Habitacion {
         this.tipo = tipo;
         this.estado = "disponible";
         this.precioPorNoche = precioPorNoche;
+        this.limpia=true;
+        this.reparacion=false;
         this.historialReservas = new ArrayList<>();
     }
 
@@ -36,6 +40,14 @@ public class Habitacion {
     public void setNumero(int numero) {
         this.numero = numero;
     }
+
+    public boolean isReparacion() {return reparacion;}
+
+    public void setReparacion(boolean reparacion) {this.reparacion = reparacion;}
+
+    public boolean isLimpia() {return limpia;}
+
+    public void setLimpia(boolean limpia) {this.limpia = limpia;}
 
     public String getTipo() {
         return tipo;

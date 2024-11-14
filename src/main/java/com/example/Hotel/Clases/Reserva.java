@@ -3,16 +3,15 @@ import java.time.LocalDate;
 import java.util.Date;
 
 import com.example.Personas.Clases.Pasajero.Pasajero;
-import com.example.Personas.Clases.Pasajero.PasajeroManager;
 
 public class Reserva {
     private Pasajero pasajero;
-    private Date fechaInicio;
-    private Date fechaFin;
+    private LocalDate fechaInicio;
+    private LocalDate fechaFin;
     private double precio;
     private String estado;
 
-    public Reserva(Pasajero pasajero, Date fechaInicio, Date fechaFin, double precio) {
+    public Reserva(Pasajero pasajero, LocalDate fechaInicio, LocalDate fechaFin, double precio) {
         this.pasajero = pasajero;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -24,11 +23,11 @@ public class Reserva {
         return pasajero;
     }
 
-    public Date getFechaInicio() {
+    public LocalDate getFechaInicio() {
         return fechaInicio;
     }
 
-    public Date getFechaFin() {
+    public LocalDate getFechaFin() {
         return fechaFin;
     }
 

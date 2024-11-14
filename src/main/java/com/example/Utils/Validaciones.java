@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.regex.Pattern;
 import com.example.Excepciones.*;
+import com.example.Hotel.Clases.Habitacion;
+import com.example.Hotel.Clases.Reserva;
 import com.example.Login.Clases.Usuario;
 import com.example.Personas.Clases.Administrador.Administrador;
 
@@ -68,7 +70,7 @@ public class Validaciones{
         if (habitacion == null) {
             throw new HabitacionNoDisponibleException("La habitación no puede ser nula.");
         }
-        if (!habitacion.estaDisponible()) {
+        if (!habitacion.getEstado().) {
             throw new HabitacionNoDisponibleException("La habitación no está disponible.");
         }
     }
