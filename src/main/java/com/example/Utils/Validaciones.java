@@ -54,10 +54,9 @@ public class Validaciones{
             throw new FechaInvalidaException("La fecha de fin debe ser posterior a la fecha de inicio.");
         }
     }
-    public static void validarDisponibilidadReserva(List<Reserva> reservas, LocalDate fechaInicio, LocalDate fechaFin, Habitacion habitacion) throws ReservaSolapadaException {
+    public static void validarDisponibilidadReserva(List<Reserva> reservas, LocalDate fechaInicio, LocalDate fechaFin) throws ReservaSolapadaException {
         for (Reserva reserva : reservas) {
             if (reserva.getHabitacion().getEstado().equals("Disponible")) {
-                // Verifica que no haya solapamiento de fechas
                 if ((fechaInicio.isBefore(reserva.getFechaFin()) && fechaInicio.isAfter(reserva.getFechaInicio())) ||
                         (fechaFin.isAfter(reserva.getFechaInicio()) && fechaFin.isBefore(reserva.getFechaFin())) ||
                         fechaInicio.isEqual(reserva.getFechaInicio()) ||

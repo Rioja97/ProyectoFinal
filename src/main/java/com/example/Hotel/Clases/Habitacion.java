@@ -15,6 +15,8 @@ public class Habitacion {
     private boolean limpia;
     private boolean reparacion;
 
+    public Habitacion(){}
+
     public Habitacion(int numero, Tipo tipo, double precio) {
         this.numero = numero;
         this.tipo = tipo;
