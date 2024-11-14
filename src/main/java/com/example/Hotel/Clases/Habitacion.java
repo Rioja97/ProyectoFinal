@@ -59,7 +59,7 @@ public class Habitacion {
         this.estado = estado;
     }
 
-    public double getPrecioPorNoche() {
+    public double getPrecio() {
         return precio;
     }
 

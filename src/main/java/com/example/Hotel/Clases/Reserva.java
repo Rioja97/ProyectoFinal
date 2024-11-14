@@ -1,5 +1,6 @@
 package com.example.Hotel.Clases;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 import com.example.Personas.Clases.Pasajero.Pasajero;
@@ -17,6 +18,14 @@ public class Reserva {
         this.habitacion = habitacion;
     }
 
+    public long calcularDiasEstancia() {
+        return (int) ChronoUnit.DAYS.between(fechaInicio, fechaFin);
+    }
+
+    public double precioFinal(){
+        return getHabitacion().getPrecio()*(calcularDiasEstancia());
+    }
+
     public Pasajero getPasajero() {
         return pasajero;
     }
@@ -28,7 +37,6 @@ public class Reserva {
     public LocalDate getFechaFin() {
         return fechaFin;
     }
-
 
     public Habitacion getHabitacion(){
         return habitacion;
