@@ -7,6 +7,8 @@ import com.example.Hotel.Clases.enumeradores.Tipo;
 import com.example.Login.Clases.LoginManager;
 import com.example.Login.Clases.Usuario;
 import com.example.Login.Enums.Rol;
+import com.example.Menu.Menu;
+import com.example.Personas.Clases.Administrador.Administrador;
 import com.example.Personas.Clases.Pasajero.Pasajero;
 import com.example.Personas.Clases.Personal.Personal;
 import com.example.Utils.JsonManager;
@@ -33,6 +35,7 @@ public class App
 
         int op = 1;
         int opcionMenu = 1;
+        int opUser = 1;
 
         while (op != 0){
             opcionMenu = 1;
@@ -65,8 +68,8 @@ public class App
                         while (opcionMenu != 0) {
                             System.out.println("---------------------------------------");
                             System.out.println("1. Agregar usuario");
-                            System.out.println("2. Eliminar usuario");
-                            System.out.println("3. Modificar Usuario");
+                            System.out.println("2. Modificar Usuario");
+                            System.out.println("3. Eliminar Usuario");
                             System.out.println("4. Ver estado de las habitaciones");
                             System.out.println("0. Cerrar sesión");
                             System.out.println("---------------------------------------");
@@ -76,20 +79,167 @@ public class App
 
                             switch (opcionMenu) {
                                 case 1:
-                                    ;
+                                    while (opUser != 0) {
+                                        System.out.println("---------------------------------------");
+                                        System.out.println("1. Crear administrador");
+                                        System.out.println("2. Crear cliente");
+                                        System.out.println("3. Crear Personal de hotel");
+                                        System.out.println("0. Volver");
+                                        System.out.println("---------------------------------------");
+                                        System.out.println("");
+
+                                        opUser = leer.nextInt();
+                                        leer.nextLine();
+
+                                        switch (opUser) {
+                                            case 1:
+                                                Administrador admin0 = new Administrador();
+
+                                                System.out.println("Ingrese su nombre de usuario:");
+                                                admin0.setUsername(leer.nextLine());
+
+                                                System.out.println("Ingrese su contraseña:");
+                                                admin0.setPasswordHash((Usuario.hashPassword(leer.nextLine())));
+
+                                                admin0.setTipoIngreso(Rol.ADMINISTRADOR);
+
+                                                System.out.println("Ingrese su nombre y apellido:");
+                                                admin0.setNombreApellido(leer.nextLine());
+
+                                                String msg = Menu.agregarUsuarioAdmin(admin0, listaUsuarios);
+
+                                                System.out.println(msg);
+
+                                                break;
+
+                                            case 2:
+                                                Pasajero pasajero0 = new Pasajero();
+
+                                                System.out.println("Ingrese su nombre de usuario:");
+                                                pasajero0.setUsername(leer.nextLine());
+
+                                                System.out.println("Ingrese su contraseña:");
+                                                pasajero0.setPasswordHash((Usuario.hashPassword(leer.nextLine())));
+
+                                                pasajero0.setTipoIngreso(Rol.CLIENTE);
+
+                                                System.out.println("Ingrese su nombre y apellido:");
+                                                pasajero0.setNombreApellido(leer.nextLine());
+
+                                                System.out.println("Ingrese su DNI:");
+                                                pasajero0.setDni(leer.nextInt());
+                                                leer.nextLine();
+
+                                                System.out.println("Ingrese su direccion:");
+                                                pasajero0.setDireccion(leer.nextLine());
+
+                                                System.out.println("Ingrese su nacionalidad:");
+                                                pasajero0.setNacionalidad(leer.nextLine());
+
+                                                String msg1 = Menu.agregarUsuarioAdmin(pasajero0, listaUsuarios);
+
+                                                System.out.println(msg1);
+                                                break;
+
+
+                                            case 3:
+                                                Personal personal0 = new Personal();
+
+                                                System.out.println("Ingrese su nombre de usuario:");
+                                                personal0.setUsername(leer.nextLine());
+
+                                                System.out.println("Ingrese su contraseña:");
+                                                personal0.setPasswordHash((Usuario.hashPassword(leer.nextLine())));
+
+                                                personal0.setTipoIngreso(Rol.PERSONAL_LIMPIEZA);
+
+                                                System.out.println("Ingrese su nombre y apellido:");
+                                                personal0.setNombreApellido(leer.nextLine());
+
+                                                String msg2 = Menu.agregarUsuarioAdmin(personal0, listaUsuarios);
+
+                                                System.out.println(msg2);
+                                                break;
+
+
+                                            case 0:
+                                                opUser = 0;
+                                                break;
+
+                                        }
+                                    }
+                                    break;
 
                                 case 2:
-                                    ;
+                                    JSONArray arr = JsonManager.FileAJsonTokener("usuarios.json");
+                                    listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
+                                    Usuario user1 = null;
+
+
+                                    for (Usuario u : listaUsuarios) {
+                                        System.out.println(u.toString());
+                                    }
+
+                                    System.out.println("Ingrese el username del usuario a modificar:");
+                                    String nombreUsuario = leer.nextLine();
+
+                                    for (Usuario u : listaUsuarios) {
+                                        if (u.getUsername().equals(nombreUsuario)) {
+                                            user1 = u;
+                                        }
+                                    }
+
+                                    arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
+                                    JsonManager.JsonArrayAFile(arr, "usuarios.json");
+
+
+                                    System.out.println("Ingrese la nueva contraseña:");
+                                    String nuevaContrasenia = leer.nextLine();
+
+                                    System.out.println("Ingrese el nuevo rol:");
+                                    Rol nuevoRol = gestorLogin.agregarRol(leer.nextLine());
+
+                                    System.out.println("Ingrese su nuevo nombre y apellido:");
+                                    String nuevoNombre = leer.nextLine();
+
+                                    String msg0 = Menu.modificarUsuarioAdmin(user1, nuevaContrasenia, nuevoRol, nuevoNombre, listaUsuarios);
+
+                                    System.out.println(msg0);
+                                    break;
 
                                 case 3:
-                                    ;
+                                    JSONArray array0 = JsonManager.FileAJsonTokener("usuarios.json");
+                                    listaUsuarios = JsonManager.jsonArrayAListaUsuarios(array0);
+                                    Usuario user2 = null;
+
+
+                                    for (Usuario u : listaUsuarios) {
+                                        System.out.println(u.toString());
+                                    }
+
+                                    System.out.println("Ingrese el username del usuario a eliminar:");
+                                    String nomUsuario = leer.nextLine();
+
+                                    for (Usuario usuario : listaUsuarios) {
+                                        if (usuario.getUsername().equals(nomUsuario)) {
+                                            user2 = usuario;
+                                        }
+                                    }
+
+                                    arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
+                                    JsonManager.JsonArrayAFile(arr, "usuarios.json");
+
+                                    String msg3 = Menu.eliminarUsuarioAdmin(user2, listaUsuarios);
+
+                                    System.out.println(msg3);
+                                    break;
 
                                 case 4:
-                                    ;
+                                    break;
 
                                 case 0:
-                                    ;
-
+                                    opcionMenu = 0;
+                                    break;
                             }
                         }
                     }
@@ -141,6 +291,7 @@ public class App
                                     array1 = JsonManager.mapAJsonArray(listaReservas);
                                     JsonManager.JsonArrayAFile(array1,"reservas.json");
 
+                                    break;
 
                                 case 2:
                                     System.out.println("Ingrese el número de habitación donde se realiza el consumo:");
@@ -161,15 +312,16 @@ public class App
                                     } else {
                                         System.out.println("No existe una reserva activa para la habitación indicada.");
                                     }
-                                    ;
+                                    break;
 
                                 case 0:
                                     opcionMenu = 0;
-                                    ;
+                                    break;
                             }
                         }
-
                     }
+                    break;
+
                 case 2:
                     System.out.println("Ingrese su nombre de usuario:");
                     username = leer.nextLine();
@@ -222,7 +374,7 @@ public class App
                                     arr1 = JsonManager.habitacionesAJsonArray(listaHabitaciones);
                                     JsonManager.JsonArrayAFile(arr1,"habitaciones.json");
 
-                                    ;
+                                    break;
 
                                 case 2:
                                     JSONArray arr2 = JsonManager.FileAJsonTokener("habitaciones.json");
@@ -251,6 +403,7 @@ public class App
                                     arr2 = JsonManager.habitacionesAJsonArray(listaHabitaciones);
                                     JsonManager.JsonArrayAFile(arr2,"habitaciones.json");
 
+                                    break;
 
                                 case 3:
 
@@ -270,6 +423,8 @@ public class App
 
                                     arr3 = JsonManager.mapAJsonArray(listaReservas);
                                     JsonManager.JsonArrayAFile(arr3,"reservas.json");
+
+                                    break;
 
                                 case 4:
                                     JSONArray arr4 = JsonManager.FileAJsonTokener("reservas.json");
@@ -293,7 +448,7 @@ public class App
                                     } else {
                                         System.out.println("No existe una reserva activa para el número de habitación indicado.");
                                     }
-                                    ;
+                                    break;
 
                                 case 5:
                                     JSONArray arr5 = JsonManager.FileAJsonTokener("reservas.json");
@@ -302,14 +457,15 @@ public class App
                                     for (Map.Entry<Integer, Reserva> entry : listaReservas.entrySet()) {
                                         System.out.println("clave =" + entry.getKey() + ", valor =" + entry.getValue());
                                     }
-                                    ;
+                                    break;
 
                                 case 0:
                                     opcionMenu = 0;
+                                    break;
                             }
                         }
                     }
-
+                    break;
                 case 3:
                     JsonManager gestorJSON = new JsonManager();
 
