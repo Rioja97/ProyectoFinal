@@ -2,6 +2,7 @@ package com.example.Hotel.Clases;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.Random;
 import java.util.SplittableRandom;
 
 import com.example.Personas.Clases.Pasajero.Pasajero;
@@ -27,6 +28,21 @@ public class Reserva {
 
     public double precioFinal(){
         return getHabitacion().getPrecio()*(calcularDiasEstancia());
+    }
+
+    public static LocalDate generarFechaAleatoria() {
+        Random random = new Random();
+
+        //Rango de años
+        int anioInicio = 2024;
+        int anioFin = 2030;
+
+        // Generar año, mes y día aleatorios
+        int anioAleatorio = anioInicio + random.nextInt(anioFin - anioInicio + 1);
+        int mesAleatorio = 11 + random.nextInt(12);
+        int diaAleatorio = 15 + random.nextInt(LocalDate.of(anioAleatorio, mesAleatorio, 1).lengthOfMonth());
+
+        return LocalDate.of(anioAleatorio, mesAleatorio, diaAleatorio);
     }
 
     public Pasajero getPasajero() {

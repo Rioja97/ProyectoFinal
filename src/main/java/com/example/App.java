@@ -236,7 +236,7 @@ public class App
 
                                     Habitacion habitacion1 = new Habitacion(numeroHab,tipo);
 
-                                    Reserva reserva1 = new Reserva(pasajero1,,,habitacion1);
+                                    Reserva reserva1 = new Reserva(pasajero1,Reserva.generarFechaAleatoria(),Reserva.generarFechaAleatoria(),habitacion1);
 
                                     listaReservas.put(numeroHab,reserva1);
 
