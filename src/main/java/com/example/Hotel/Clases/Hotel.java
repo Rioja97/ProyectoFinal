@@ -47,24 +47,25 @@ public class Hotel {
         reservas.remove(reserva);
     }
 
-    public void verHabitacionesDisponibles() {
+    public List<Habitacion> obtenerHabitacionesDisponibles() {
+        List<Habitacion> habitacionesDisponibles = new ArrayList<>();
         for (Habitacion habitacion : habitaciones) {
-            if(habitacion.getEstado().equals(Estado.DISPONIBLE)){
-                System.out.println(habitacion.toString());
-            };
-        }
-    }
-
-    public void verHabitacionesNoDisponibles() {
-        for (Map.Entry<Integer, Reserva> entrada : reservas.entrySet()) {
-            Reserva reserva = entrada.getValue();
-            
-            if (reserva.getHabitacion().getEstado().equals(Estado.OCUPADO)) {
-                System.out.println(reserva.getHabitacion().toString());
-                System.out.println("Información pasajero: ");
-                System.out.println(reserva.getPasajero().toString());
+            if (habitacion.getEstado().equals(Estado.DISPONIBLE)) {
+                habitacionesDisponibles.add(habitacion);
             }
         }
+        return habitacionesDisponibles;
+    }
+
+    public List<Habitacion> obtenerHabitacionesNoDisponibles() {
+        List<Habitacion> habitacionesNoDisponibles = new ArrayList<>();
+        for (Map.Entry<Integer, Reserva> entrada : reservas.entrySet()) {
+            Reserva reserva = entrada.getValue();
+            if (reserva.getHabitacion().getEstado().equals(Estado.OCUPADO)) {
+                habitacionesNoDisponibles.add(reserva.getHabitacion());
+            }
+        }
+        return habitacionesNoDisponibles;
     }
 
 
