@@ -1,6 +1,7 @@
 package com.example.Hotel.Clases;
 import com.example.Hotel.Clases.enumeradores.Estado;
 import com.example.Hotel.Clases.enumeradores.Tipo;
+import com.example.Utils.Consumo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,9 +41,7 @@ public class Habitacion {
         this.reparacion=false;
     }
 
-    public void actualizarEstadoReserva(Reserva reserva, Estado nuevoEstado) {
-        reserva.getHabitacion().setEstado(nuevoEstado);
-    }
+    public void actualizarEstadoReserva(Reserva reserva, Estado nuevoEstado) {reserva.getHabitacion().setEstado(nuevoEstado);}
 
     public int getNumero() {
         return numero;

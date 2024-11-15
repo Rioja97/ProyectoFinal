@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.SplittableRandom;
 
 import com.example.Personas.Clases.Pasajero.Pasajero;
+import com.example.Utils.Consumo;
 
 public class Reserva {
     private Pasajero pasajero;
@@ -26,7 +27,20 @@ public class Reserva {
         return (int) ChronoUnit.DAYS.between(fechaInicio, fechaFin);
     }
 
-    public double precioFinal(){
+    public Consumo registrarConsumo(String descripcion, double monto) {
+        Consumo x = new Consumo(descripcion, monto);
+        return x;
+    }
+
+    public double calcularConsumos(Consumo x){
+        return x.getMonto();
+    }
+
+    public double precioFinalConsumo(Consumo x){
+        return getHabitacion().getPrecio()*(calcularDiasEstancia())+calcularConsumos(x);
+    }
+
+    public double precioFinalSinConsumo(Consumo x){
         return getHabitacion().getPrecio()*(calcularDiasEstancia());
     }
 

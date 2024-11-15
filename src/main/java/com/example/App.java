@@ -143,6 +143,24 @@ public class App
 
 
                                 case 2:
+                                    System.out.println("Ingrese el número de habitación donde se realiza el consumo:");
+                                    int numHabConsumo = leer.nextInt();
+                                    leer.nextLine();
+
+                                    System.out.println("Ingrese la descripción del consumo:");
+                                    String descripcionConsumo = leer.nextLine();
+
+                                    System.out.println("Ingrese el monto del consumo:");
+                                    double montoConsumo = leer.nextDouble();
+                                    leer.nextLine();
+
+                                    Reserva reservaConsumo = listaReservas.get(numHabConsumo);
+                                    if (reservaConsumo != null) {
+                                        reservaConsumo.registrarConsumo(descripcionConsumo, montoConsumo);
+                                        System.out.println("Consumo registrado exitosamente en la habitación número: " + numHabConsumo);
+                                    } else {
+                                        System.out.println("No existe una reserva activa para la habitación indicada.");
+                                    }
                                     ;
 
                                 case 0:
