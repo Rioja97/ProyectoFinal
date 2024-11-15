@@ -2,6 +2,7 @@ package com.example;
 
 import com.example.Hotel.Clases.Habitacion;
 import com.example.Hotel.Clases.Reserva;
+import com.example.Hotel.Clases.enumeradores.Estado;
 import com.example.Hotel.Clases.enumeradores.Tipo;
 import com.example.Login.Clases.LoginManager;
 import com.example.Login.Clases.Usuario;
@@ -35,7 +36,7 @@ public class App
 
         while (op != 0){
             opcionMenu = 1;
-            
+
             System.out.println("-----------------------------------");
             System.out.println("Bienvenido al HOTEL:");
             System.out.println("    1. Iniciar Sesion como cliente");
@@ -106,6 +107,39 @@ public class App
 
                             switch (opcionMenu) {
                                 case 1:
+                                    Habitacion habitacion1 = null;
+
+                                    JSONArray array1 = JsonManager.FileAJsonTokener("reservas.json");
+                                    listaReservas = JsonManager.jsonArrayAMap(array1);
+
+                                    JSONArray arr1 = JsonManager.FileAJsonTokener("habitaciones.json");
+                                    listaHabitaciones = JsonManager.jsonArrayAHabitaciones(arr1);
+
+                                    //ver habitaciones sucias
+                                    for(Habitacion h : listaHabitaciones){
+                                        if(h.getEstado() == Estado.DISPONIBLE){
+                                            System.out.println(h.toString());
+                                        }
+                                    }
+
+
+                                    System.out.println("Ingrese el numero de la habitacion a reservar:");
+                                    int numeroHab = leer.nextInt();
+                                    leer.nextLine();
+
+                                    for(Habitacion h : listaHabitaciones){
+                                        if(h.getNumero() == numeroHab){
+                                            habitacion1 = h;
+                                            habitacion1.setEstado(Estado.RESERVADO);
+                                        }
+                                    }
+
+                                    Reserva reserva1 = new Reserva(pasajero,Reserva.generarFechaAleatoria(),Reserva.generarFechaAleatoria(),habitacion1);
+
+                                    listaReservas.put(numeroHab,reserva1);
+
+                                    array1 = JsonManager.mapAJsonArray(listaReservas);
+                                    JsonManager.JsonArrayAFile(array1,"reservas.json");
 
                                     ;
 
@@ -206,44 +240,21 @@ public class App
                                     JSONArray arr3 = JsonManager.FileAJsonTokener("reservas.json");
                                     listaReservas = JsonManager.jsonArrayAMap(arr3);
 
-                                    System.out.println("Ingrese nombre y apellido del pasajero que realizo la reserva:");
-                                    String nombreApellido = leer.nextLine();
-
-                                    System.out.println("Ingrese documento del pasajero que realizo la reserva:");
-                                    int dni = leer.nextInt();
+                                    System.out.println("Ingrese el numero de habitacion para realizar el Check-In:");
+                                    int nHabitacion = leer.nextInt();
                                     leer.nextLine();
 
-                                    System.out.println("Ingrese direccion del pasajero que realizo la reserva:");
-                                    String direccion = leer.nextLine();
 
-                                    System.out.println("Ingrese nacionalidad del pasajero que realizo la reserva:");
-                                    String nacionalidad = leer.nextLine();
+                                    for (Map.Entry<Integer, Reserva> entry : listaReservas.entrySet()) {
+                                        if(entry.getKey() == nHabitacion){
+                                            entry.getValue().getHabitacion().setEstado(Estado.OCUPADO);
+                                        }
+                                    }
 
-                                    Pasajero pasajero1 = new Pasajero(nombreApellido,dni,direccion,nacionalidad);
-
-
-                                    System.out.println("Ingrese la fecha de inicio de la estadia:");
-
-                                    System.out.println("Ingrese la fecha de finalización de la estadia:");
-
-
-                                    System.out.println("Ingrese el numero de la habitacion reservada:");
-                                    int numeroHab = leer.nextInt();
-                                    leer.nextLine();
-
-                                    System.out.println("Ingrese el tipo de habitacion que es:");
-                                    Tipo tipo = gestorLogin.agregarTipo(leer.nextLine());
-
-                                    Habitacion habitacion1 = new Habitacion(numeroHab,tipo);
-
-                                    Reserva reserva1 = new Reserva(pasajero1,,,habitacion1);
-
-                                    listaReservas.put(numeroHab,reserva1);
 
                                     arr3 = JsonManager.mapAJsonArray(listaReservas);
                                     JsonManager.JsonArrayAFile(arr3,"reservas.json");
-                                    ;
-
+                                    
                                 case 4:
                                     ;
 
