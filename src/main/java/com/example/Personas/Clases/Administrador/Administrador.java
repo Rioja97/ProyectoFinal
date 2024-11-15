@@ -22,8 +22,8 @@ public class Administrador extends Usuario {
         LoginManager.agregarUsuario(usuario, hotel.getUsuarios());
     }
 
-    public void modificarUsuario(Usuario usuario,  String newPassword, Rol newRol, String nombreApellidoNuevo, char sexo, Hotel hotel){
-        LoginManager.modificarUsuario(usuario, newPassword, newRol, nombreApellidoNuevo, sexo, hotel.getUsuarios());
+    public void modificarUsuario(Usuario usuario,  String newPassword, Rol newRol, String nombreApellidoNuevo, Hotel hotel){
+        LoginManager.modificarUsuario(usuario, newPassword, newRol, nombreApellidoNuevo, hotel.getUsuarios());
     }
 
     public void eliminarUsuario(Usuario usuario, Hotel hotel){

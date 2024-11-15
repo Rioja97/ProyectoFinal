@@ -94,7 +94,9 @@ public class LoginManager {
     }
 
 
-    public static String agregarUsuario(Usuario usuario, TreeSet<Usuario> listaUsuarios){
+    public static String agregarUsuario(Usuario usuario, TreeSet<Usuario> listaUsuarios) throws UsuarioRepetidoException{
+        JSONArray arr = JsonManager.FileAJsonTokener("usuarios.json");
+        listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
 
         for(Usuario u: listaUsuarios){
 
@@ -104,11 +106,17 @@ public class LoginManager {
         }
         listaUsuarios.add(usuario);
 
+        arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
+        JsonManager.JsonArrayAFile(arr,"usuarios.json");
+
         return "Usuario agregado exitósamente";
     }
 
 
-    public static String modificarUsuario(Usuario usuario, String newPassword, Rol newRol, String nombreApellidoNuevo, char sexo, TreeSet<Usuario> listaUsuarios){
+    public static String modificarUsuario(Usuario usuario, String newPassword, Rol newRol, String nombreApellidoNuevo, TreeSet<Usuario> listaUsuarios){
+        JSONArray arr = JsonManager.FileAJsonTokener("usuarios.json");
+        listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
+
 
         if(!listaUsuarios.contains(usuario)){
             throw new NoSuchElementException("Usuario no encontrado");
@@ -118,17 +126,25 @@ public class LoginManager {
         usuario.setTipoIngreso(newRol);
         usuario.setNombreApellido(nombreApellidoNuevo);
 
+        arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
+        JsonManager.JsonArrayAFile(arr,"usuarios.json");
 
         return "Usuario modificado exitosamente";
     }
 
 
     public static String eliminarUsuario(Usuario usuario, TreeSet<Usuario> listaUsuarios){
+        JSONArray arr = JsonManager.FileAJsonTokener("usuarios.json");
+        listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
+
 
         if(!listaUsuarios.contains(usuario)){
             throw new NoSuchElementException("Usuario no encontrado");
         }
         listaUsuarios.remove(usuario);
+
+        arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
+        JsonManager.JsonArrayAFile(arr,"usuarios.json");
 
         return "Usuario eliminado exitosamente";
     }
