@@ -2,6 +2,7 @@ package com.example;
 
 import com.example.Hotel.Clases.Habitacion;
 import com.example.Hotel.Clases.Reserva;
+import com.example.Hotel.Clases.enumeradores.Estado;
 import com.example.Hotel.Clases.enumeradores.Tipo;
 import com.example.Login.Clases.LoginManager;
 import com.example.Login.Clases.Usuario;
@@ -245,6 +246,27 @@ public class App
                                     ;
 
                                 case 4:
+                                    JSONArray arr4 = JsonManager.FileAJsonTokener("reservas.json");
+                                    listaReservas = JsonManager.jsonArrayAMap(arr4);
+
+                                    System.out.println("Ingrese el número de habitación para realizar el Check-Out:");
+                                    int numHabitacionCheckout = leer.nextInt();
+                                    leer.nextLine();
+
+                                    // Verificar si existe una reserva para la habitación indicada
+                                    Reserva reservaCheckout = listaReservas.get(numHabitacionCheckout);
+                                    if (reservaCheckout != null) {
+                                        Personal personal1 = new Personal();
+                                        personal1.hacerCheckOut(reservaCheckout);
+
+                                        // Actualizar los cambios
+                                        arr4 = JsonManager.mapAJsonArray(listaReservas);
+                                        JsonManager.JsonArrayAFile(arr4, "reservas.json");
+
+                                        System.out.println("Check-Out realizado correctamente para la habitación número: " + numHabitacionCheckout);
+                                    } else {
+                                        System.out.println("No existe una reserva activa para el número de habitación indicado.");
+                                    }
                                     ;
 
                                 case 5:
