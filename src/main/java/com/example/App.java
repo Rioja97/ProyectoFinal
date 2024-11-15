@@ -235,6 +235,18 @@ public class App
                                     break;
 
                                 case 4:
+                                    JSONArray array1 = JsonManager.FileAJsonTokener("reservas.json");
+                                    listaReservas = JsonManager.jsonArrayAMap(array1);
+
+                                    JSONArray arr1 = JsonManager.FileAJsonTokener("habitaciones.json");
+                                    listaHabitaciones = JsonManager.jsonArrayAHabitaciones(arr1);
+
+                                    //ver habitaciones
+                                    for(Habitacion h : listaHabitaciones){
+                                        System.out.println(h.toString());
+                                        System.out.println("\n");
+                                    }
+
                                     break;
 
                                 case 0:
@@ -269,6 +281,7 @@ public class App
                                     for(Habitacion h : listaHabitaciones){
                                         if(h.getEstado() == Estado.DISPONIBLE){
                                             System.out.println(h.toString());
+                                            System.out.println("\n");
                                         }
                                     }
 
@@ -356,6 +369,7 @@ public class App
                                     for(Habitacion h : listaHabitaciones){
                                         if(h.isLimpia() == false){
                                             System.out.println(h.toString());
+                                            System.out.println("\n");
                                         }
                                     }
 
@@ -385,6 +399,7 @@ public class App
                                     for(Habitacion h : listaHabitaciones){
                                         if(h.isReparacion() == false){
                                             System.out.println(h.toString());
+                                            System.out.println("\n");
                                         }
                                     }
 
