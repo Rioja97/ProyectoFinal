@@ -67,6 +67,7 @@ public class Hotel {
         }
     }
 
+
     public String getNombre() {
         return nombre;
     }

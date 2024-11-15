@@ -1,9 +1,11 @@
 package com.example.Login.Clases;
 
+import com.example.Hotel.Clases.enumeradores.Tipo;
 import com.example.Login.Enums.Rol;
 import com.example.Login.Exceptions.UsuarioRepetidoException;
 import com.example.Personas.Clases.Pasajero.Pasajero;
 import com.example.Personas.Clases.Personal.Personal;
+import com.example.Utils.JsonManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import java.io.FileWriter;
@@ -29,6 +31,18 @@ public class LoginManager {
         return r;
     }
 
+    public Tipo agregarTipo(String tipo){
+        Tipo t = null;
+
+        try{
+            String tipoIngresado = tipo.toUpperCase();
+            t = Tipo.valueOf(tipoIngresado);
+        }catch (IllegalArgumentException e){
+            e.getMessage();
+        }
+        return t;
+    }
+
 
     //Metodo para iniciar sesion como Pasajero
     public Pasajero iniciarSesionCliente(String username, String password){
@@ -37,7 +51,8 @@ public class LoginManager {
         TreeSet<Usuario> listaUsuarios = new TreeSet<>();
 
         //CARGAR TREESET DESDE ARCHIVO
-        listaUsuarios = ;
+        JSONArray arr = JsonManager.FileAJsonTokener("usuarios.json");
+        listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
 
         password = Usuario.hashPassword(password);
 
@@ -61,7 +76,8 @@ public class LoginManager {
         TreeSet<Usuario> listaUsuarios = new TreeSet<>();
 
         //CARGAR TREESET DESDE ARCHIVO
-        listaUsuarios = ;
+        JSONArray arr = JsonManager.FileAJsonTokener("usuarios.json");
+        listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
 
         password = Usuario.hashPassword(password);
 

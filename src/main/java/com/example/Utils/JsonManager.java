@@ -76,7 +76,7 @@ public class JsonManager {
             // Convertir datos de pasajero
             JSONObject pasajeroJson = new JSONObject();
             pasajeroJson.put("nombreApellido", reserva.getPasajero().getNombreApellido());
-            pasajeroJson.put("documento", reserva.getPasajero().getDni());
+            pasajeroJson.put("dni", reserva.getPasajero().getDni());
             pasajeroJson.put("direccion", reserva.getPasajero().getDireccion());
             pasajeroJson.put("nacionalidad", reserva.getPasajero().getNacionalidad());
 
@@ -141,7 +141,7 @@ public class JsonManager {
                     Administrador admin = new Administrador(username, passwordHash, tipoIngreso, nombreApellido);
                     listaUsuarios.add(admin);
                 } else if (tipoIngreso.toString() == "CLIENTE") {
-                    Pasajero pasajero = new Pasajero(username, passwordHash, tipoIngreso, nombreApellido, null, null, null, null);
+                    Pasajero pasajero = new Pasajero(username, passwordHash, tipoIngreso, nombreApellido);
                     listaUsuarios.add(pasajero);
                 } else{
                     Personal personal = new Personal(username, passwordHash, tipoIngreso, nombreApellido);
@@ -166,7 +166,7 @@ public class JsonManager {
             boolean reparacion = obj.getBoolean("reparacion");
 
             // Crear una instancia de Habitacion y agregarla al ArrayList
-            Habitacion habitacion = new Habitacion(numero, tipo, estado, precio, limpia, reparacion);
+            Habitacion habitacion = new Habitacion(numero,tipo,estado,precio,limpia,reparacion);
             listaHabitaciones.add(habitacion);
         }
         return listaHabitaciones;
@@ -185,16 +185,16 @@ public class JsonManager {
             // Obtener los datos de pasajero
             JSONObject pasajeroJson = reservaJson.getJSONObject("pasajero");
             String nombreApellido = pasajeroJson.getString("nombreApellido");
-            int documento = pasajeroJson.getInt("documento");
+            int dni = pasajeroJson.getInt("dni");
             String direccion = pasajeroJson.getString("direccion");
             String nacionalidad = pasajeroJson.getString("nacionalidad");
-            Pasajero pasajero = new Pasajero(null, null, null, nombreApellido, documento, direccion, nacionalidad, null);
+            Pasajero pasajero = new Pasajero(nombreApellido, dni, direccion, nacionalidad);
 
             // Obtener los datos de habitacion
             JSONObject habitacionJson = reservaJson.getJSONObject("habitacion");
             int numeroHabitacion = habitacionJson.getInt("numero");
             Tipo tipo = Tipo.valueOf(habitacionJson.getString("tipo"));
-            Habitacion habitacion = new Habitacion(numeroHabitacion, tipo, null, null, null, null);
+            Habitacion habitacion = new Habitacion(numeroHabitacion,tipo);
 
             // Obtener las fechas de la reserva
             LocalDate fechaInicio = LocalDate.parse(reservaJson.getString("fechaInicio"));
@@ -208,24 +208,5 @@ public class JsonManager {
         return reservas;
     }
 
-
-    //Convertir JSONArray en TreeSet
-    public TreeSet<Usuario> JsonArrayAlistaUsuarios(JSONArray jarray){
-        TreeSet<Usuario> listaUsuarios = new TreeSet<>();
-
-        try {
-            for(int i = 0; i< jarray.length();i++){
-                if()
-                Usuario usuario = gestor.deserializar(jarray.getJSONObject(i));
-
-                curso.agregarPersonaACurso(persona);
-            }
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
-
-        return curso;
-    }
-
-    }
+}
 

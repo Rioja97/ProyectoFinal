@@ -2,6 +2,7 @@ package com.example.Hotel.Clases;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.SplittableRandom;
 
 import com.example.Personas.Clases.Pasajero.Pasajero;
 
@@ -13,7 +14,7 @@ public class Reserva {
 
     public Reserva(){}
 
-    public Reserva(Pasajero pasajero, LocalDate fechaInicio, LocalDate fechaFin, double precio, String estado, Habitacion habitacion) {
+    public Reserva(Pasajero pasajero, LocalDate fechaInicio, LocalDate fechaFin, Habitacion habitacion) {
         this.pasajero = pasajero;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -44,4 +45,13 @@ public class Reserva {
         return habitacion;
     }
 
+    @Override
+    public String toString() {
+        return "Reserva{" +
+                "pasajero=" + pasajero +
+                ", fechaInicio=" + fechaInicio +
+                ", fechaFin=" + fechaFin +
+                ", habitacion=" + habitacion +
+                '}';
+    }
 }

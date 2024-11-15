@@ -1,6 +1,8 @@
 package com.example;
 
 import com.example.Hotel.Clases.Habitacion;
+import com.example.Hotel.Clases.Reserva;
+import com.example.Hotel.Clases.enumeradores.Tipo;
 import com.example.Login.Clases.LoginManager;
 import com.example.Login.Clases.Usuario;
 import com.example.Login.Enums.Rol;
@@ -9,9 +11,7 @@ import com.example.Personas.Clases.Personal.Personal;
 import com.example.Utils.JsonManager;
 import org.json.JSONArray;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Hello world!
@@ -23,7 +23,7 @@ public class App
     {
         TreeSet<Usuario> listaUsuarios = new TreeSet<>();
         ArrayList<Habitacion> listaHabitaciones = new ArrayList<>();
-
+        Map<Integer, Reserva> listaReservas = new HashMap<>();
 
 
         LoginManager gestorLogin = new LoginManager();
@@ -34,6 +34,8 @@ public class App
         int opcionMenu = 1;
 
         while (op != 0){
+            opcionMenu = 1;
+            
             System.out.println("-----------------------------------");
             System.out.println("Bienvenido al HOTEL:");
             System.out.println("    1. Iniciar Sesion como cliente");
@@ -111,6 +113,7 @@ public class App
                                     ;
 
                                 case 0:
+                                    opcionMenu = 0;
                                     ;
                             }
                         }
@@ -131,9 +134,9 @@ public class App
                             System.out.println("---------------------------------------");
                             System.out.println("1. Limpiar habitación");
                             System.out.println("2. Reparar habitación");
-                            System.out.println("4. Realizar Check-In");
-                            System.out.println("5. Realizar Check-Out");
-                            System.out.println("6. Ver reservas");
+                            System.out.println("3. Realizar Check-In");
+                            System.out.println("4. Realizar Check-Out");
+                            System.out.println("5. Ver reservas");
                             System.out.println("0. Cerrar sesión");
                             System.out.println("---------------------------------------");
 
@@ -197,19 +200,64 @@ public class App
                                     arr2 = JsonManager.habitacionesAJsonArray(listaHabitaciones);
                                     JsonManager.JsonArrayAFile(arr2,"habitaciones.json");
 
-                                    ;
 
                                 case 3:
+
+                                    JSONArray arr3 = JsonManager.FileAJsonTokener("reservas.json");
+                                    listaReservas = JsonManager.jsonArrayAMap(arr3);
+
+                                    System.out.println("Ingrese nombre y apellido del pasajero que realizo la reserva:");
+                                    String nombreApellido = leer.nextLine();
+
+                                    System.out.println("Ingrese documento del pasajero que realizo la reserva:");
+                                    int dni = leer.nextInt();
+                                    leer.nextLine();
+
+                                    System.out.println("Ingrese direccion del pasajero que realizo la reserva:");
+                                    String direccion = leer.nextLine();
+
+                                    System.out.println("Ingrese nacionalidad del pasajero que realizo la reserva:");
+                                    String nacionalidad = leer.nextLine();
+
+                                    Pasajero pasajero1 = new Pasajero(nombreApellido,dni,direccion,nacionalidad);
+
+
+                                    System.out.println("Ingrese la fecha de inicio de la estadia:");
+
+                                    System.out.println("Ingrese la fecha de finalización de la estadia:");
+
+
+                                    System.out.println("Ingrese el numero de la habitacion reservada:");
+                                    int numeroHab = leer.nextInt();
+                                    leer.nextLine();
+
+                                    System.out.println("Ingrese el tipo de habitacion que es:");
+                                    Tipo tipo = gestorLogin.agregarTipo(leer.nextLine());
+
+                                    Habitacion habitacion1 = new Habitacion(numeroHab,tipo);
+
+                                    Reserva reserva1 = new Reserva(pasajero1,,,habitacion1);
+
+                                    listaReservas.put(numeroHab,reserva1);
+
+                                    arr3 = JsonManager.mapAJsonArray(listaReservas);
+                                    JsonManager.JsonArrayAFile(arr3,"reservas.json");
                                     ;
 
                                 case 4:
                                     ;
 
                                 case 5:
+                                    JSONArray arr5 = JsonManager.FileAJsonTokener("reservas.json");
+                                    listaReservas = JsonManager.jsonArrayAMap(arr5);
+
+                                    for (Map.Entry<Integer, Reserva> entry : listaReservas.entrySet()) {
+                                        System.out.println("clave =" + entry.getKey() + ", valor =" + entry.getValue());
+                                    }
                                     ;
-                                case 6:
-                                    ;
-                                case 0:;
+
+                                case 0:
+                                    opcionMenu = 0;
                             }
                         }
                     }
@@ -232,8 +280,7 @@ public class App
                         System.out.println("Ingrese su contraseña:");
                         pasajero1.setPasswordHash((Usuario.hashPassword(leer.nextLine())));
 
-                        System.out.println("Ingrese el rol del usuario (PERSONAL_LIMPIEZA o CLIENTE):");
-                        pasajero1.setTipoIngreso(gestorLogin.agregarRol(leer.nextLine()));
+                        pasajero1.setTipoIngreso(Rol.CLIENTE);
 
                         System.out.println("Ingrese su nombre y apellido:");
                         pasajero1.setNombreApellido(leer.nextLine());
@@ -242,13 +289,23 @@ public class App
                         pasajero1.setDni(leer.nextInt());
                         leer.nextLine();
 
+                        System.out.println("Ingrese su direccion:");
+                        pasajero1.setDireccion(leer.nextLine());
+
+                        System.out.println("Ingrese su nacionalidad:");
+                        pasajero1.setNacionalidad(leer.nextLine());
+
 
                         //AGREGAR METODO PARA CARGAR TREESET DESDE ARCHIVO
-                        gestorLogin = gestorJSON.cargarSetDesdeArchivo("usuarios.json");
-                        gestorLogin.agregarUsuario(pasajero1);
+                        JSONArray arr = JsonManager.FileAJsonTokener("usuarios.json");
+                        listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
+
+                        listaUsuarios.add(pasajero1);
 
                         //SOBREESCRIBIR ARCHIVO CON EL USUARIO YA AGREGADO
-                        JsonManager.cargarArchivoDesdeSet(gestorLogin);
+                        arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
+                        JsonManager.JsonArrayAFile(arr,"usuarios.json");
+
                     }else{
                         Personal personal1 = new Personal();
 
@@ -258,22 +315,21 @@ public class App
                         System.out.println("Ingrese su contraseña:");
                         personal1.setPasswordHash((Usuario.hashPassword(leer.nextLine())));
 
-                        System.out.println("Ingrese el rol del usuario (PERSONAL_LIMPIEZA o CLIENTE):");
-                        personal1.setTipoIngreso(gestorLogin.agregarRol(leer.nextLine()));
+                        personal1.setTipoIngreso(Rol.PERSONAL_LIMPIEZA);
 
                         System.out.println("Ingrese su nombre y apellido:");
                         personal1.setNombreApellido(leer.nextLine());
 
-                        System.out.println("Ingrese su DNI:");
-                        personal1.setDni(leer.nextInt());
-                        leer.nextLine();
 
                         //AGREGAR METODO PARA CARGAR TREESET DESDE ARCHIVO
-                        gestorLogin = gestorJSON.cargarSetDesdeArchivo("usuarios.json");
-                        gestorLogin.agregarUsuario(personal1);
+                        JSONArray arr = JsonManager.FileAJsonTokener("usuarios.json");
+                        listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
+
+                        listaUsuarios.add(personal1);
 
                         //SOBREESCRIBIR ARCHIVO CON EL USUARIO YA AGREGADO
-                        JsonManager.cargarArchivoDesdeSet(gestorLogin);
+                        arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
+                        JsonManager.JsonArrayAFile(arr,"usuarios.json");
                     }
                 case 0:
                     break;

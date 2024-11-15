@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import com.example.Login.Enums.Rol;
 import com.example.Personas.Clases.Administrador.Administrador;
+import com.example.Personas.Clases.Pasajero.Pasajero;
 import com.example.Personas.Clases.Personal.Personal;
 import org.json.JSONObject;
 
@@ -27,6 +28,10 @@ public abstract class Usuario implements Comparable<Usuario>{
         this.nombreApellido = nombreApellido;
     }
 
+    public Usuario(String nombreApellido){
+        this.nombreApellido = nombreApellido;
+    }
+
 
     //Constructor sin parametros para creacion de pasajero
     public Usuario() {
@@ -43,19 +48,24 @@ public abstract class Usuario implements Comparable<Usuario>{
 
         Rol tipoIngreso = gestorLogin.agregarRol(jsonObject.getString("tipoIngreso"));
 
+        String nombreApellido = jsonObject.getString("nombreApellido");
 
         switch (jsonObject.getString("tipoIngreso")) {
             case "ADMINISTRADOR":
-                String nombreApellido = jsonObject.getString("nombreApellido");
                 return new Administrador(username, passwordHash, tipoIngreso,nombreApellido);
 
             case "CLIENTE":
-                String nombreApellido = jsonObject.getString("nombreApellido");
+                int dni = jsonObject.getInt("dni");
+                String direccion = jsonObject.getString("direccion");
+                String nacionalidad = jsonObject.getString("nacionalidad");
 
-                return new Personal(username, passwordHash, tipoIngreso,);
+                return new Pasajero(username, passwordHash, tipoIngreso,nombreApellido,dni,direccion,nacionalidad);
+
+            case "PERSONAL_LIMPIEZA":
+                return new Personal(username, passwordHash, tipoIngreso,nombreApellido);
 
             default:
-                throw new IllegalArgumentException("Tipo de usuario desconocido: " + tipo);
+                throw new IllegalArgumentException("No existe ese tipo de usuario");
         }
     }
 

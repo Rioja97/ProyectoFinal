@@ -17,6 +17,20 @@ public class Habitacion {
 
     public Habitacion(){}
 
+    public Habitacion(int numero,Tipo tipo){
+        this.numero = numero;
+        this.tipo = tipo;
+    }
+
+    public Habitacion(int numero, Tipo tipo, Estado estado, double precio,boolean limpia,boolean reparacion) {
+        this.numero = numero;
+        this.tipo = tipo;
+        this.estado = estado;
+        this.precio = precio;
+        this.limpia= limpia;
+        this.reparacion= reparacion;
+    }
+
     public Habitacion(int numero, Tipo tipo, double precio) {
         this.numero = numero;
         this.tipo = tipo;
