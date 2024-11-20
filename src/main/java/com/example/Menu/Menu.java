@@ -4,10 +4,8 @@ import com.example.Login.Clases.LoginManager;
 import com.example.Login.Clases.Usuario;
 import com.example.Login.Enums.Rol;
 import com.example.Login.Exceptions.UsuarioRepetidoException;
-import com.sun.tools.jdeprscan.scan.Scan;
-import java.rmi.NoSuchObjectException;
+
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 import java.util.TreeSet;
 
 public final class Menu {

@@ -47,10 +47,10 @@ public class App
             System.out.println("    3. Registrarse");
             System.out.println("    0. Salir del programa.");
             System.out.println("");
+            System.out.println("-----------------------------------");
             System.out.println("Ingrese una opcion:");
             op = leer.nextInt();
             leer.nextLine();
-            System.out.println("-----------------------------------");
 
             switch (op) {
                 case 1:
@@ -343,6 +343,7 @@ public class App
                     password = leer.nextLine();
 
                     Personal personal = null;
+
                     personal = gestorLogin.iniciarSesionPersonal(username, password);
                     if (personal.getTipoIngreso() == Rol.PERSONAL_LIMPIEZA) {
                         while (opcionMenu != 0){
@@ -525,7 +526,8 @@ public class App
                         arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
                         JsonManager.JsonArrayAFile(arr,"usuarios.json");
 
-                    }else{
+                    }
+                    if(rol == 2){
                         Personal personal1 = new Personal();
 
                         System.out.println("Ingrese su nombre de usuario:");
