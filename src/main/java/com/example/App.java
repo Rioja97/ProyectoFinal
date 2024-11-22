@@ -28,6 +28,10 @@ public class App
         Map<Integer, Reserva> listaReservas = new HashMap<>();
 
 
+        Personal personal = new Personal();
+        Pasajero pasajero = new Pasajero();
+
+
         LoginManager gestorLogin = new LoginManager();
 
         Scanner leer = new Scanner(System.in);
@@ -65,9 +69,97 @@ public class App
             switch (op) {
                 case 1:
 
-                    if(gestorLogin.iniciarSesionConReintentos()) {
-                        Pasajero pasajero = new Pasajero();
-                        if (pasajero.getTipoIngreso() == Rol.ADMINISTRADOR) {
+                    if (gestorLogin.iniciarSesionConReintentos()) {
+
+                        if (pasajero.getTipoIngreso() == Rol.CLIENTE) {
+                            while (opcionMenu != 0) {
+
+                                System.out.println("---------------------------------------");
+                                System.out.println("1. Realizar reserva");
+                                System.out.println("2. Realizar consumo");
+                                System.out.println("0. Cerrar sesión");
+                                System.out.println("---------------------------------------");
+
+                                opcionMenu = leer.nextInt();
+                                leer.nextLine();
+
+                                switch (opcionMenu) {
+                                    case 1:
+                                        Habitacion habitacion1 = null;
+
+                                        JSONArray array1 = JsonManager.FileAJsonArray("reservas.json");
+                                        listaReservas = JsonManager.jsonArrayAMap(array1);
+
+                                        JSONArray arr1 = JsonManager.FileAJsonArray("habitaciones.json");
+                                        listaHabitaciones = JsonManager.jsonArrayAHabitaciones(arr1);
+
+                                        //ver habitaciones sucias
+                                        for (Habitacion h : listaHabitaciones) {
+                                            if (h.getEstado() == Estado.DISPONIBLE) {
+                                                System.out.println(h.toString());
+                                                System.out.println("\n");
+                                            }
+                                        }
+
+
+                                        System.out.println("Ingrese el numero de la habitacion a reservar:");
+                                        int numeroHab = leer.nextInt();
+                                        leer.nextLine();
+
+                                        for (Habitacion h : listaHabitaciones) {
+                                            if (h.getNumero() == numeroHab) {
+                                                habitacion1 = h;
+                                                habitacion1.setEstado(Estado.RESERVADO);
+                                            }
+                                        }
+
+                                        Reserva reserva1 = new Reserva(pasajero, Reserva.generarFechaAleatoria(), Reserva.generarFechaAleatoria(), habitacion1);
+
+                                        listaReservas.put(numeroHab, reserva1);
+
+                                        array1 = JsonManager.mapAJsonArray(listaReservas);
+                                        JsonManager.JsonArrayAFile(array1, "reservas.json");
+
+                                        break;
+
+                                    case 2:
+                                        System.out.println("Ingrese el número de habitación donde se realiza el consumo:");
+                                        int numHabConsumo = leer.nextInt();
+                                        leer.nextLine();
+
+                                        System.out.println("Ingrese la descripción del consumo:");
+                                        String descripcionConsumo = leer.nextLine();
+
+                                        System.out.println("Ingrese el monto del consumo:");
+                                        double montoConsumo = leer.nextDouble();
+                                        leer.nextLine();
+
+                                        Reserva reservaConsumo = listaReservas.get(numHabConsumo);
+                                        if (reservaConsumo != null) {
+                                            reservaConsumo.registrarConsumo(descripcionConsumo, montoConsumo);
+                                            System.out.println("Consumo registrado exitosamente en la habitación número: " + numHabConsumo);
+                                        } else {
+                                            System.out.println("No existe una reserva activa para la habitación indicada.");
+                                        }
+                                        break;
+
+                                    case 0:
+                                        opcionMenu = 0;
+                                        break;
+                                }
+                            }
+                        }
+                        break;
+                    } else {
+                        break;
+                    }
+
+                case 2:
+                    if (gestorLogin.iniciarSesionConReintentos()) {
+
+
+                        //personal = gestorLogin.iniciarSesionPersonal(username, password);
+                        if (personal.getTipoIngreso() == Rol.ADMINISTRADOR) {
 
                             while (opcionMenu != 0) {
                                 System.out.println("---------------------------------------");
@@ -258,101 +350,12 @@ public class App
                                 }
                             }
                         }
-                        if (pasajero.getTipoIngreso() == Rol.CLIENTE) {
-                            while (opcionMenu != 0) {
-
-                                System.out.println("---------------------------------------");
-                                System.out.println("1. Realizar reserva");
-                                System.out.println("2. Realizar consumo");
-                                System.out.println("0. Cerrar sesión");
-                                System.out.println("---------------------------------------");
-
-                                opcionMenu = leer.nextInt();
-                                leer.nextLine();
-
-                                switch (opcionMenu) {
-                                    case 1:
-                                        Habitacion habitacion1 = null;
-
-                                        JSONArray array1 = JsonManager.FileAJsonArray("reservas.json");
-                                        listaReservas = JsonManager.jsonArrayAMap(array1);
-
-                                        JSONArray arr1 = JsonManager.FileAJsonArray("habitaciones.json");
-                                        listaHabitaciones = JsonManager.jsonArrayAHabitaciones(arr1);
-
-                                        //ver habitaciones sucias
-                                        for (Habitacion h : listaHabitaciones) {
-                                            if (h.getEstado() == Estado.DISPONIBLE) {
-                                                System.out.println(h.toString());
-                                                System.out.println("\n");
-                                            }
-                                        }
-
-
-                                        System.out.println("Ingrese el numero de la habitacion a reservar:");
-                                        int numeroHab = leer.nextInt();
-                                        leer.nextLine();
-
-                                        for (Habitacion h : listaHabitaciones) {
-                                            if (h.getNumero() == numeroHab) {
-                                                habitacion1 = h;
-                                                habitacion1.setEstado(Estado.RESERVADO);
-                                            }
-                                        }
-
-                                        Reserva reserva1 = new Reserva(pasajero, Reserva.generarFechaAleatoria(), Reserva.generarFechaAleatoria(), habitacion1);
-
-                                        listaReservas.put(numeroHab, reserva1);
-
-                                        array1 = JsonManager.mapAJsonArray(listaReservas);
-                                        JsonManager.JsonArrayAFile(array1, "reservas.json");
-
-                                        break;
-
-                                    case 2:
-                                        System.out.println("Ingrese el número de habitación donde se realiza el consumo:");
-                                        int numHabConsumo = leer.nextInt();
-                                        leer.nextLine();
-
-                                        System.out.println("Ingrese la descripción del consumo:");
-                                        String descripcionConsumo = leer.nextLine();
-
-                                        System.out.println("Ingrese el monto del consumo:");
-                                        double montoConsumo = leer.nextDouble();
-                                        leer.nextLine();
-
-                                        Reserva reservaConsumo = listaReservas.get(numHabConsumo);
-                                        if (reservaConsumo != null) {
-                                            reservaConsumo.registrarConsumo(descripcionConsumo, montoConsumo);
-                                            System.out.println("Consumo registrado exitosamente en la habitación número: " + numHabConsumo);
-                                        } else {
-                                            System.out.println("No existe una reserva activa para la habitación indicada.");
-                                        }
-                                        break;
-
-                                    case 0:
-                                        opcionMenu = 0;
-                                        break;
-                                }
-                            }
-                        }
-                        break;
                     } else {
                         break;
                     }
 
-                case 2:
-                    System.out.println("Ingrese su nombre de usuario:");
-                    //username = leer.nextLine();
-
-                    System.out.println("Ingrese su contraseña:");
-                    //password = leer.nextLine();
-
-                    Personal personal = null;
-
-                    //personal = gestorLogin.iniciarSesionPersonal(username, password);
                     if (personal.getTipoIngreso() == Rol.PERSONAL_LIMPIEZA) {
-                        while (opcionMenu != 0){
+                        while (opcionMenu != 0) {
 
                             System.out.println("---------------------------------------");
                             System.out.println("1. Limpiar habitación");
@@ -373,8 +376,8 @@ public class App
                                     listaHabitaciones = JsonManager.jsonArrayAHabitaciones(arr1);
 
                                     //ver habitaciones sucias
-                                    for(Habitacion h : listaHabitaciones){
-                                        if(h.isLimpia() == false){
+                                    for (Habitacion h : listaHabitaciones) {
+                                        if (h.isLimpia() == false) {
                                             System.out.println(h.toString());
                                             System.out.println("\n");
                                         }
@@ -385,15 +388,15 @@ public class App
                                     int numHab = leer.nextInt();
                                     leer.nextLine();
 
-                                    for(Habitacion h : listaHabitaciones){
-                                        if(h.getNumero()== numHab){
+                                    for (Habitacion h : listaHabitaciones) {
+                                        if (h.getNumero() == numHab) {
                                             h.setLimpia(true);
                                         }
                                     }
 
                                     //funciones para guardar lista de habitaciones en archivo
                                     arr1 = JsonManager.habitacionesAJsonArray(listaHabitaciones);
-                                    JsonManager.JsonArrayAFile(arr1,"habitaciones.json");
+                                    JsonManager.JsonArrayAFile(arr1, "habitaciones.json");
 
                                     break;
 
@@ -403,8 +406,8 @@ public class App
 
 
                                     //ver habitaciones que necesitan ser reparadas
-                                    for(Habitacion h : listaHabitaciones){
-                                        if(h.isReparacion() == false){
+                                    for (Habitacion h : listaHabitaciones) {
+                                        if (h.isReparacion() == false) {
                                             System.out.println(h.toString());
                                             System.out.println("\n");
                                         }
@@ -415,15 +418,15 @@ public class App
                                     int numHab1 = leer.nextInt();
                                     leer.nextLine();
 
-                                    for(Habitacion h : listaHabitaciones){
-                                        if(h.getNumero()== numHab1){
+                                    for (Habitacion h : listaHabitaciones) {
+                                        if (h.getNumero() == numHab1) {
                                             h.setReparacion(true);
                                         }
                                     }
 
 
                                     arr2 = JsonManager.habitacionesAJsonArray(listaHabitaciones);
-                                    JsonManager.JsonArrayAFile(arr2,"habitaciones.json");
+                                    JsonManager.JsonArrayAFile(arr2, "habitaciones.json");
 
                                     break;
 
@@ -438,13 +441,13 @@ public class App
 
 
                                     for (Map.Entry<Integer, Reserva> entry : listaReservas.entrySet()) {
-                                        if(entry.getKey() == nHabitacion){
+                                        if (entry.getKey() == nHabitacion) {
                                             entry.getValue().getHabitacion().setEstado(Estado.OCUPADO);
                                         }
                                     }
 
                                     arr3 = JsonManager.mapAJsonArray(listaReservas);
-                                    JsonManager.JsonArrayAFile(arr3,"reservas.json");
+                                    JsonManager.JsonArrayAFile(arr3, "reservas.json");
 
                                     break;
 
@@ -497,7 +500,7 @@ public class App
                     int rol = leer.nextInt();
                     leer.nextLine();
 
-                    if(rol == 1){
+                    if (rol == 1) {
                         Pasajero pasajero1 = new Pasajero();
 
                         System.out.println("Ingrese su nombre de usuario:");
@@ -530,10 +533,10 @@ public class App
 
                         //SOBREESCRIBIR ARCHIVO CON EL USUARIO YA AGREGADO
                         arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
-                        JsonManager.JsonArrayAFile(arr,"usuarios.json");
+                        JsonManager.JsonArrayAFile(arr, "usuarios.json");
 
                     }
-                    if(rol == 2){
+                    if (rol == 2) {
                         Personal personal1 = new Personal();
 
                         System.out.println("Ingrese su nombre de usuario:");
@@ -556,7 +559,7 @@ public class App
 
                         //SOBREESCRIBIR ARCHIVO CON EL USUARIO YA AGREGADO
                         arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
-                        JsonManager.JsonArrayAFile(arr,"usuarios.json");
+                        JsonManager.JsonArrayAFile(arr, "usuarios.json");
                     }
                 case 0:
                     break;

@@ -202,9 +202,10 @@ public class LoginManager {
         return flag;
     }
 
+    //Metodo para ingresar los datos al usuario
     private String solicitarEntrada(String mensaje) {
         System.out.println(mensaje);
-        // Aquí puedes usar un Scanner para leer entrada del usuario
+
         java.util.Scanner scanner = new java.util.Scanner(System.in);
         return scanner.nextLine();
     }
