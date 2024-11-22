@@ -49,7 +49,6 @@ public class App
             JsonManager.crearArchivo("reservas.json");
         }
 
-
         while (op != 0){
             opcionMenu = 1;
             
@@ -75,7 +74,7 @@ public class App
 
                     Pasajero pasajero = new Pasajero();
                     try{
-                        pasajero = gestorLogin.iniciarSesionCliente(username, password);
+                        gestorLogin.iniciarSesionCliente(username, password);
                     } catch (NoSuchElementException e){
                         System.out.println(e.getMessage());
 
@@ -117,7 +116,7 @@ public class App
                                                 admin0.setUsername(leer.nextLine());
 
                                                 System.out.println("Ingrese su contraseña:");
-                                                admin0.setPasswordHash((Usuario.hashPassword(leer.nextLine())));
+                                                admin0.setPassword(leer.nextLine());
 
                                                 admin0.setTipoIngreso(Rol.ADMINISTRADOR);
 
@@ -137,7 +136,7 @@ public class App
                                                 pasajero0.setUsername(leer.nextLine());
 
                                                 System.out.println("Ingrese su contraseña:");
-                                                pasajero0.setPasswordHash((Usuario.hashPassword(leer.nextLine())));
+                                                pasajero0.setPassword(leer.nextLine());
 
                                                 pasajero0.setTipoIngreso(Rol.CLIENTE);
 
@@ -167,7 +166,7 @@ public class App
                                                 personal0.setUsername(leer.nextLine());
 
                                                 System.out.println("Ingrese su contraseña:");
-                                                personal0.setPasswordHash((Usuario.hashPassword(leer.nextLine())));
+                                                personal0.setPassword(leer.nextLine());
 
                                                 personal0.setTipoIngreso(Rol.PERSONAL_LIMPIEZA);
 
@@ -516,7 +515,7 @@ public class App
                         pasajero1.setUsername(leer.nextLine());
 
                         System.out.println("Ingrese su contraseña:");
-                        pasajero1.setPasswordHash((Usuario.hashPassword(leer.nextLine())));
+                        pasajero1.setPassword(leer.nextLine());
 
                         pasajero1.setTipoIngreso(Rol.CLIENTE);
 
@@ -552,7 +551,7 @@ public class App
                         personal1.setUsername(leer.nextLine());
 
                         System.out.println("Ingrese su contraseña:");
-                        personal1.setPasswordHash((Usuario.hashPassword(leer.nextLine())));
+                        personal1.setPassword(leer.nextLine());
 
                         personal1.setTipoIngreso(Rol.PERSONAL_LIMPIEZA);
 

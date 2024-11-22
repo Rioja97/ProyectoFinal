@@ -6,6 +6,18 @@
         "username": "daniela1"
     },
     {
+        "nombreApellido": "Emamnuel Fossati",
+        "passworHash": "123",
+        "tipoIngreso": "CLIENTE",
+        "username": "emma"
+    },
+    {
+        "nombreApellido": "Emmanuel Fossati",
+        "passworHash": "123",
+        "tipoIngreso": "CLIENTE",
+        "username": "emmafossati"
+    },
+    {
         "nombreApellido": "Francisco Gomez",
         "passworHash": "7e760e1cecae18280969495bc11de2be3d69ebada71474295cdc32e2a12d0887",
         "tipoIngreso": "CLIENTE",

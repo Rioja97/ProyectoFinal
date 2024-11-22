@@ -14,16 +14,16 @@ public abstract class Usuario implements Comparable<Usuario>{
 
     //Atributos
     private String username;
-    private String passwordHash;
+    private String password;
     private Rol tipoIngreso;
     private String nombreApellido;
 
 
     //Constructor con parámetros
 
-    public Usuario(String username, String passwordHash, Rol tipoIngreso, String nombreApellido) {
+    public Usuario(String username, String password, Rol tipoIngreso, String nombreApellido) {
         this.username = username;
-        this.passwordHash = passwordHash;
+        this.password = password;
         this.tipoIngreso = tipoIngreso;
         this.nombreApellido = nombreApellido;
     }
@@ -38,6 +38,7 @@ public abstract class Usuario implements Comparable<Usuario>{
         this.tipoIngreso = Rol.CLIENTE;
     }
 
+/*
 
     private Usuario crearUsuarioDesdeJson(JSONObject jsonObject) {
         LoginManager gestorLogin = new LoginManager();
@@ -107,17 +108,18 @@ public abstract class Usuario implements Comparable<Usuario>{
             throw new RuntimeException("Error al hashear la contraseña", e);
         }
     }
+*/
 
     //GETTERS
     public String getUsername() {return username;}
-    public String getPasswordHash() {return passwordHash;}
+    public String getPassword() {return password;}
     public Rol getTipoIngreso() {return tipoIngreso;}
     public String getNombreApellido() {return nombreApellido;}
 
     //SETTERS
 
     public void setUsername(String username) {this.username = username;}
-    public void setPasswordHash(String password) {this.passwordHash = hashPassword(password);}
+    public void setPassword(String password) {this.password = password;}
     public void setTipoIngreso(Rol tipoIngreso) {tipoIngreso = tipoIngreso;}
     public void setNombreApellido(String nombreApellido) {this.nombreApellido = nombreApellido;}
 
@@ -128,13 +130,13 @@ public abstract class Usuario implements Comparable<Usuario>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Usuario usuario = (Usuario) o;
-        return Objects.equals(username, usuario.username) && Objects.equals(passwordHash, usuario.passwordHash) && tipoIngreso == usuario.tipoIngreso && Objects.equals(nombreApellido, usuario.nombreApellido);
+        return Objects.equals(username, usuario.username) && Objects.equals(password, usuario.password) && tipoIngreso == usuario.tipoIngreso && Objects.equals(nombreApellido, usuario.nombreApellido);
     }
 
     // Metodo hashCode para username y tipoIngreso
     @Override
     public int hashCode() {
-        return Objects.hash(username, passwordHash, tipoIngreso, nombreApellido);
+        return Objects.hash(username, password, tipoIngreso, nombreApellido);
     }
 
 
@@ -146,7 +148,7 @@ public abstract class Usuario implements Comparable<Usuario>{
     public String toString() {
         return "Usuario:" +
                 "Username = '" + username + '\n' +
-                ", Password = '" + passwordHash + '\n' +
+                ", Password = '" + password + '\n' +
                 ", Tipo de Ingreso = " + tipoIngreso + '\n' +
                 ", Nombre y Apellido = '" + nombreApellido + '\n';
     }

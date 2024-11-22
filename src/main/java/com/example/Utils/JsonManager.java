@@ -40,7 +40,7 @@ public class JsonManager {
             JSONObject obj = new JSONObject();
 
             obj.put("username", u.getUsername());
-            obj.put("passworHash", u.getPasswordHash());
+            obj.put("passworHash", u.getPassword());
             obj.put("tipoIngreso", u.getTipoIngreso().toString());
             obj.put("nombreApellido", u.getNombreApellido());
 

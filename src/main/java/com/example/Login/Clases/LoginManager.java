@@ -46,19 +46,20 @@ public class LoginManager {
 
     //Metodo para iniciar sesion como Pasajero
     public Pasajero iniciarSesionCliente(String username, String password){
-        Pasajero pasajero1 = null;
+        Pasajero pasajero1 = new Pasajero();
 
         TreeSet<Usuario> listaUsuarios = new TreeSet<>();
+
 
         //CARGAR TREESET DESDE ARCHIVO
         JSONArray arr = JsonManager.FileAJsonTokener("usuarios.json");
         listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
 
-        password = Usuario.hashPassword(password);
+        //System.out.println(listaUsuarios.toString());
 
         for(Usuario u : listaUsuarios){
             if(u instanceof Pasajero){
-                if(u.getUsername().equals(username) && u.getPasswordHash().equals(password)){
+                if(u.getUsername().equals(username) && u.getPassword().equals(password)){
                     pasajero1 = (Pasajero) u;
                 }else{
                     throw new NoSuchElementException("Nombre de usuario o contraseña incorrectos.");
@@ -69,9 +70,9 @@ public class LoginManager {
         return pasajero1;
     }
 
-    //Metodo para iniciar sesion como Pasajero
+    //Metodo para iniciar sesion como Personal
     public Personal iniciarSesionPersonal(String username, String password){
-        Personal personal1 = null;
+        Personal personal1 = new Personal();
 
         TreeSet<Usuario> listaUsuarios = new TreeSet<>();
 
@@ -79,11 +80,10 @@ public class LoginManager {
         JSONArray arr = JsonManager.FileAJsonTokener("usuarios.json");
         listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
 
-        password = Usuario.hashPassword(password);
 
         for(Usuario u : listaUsuarios){
             if(u instanceof Personal){
-                if(u.getUsername().equals(username) && u.getPasswordHash().equals(password)){
+                if(u.getUsername().equals(username) && u.getPassword().equals(password)){
                     personal1 = (Personal) u;
                 }else{
                     throw new NoSuchElementException("Nombre de usuario o contraseña incorrectos.");
@@ -122,7 +122,7 @@ public class LoginManager {
             throw new NoSuchElementException("Usuario no encontrado");
         }
 
-        usuario.setPasswordHash(newPassword);
+        usuario.setPassword(newPassword);
         usuario.setTipoIngreso(newRol);
         usuario.setNombreApellido(nombreApellidoNuevo);
 
