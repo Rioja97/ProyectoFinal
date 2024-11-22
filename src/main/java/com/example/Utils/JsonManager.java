@@ -13,9 +13,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -203,9 +208,27 @@ public class JsonManager {
             Reserva reserva = new Reserva(pasajero, fechaInicio, fechaFin, habitacion);
             reservas.put(id, reserva);
         }
-
         return reservas;
     }
+
+
+    public static void crearArchivo(String nombreArchivo){
+
+        File file = new File(nombreArchivo);
+    }
+
+
+    public static boolean comprobarExistenciaArchivo(String nombreArchivo){
+
+        Path path = Paths.get(nombreArchivo);
+
+        if(Files.exists(path)){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
 
 }
 

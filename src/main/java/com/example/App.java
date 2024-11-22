@@ -3,7 +3,6 @@ package com.example;
 import com.example.Hotel.Clases.Habitacion;
 import com.example.Hotel.Clases.Reserva;
 import com.example.Hotel.Clases.enumeradores.Estado;
-import com.example.Hotel.Clases.enumeradores.Tipo;
 import com.example.Login.Clases.LoginManager;
 import com.example.Login.Clases.Usuario;
 import com.example.Login.Enums.Rol;
@@ -14,6 +13,8 @@ import com.example.Personas.Clases.Personal.Personal;
 import com.example.Utils.JsonManager;
 import org.json.JSONArray;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -36,6 +37,18 @@ public class App
         int op = 1;
         int opcionMenu = 1;
         int opUser = 1;
+
+
+        if(!JsonManager.comprobarExistenciaArchivo("usuarios.json")){
+            JsonManager.crearArchivo("usuarios.json");
+        }
+        if(!JsonManager.comprobarExistenciaArchivo("habitaciones.json")){
+            JsonManager.crearArchivo("habitaciones.json");
+        }
+        if(!JsonManager.comprobarExistenciaArchivo("reservas.json")){
+            JsonManager.crearArchivo("reservas.json");
+        }
+
 
         while (op != 0){
             opcionMenu = 1;
@@ -60,8 +73,13 @@ public class App
                     System.out.println("Ingrese su contraseña:");
                     String password = leer.nextLine();
 
-                    Pasajero pasajero = null;
-                    pasajero = gestorLogin.iniciarSesionCliente(username, password);
+                    Pasajero pasajero = new Pasajero();
+                    try{
+                        pasajero = gestorLogin.iniciarSesionCliente(username, password);
+                    } catch (NoSuchElementException e){
+                        System.out.println(e.getMessage());
+
+                    }
 
                     if (pasajero.getTipoIngreso() == Rol.ADMINISTRADOR) {
 

@@ -167,8 +167,6 @@ public class LoginManager {
         } catch (JSONException e) {
             System.out.println("Error al escribir el archivo");
         }
-        
         return true;
     }
-
 }
