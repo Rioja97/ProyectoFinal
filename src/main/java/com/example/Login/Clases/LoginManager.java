@@ -2,6 +2,7 @@ package com.example.Login.Clases;
 
 import com.example.Hotel.Clases.enumeradores.Tipo;
 import com.example.Login.Enums.Rol;
+import com.example.Login.Exceptions.IngresoIncorrectoException;
 import com.example.Login.Exceptions.UsuarioRepetidoException;
 import com.example.Personas.Clases.Pasajero.Pasajero;
 import com.example.Personas.Clases.Personal.Personal;
@@ -45,14 +46,14 @@ public class LoginManager {
 
 
     //Metodo para iniciar sesion como Pasajero
-    public Pasajero iniciarSesionCliente(String username, String password){
-        Pasajero pasajero1 = new Pasajero();
+    public boolean iniciarSesionCliente(String username, String password) throws IngresoIncorrectoException {
 
         TreeSet<Usuario> listaUsuarios = new TreeSet<>();
 
+        boolean flag = false;
 
         //CARGAR TREESET DESDE ARCHIVO
-        JSONArray arr = JsonManager.FileAJsonTokener("usuarios.json");
+        JSONArray arr = JsonManager.FileAJsonArray("usuarios.json");
         listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
 
         //System.out.println(listaUsuarios.toString());
@@ -60,14 +61,14 @@ public class LoginManager {
         for(Usuario u : listaUsuarios){
             if(u instanceof Pasajero){
                 if(u.getUsername().equals(username) && u.getPassword().equals(password)){
-                    pasajero1 = (Pasajero) u;
-                }else{
-                    throw new NoSuchElementException("Nombre de usuario o contraseña incorrectos.");
+                    flag = true;
                 }
             }
-
         }
-        return pasajero1;
+        if(flag == false){
+            throw new IngresoIncorrectoException("Nombre de usuario o contraseña incorrectos.");
+        }
+        return flag;
     }
 
     //Metodo para iniciar sesion como Personal
@@ -77,7 +78,7 @@ public class LoginManager {
         TreeSet<Usuario> listaUsuarios = new TreeSet<>();
 
         //CARGAR TREESET DESDE ARCHIVO
-        JSONArray arr = JsonManager.FileAJsonTokener("usuarios.json");
+        JSONArray arr = JsonManager.FileAJsonArray("usuarios.json");
         listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
 
 
@@ -95,7 +96,7 @@ public class LoginManager {
 
 
     public static String agregarUsuario(Usuario usuario, TreeSet<Usuario> listaUsuarios) throws UsuarioRepetidoException{
-        JSONArray arr = JsonManager.FileAJsonTokener("usuarios.json");
+        JSONArray arr = JsonManager.FileAJsonArray("usuarios.json");
         listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
 
         for(Usuario u: listaUsuarios){
@@ -114,7 +115,7 @@ public class LoginManager {
 
 
     public static String modificarUsuario(Usuario usuario, String newPassword, Rol newRol, String nombreApellidoNuevo, TreeSet<Usuario> listaUsuarios){
-        JSONArray arr = JsonManager.FileAJsonTokener("usuarios.json");
+        JSONArray arr = JsonManager.FileAJsonArray("usuarios.json");
         listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
 
 
@@ -134,7 +135,7 @@ public class LoginManager {
 
 
     public static String eliminarUsuario(Usuario usuario, TreeSet<Usuario> listaUsuarios){
-        JSONArray arr = JsonManager.FileAJsonTokener("usuarios.json");
+        JSONArray arr = JsonManager.FileAJsonArray("usuarios.json");
         listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
 
 
@@ -169,4 +170,43 @@ public class LoginManager {
         }
         return true;
     }
+
+    public boolean iniciarSesionConReintentos() {
+        int intentosRestantes = 3; // Máximo de intentos
+        boolean sesionIniciada = false;
+        boolean flag = false;
+
+        while (intentosRestantes > 0 && !sesionIniciada) {
+            try {
+                // Solicitar datos al usuario
+                String username = solicitarEntrada("Ingresa tu nombre de usuario:");
+                String password = solicitarEntrada("Ingresa tu contraseña:");
+
+                // Intentar iniciar sesión
+                sesionIniciada = iniciarSesionCliente(username, password);
+                if (sesionIniciada) {
+                    System.out.println("¡Inicio de sesión exitoso!");
+                    flag = true;
+                }
+            } catch (IngresoIncorrectoException e) {
+                intentosRestantes--;
+                System.out.println(e.getMessage());
+                if (intentosRestantes > 0) {
+                    System.out.println("Te quedan " + intentosRestantes + " intentos.");
+                } else {
+                    System.out.println("Demasiados intentos fallidos. Intenta más tarde.");
+                    flag = false;
+                }
+            }
+        }
+        return flag;
+    }
+
+    private String solicitarEntrada(String mensaje) {
+        System.out.println(mensaje);
+        // Aquí puedes usar un Scanner para leer entrada del usuario
+        java.util.Scanner scanner = new java.util.Scanner(System.in);
+        return scanner.nextLine();
+    }
+
 }

@@ -10,7 +10,6 @@ import com.example.Personas.Clases.Administrador.Administrador;
 import com.example.Personas.Clases.Pasajero.Pasajero;
 import com.example.Personas.Clases.Personal.Personal;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -114,11 +113,13 @@ public class JsonManager {
     }
 
 
-    public static JSONArray FileAJsonTokener(String filePath) {
+    public static JSONArray FileAJsonArray(String filePath) {
+
         try (FileReader fileReader = new FileReader(filePath)) {
             // Crear un JSONTokener con el contenido del archivo
             JSONTokener tokener = new JSONTokener(fileReader);
             // Convertir el JSONTokener a un JSONArray
+
             return new JSONArray(tokener);
         } catch (IOException e) {
             System.err.println("Error al leer el archivo: " + e.getMessage());

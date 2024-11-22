@@ -6,15 +6,13 @@ import com.example.Hotel.Clases.enumeradores.Estado;
 import com.example.Login.Clases.LoginManager;
 import com.example.Login.Clases.Usuario;
 import com.example.Login.Enums.Rol;
+import com.example.Login.Exceptions.IngresoIncorrectoException;
 import com.example.Menu.Menu;
 import com.example.Personas.Clases.Administrador.Administrador;
 import com.example.Personas.Clases.Pasajero.Pasajero;
 import com.example.Personas.Clases.Personal.Personal;
 import com.example.Utils.JsonManager;
 import org.json.JSONArray;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -66,302 +64,293 @@ public class App
 
             switch (op) {
                 case 1:
-                    System.out.println("Ingrese su nombre de usuario:");
-                    String username = leer.nextLine();
 
-                    System.out.println("Ingrese su contraseña:");
-                    String password = leer.nextLine();
+                    if(gestorLogin.iniciarSesionConReintentos()) {
+                        Pasajero pasajero = new Pasajero();
+                        if (pasajero.getTipoIngreso() == Rol.ADMINISTRADOR) {
 
-                    Pasajero pasajero = new Pasajero();
-                    try{
-                        gestorLogin.iniciarSesionCliente(username, password);
-                    } catch (NoSuchElementException e){
-                        System.out.println(e.getMessage());
+                            while (opcionMenu != 0) {
+                                System.out.println("---------------------------------------");
+                                System.out.println("1. Agregar usuario");
+                                System.out.println("2. Modificar Usuario");
+                                System.out.println("3. Eliminar Usuario");
+                                System.out.println("4. Ver estado de las habitaciones");
+                                System.out.println("0. Cerrar sesión");
+                                System.out.println("---------------------------------------");
 
-                    }
+                                opcionMenu = leer.nextInt();
+                                leer.nextLine();
 
-                    if (pasajero.getTipoIngreso() == Rol.ADMINISTRADOR) {
+                                switch (opcionMenu) {
+                                    case 1:
+                                        while (opUser != 0) {
+                                            System.out.println("---------------------------------------");
+                                            System.out.println("1. Crear administrador");
+                                            System.out.println("2. Crear cliente");
+                                            System.out.println("3. Crear Personal de hotel");
+                                            System.out.println("0. Volver");
+                                            System.out.println("---------------------------------------");
+                                            System.out.println("");
 
-                        while (opcionMenu != 0) {
-                            System.out.println("---------------------------------------");
-                            System.out.println("1. Agregar usuario");
-                            System.out.println("2. Modificar Usuario");
-                            System.out.println("3. Eliminar Usuario");
-                            System.out.println("4. Ver estado de las habitaciones");
-                            System.out.println("0. Cerrar sesión");
-                            System.out.println("---------------------------------------");
+                                            opUser = leer.nextInt();
+                                            leer.nextLine();
 
-                            opcionMenu = leer.nextInt();
-                            leer.nextLine();
+                                            switch (opUser) {
+                                                case 1:
+                                                    Administrador admin0 = new Administrador();
 
-                            switch (opcionMenu) {
-                                case 1:
-                                    while (opUser != 0) {
-                                        System.out.println("---------------------------------------");
-                                        System.out.println("1. Crear administrador");
-                                        System.out.println("2. Crear cliente");
-                                        System.out.println("3. Crear Personal de hotel");
-                                        System.out.println("0. Volver");
-                                        System.out.println("---------------------------------------");
-                                        System.out.println("");
+                                                    System.out.println("Ingrese su nombre de usuario:");
+                                                    admin0.setUsername(leer.nextLine());
 
-                                        opUser = leer.nextInt();
-                                        leer.nextLine();
+                                                    System.out.println("Ingrese su contraseña:");
+                                                    admin0.setPassword(leer.nextLine());
 
-                                        switch (opUser) {
-                                            case 1:
-                                                Administrador admin0 = new Administrador();
+                                                    admin0.setTipoIngreso(Rol.ADMINISTRADOR);
 
-                                                System.out.println("Ingrese su nombre de usuario:");
-                                                admin0.setUsername(leer.nextLine());
+                                                    System.out.println("Ingrese su nombre y apellido:");
+                                                    admin0.setNombreApellido(leer.nextLine());
 
-                                                System.out.println("Ingrese su contraseña:");
-                                                admin0.setPassword(leer.nextLine());
+                                                    String msg = Menu.agregarUsuarioAdmin(admin0, listaUsuarios);
 
-                                                admin0.setTipoIngreso(Rol.ADMINISTRADOR);
+                                                    System.out.println(msg);
 
-                                                System.out.println("Ingrese su nombre y apellido:");
-                                                admin0.setNombreApellido(leer.nextLine());
+                                                    break;
 
-                                                String msg = Menu.agregarUsuarioAdmin(admin0, listaUsuarios);
+                                                case 2:
+                                                    Pasajero pasajero0 = new Pasajero();
 
-                                                System.out.println(msg);
+                                                    System.out.println("Ingrese su nombre de usuario:");
+                                                    pasajero0.setUsername(leer.nextLine());
 
-                                                break;
+                                                    System.out.println("Ingrese su contraseña:");
+                                                    pasajero0.setPassword(leer.nextLine());
 
-                                            case 2:
-                                                Pasajero pasajero0 = new Pasajero();
+                                                    pasajero0.setTipoIngreso(Rol.CLIENTE);
 
-                                                System.out.println("Ingrese su nombre de usuario:");
-                                                pasajero0.setUsername(leer.nextLine());
+                                                    System.out.println("Ingrese su nombre y apellido:");
+                                                    pasajero0.setNombreApellido(leer.nextLine());
 
-                                                System.out.println("Ingrese su contraseña:");
-                                                pasajero0.setPassword(leer.nextLine());
+                                                    System.out.println("Ingrese su DNI:");
+                                                    pasajero0.setDni(leer.nextInt());
+                                                    leer.nextLine();
 
-                                                pasajero0.setTipoIngreso(Rol.CLIENTE);
+                                                    System.out.println("Ingrese su direccion:");
+                                                    pasajero0.setDireccion(leer.nextLine());
 
-                                                System.out.println("Ingrese su nombre y apellido:");
-                                                pasajero0.setNombreApellido(leer.nextLine());
+                                                    System.out.println("Ingrese su nacionalidad:");
+                                                    pasajero0.setNacionalidad(leer.nextLine());
 
-                                                System.out.println("Ingrese su DNI:");
-                                                pasajero0.setDni(leer.nextInt());
-                                                leer.nextLine();
+                                                    String msg1 = Menu.agregarUsuarioAdmin(pasajero0, listaUsuarios);
 
-                                                System.out.println("Ingrese su direccion:");
-                                                pasajero0.setDireccion(leer.nextLine());
-
-                                                System.out.println("Ingrese su nacionalidad:");
-                                                pasajero0.setNacionalidad(leer.nextLine());
-
-                                                String msg1 = Menu.agregarUsuarioAdmin(pasajero0, listaUsuarios);
-
-                                                System.out.println(msg1);
-                                                break;
+                                                    System.out.println(msg1);
+                                                    break;
 
 
-                                            case 3:
-                                                Personal personal0 = new Personal();
+                                                case 3:
+                                                    Personal personal0 = new Personal();
 
-                                                System.out.println("Ingrese su nombre de usuario:");
-                                                personal0.setUsername(leer.nextLine());
+                                                    System.out.println("Ingrese su nombre de usuario:");
+                                                    personal0.setUsername(leer.nextLine());
 
-                                                System.out.println("Ingrese su contraseña:");
-                                                personal0.setPassword(leer.nextLine());
+                                                    System.out.println("Ingrese su contraseña:");
+                                                    personal0.setPassword(leer.nextLine());
 
-                                                personal0.setTipoIngreso(Rol.PERSONAL_LIMPIEZA);
+                                                    personal0.setTipoIngreso(Rol.PERSONAL_LIMPIEZA);
 
-                                                System.out.println("Ingrese su nombre y apellido:");
-                                                personal0.setNombreApellido(leer.nextLine());
+                                                    System.out.println("Ingrese su nombre y apellido:");
+                                                    personal0.setNombreApellido(leer.nextLine());
 
-                                                String msg2 = Menu.agregarUsuarioAdmin(personal0, listaUsuarios);
+                                                    String msg2 = Menu.agregarUsuarioAdmin(personal0, listaUsuarios);
 
-                                                System.out.println(msg2);
-                                                break;
+                                                    System.out.println(msg2);
+                                                    break;
 
 
-                                            case 0:
-                                                opUser = 0;
-                                                break;
+                                                case 0:
+                                                    opUser = 0;
 
+                                            }
                                         }
-                                    }
-                                    break;
+                                        break;
 
-                                case 2:
-                                    JSONArray arr = JsonManager.FileAJsonTokener("usuarios.json");
-                                    listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
-                                    Usuario user1 = null;
+                                    case 2:
+                                        JSONArray arr = JsonManager.FileAJsonArray("usuarios.json");
+                                        listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
+                                        Usuario user1 = null;
 
 
-                                    for (Usuario u : listaUsuarios) {
-                                        System.out.println(u.toString());
-                                    }
-
-                                    System.out.println("Ingrese el username del usuario a modificar:");
-                                    String nombreUsuario = leer.nextLine();
-
-                                    for (Usuario u : listaUsuarios) {
-                                        if (u.getUsername().equals(nombreUsuario)) {
-                                            user1 = u;
+                                        for (Usuario u : listaUsuarios) {
+                                            System.out.println(u.toString());
                                         }
-                                    }
 
-                                    arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
-                                    JsonManager.JsonArrayAFile(arr, "usuarios.json");
+                                        System.out.println("Ingrese el username del usuario a modificar:");
+                                        String nombreUsuario = leer.nextLine();
 
-
-                                    System.out.println("Ingrese la nueva contraseña:");
-                                    String nuevaContrasenia = leer.nextLine();
-
-                                    System.out.println("Ingrese el nuevo rol:");
-                                    Rol nuevoRol = gestorLogin.agregarRol(leer.nextLine());
-
-                                    System.out.println("Ingrese su nuevo nombre y apellido:");
-                                    String nuevoNombre = leer.nextLine();
-
-                                    String msg0 = Menu.modificarUsuarioAdmin(user1, nuevaContrasenia, nuevoRol, nuevoNombre, listaUsuarios);
-
-                                    System.out.println(msg0);
-                                    break;
-
-                                case 3:
-                                    JSONArray array0 = JsonManager.FileAJsonTokener("usuarios.json");
-                                    listaUsuarios = JsonManager.jsonArrayAListaUsuarios(array0);
-                                    Usuario user2 = null;
-
-
-                                    for (Usuario u : listaUsuarios) {
-                                        System.out.println(u.toString());
-                                    }
-
-                                    System.out.println("Ingrese el username del usuario a eliminar:");
-                                    String nomUsuario = leer.nextLine();
-
-                                    for (Usuario usuario : listaUsuarios) {
-                                        if (usuario.getUsername().equals(nomUsuario)) {
-                                            user2 = usuario;
+                                        for (Usuario u : listaUsuarios) {
+                                            if (u.getUsername().equals(nombreUsuario)) {
+                                                user1 = u;
+                                            }
                                         }
-                                    }
 
-                                    arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
-                                    JsonManager.JsonArrayAFile(arr, "usuarios.json");
+                                        arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
+                                        JsonManager.JsonArrayAFile(arr, "usuarios.json");
 
-                                    String msg3 = Menu.eliminarUsuarioAdmin(user2, listaUsuarios);
 
-                                    System.out.println(msg3);
-                                    break;
+                                        System.out.println("Ingrese la nueva contraseña:");
+                                        String nuevaContrasenia = leer.nextLine();
 
-                                case 4:
-                                    JSONArray array1 = JsonManager.FileAJsonTokener("reservas.json");
-                                    listaReservas = JsonManager.jsonArrayAMap(array1);
+                                        System.out.println("Ingrese el nuevo rol:");
+                                        Rol nuevoRol = gestorLogin.agregarRol(leer.nextLine());
 
-                                    JSONArray arr1 = JsonManager.FileAJsonTokener("habitaciones.json");
-                                    listaHabitaciones = JsonManager.jsonArrayAHabitaciones(arr1);
+                                        System.out.println("Ingrese su nuevo nombre y apellido:");
+                                        String nuevoNombre = leer.nextLine();
 
-                                    //ver habitaciones
-                                    for(Habitacion h : listaHabitaciones){
-                                        System.out.println(h.toString());
-                                        System.out.println("\n");
-                                    }
+                                        String msg0 = Menu.modificarUsuarioAdmin(user1, nuevaContrasenia, nuevoRol, nuevoNombre, listaUsuarios);
 
-                                    break;
+                                        System.out.println(msg0);
+                                        break;
 
-                                case 0:
-                                    opcionMenu = 0;
-                                    break;
-                            }
-                        }
-                    }
-                    if (pasajero.getTipoIngreso() == Rol.CLIENTE) {
-                        while (opcionMenu != 0){
+                                    case 3:
+                                        JSONArray array0 = JsonManager.FileAJsonArray("usuarios.json");
+                                        listaUsuarios = JsonManager.jsonArrayAListaUsuarios(array0);
+                                        Usuario user2 = null;
 
-                            System.out.println("---------------------------------------");
-                            System.out.println("1. Realizar reserva");
-                            System.out.println("2. Realizar consumo");
-                            System.out.println("0. Cerrar sesión");
-                            System.out.println("---------------------------------------");
 
-                            opcionMenu = leer.nextInt();
-                            leer.nextLine();
+                                        for (Usuario u : listaUsuarios) {
+                                            System.out.println(u.toString());
+                                        }
 
-                            switch (opcionMenu) {
-                                case 1:
-                                    Habitacion habitacion1 = null;
+                                        System.out.println("Ingrese el username del usuario a eliminar:");
+                                        String nomUsuario = leer.nextLine();
 
-                                    JSONArray array1 = JsonManager.FileAJsonTokener("reservas.json");
-                                    listaReservas = JsonManager.jsonArrayAMap(array1);
+                                        for (Usuario usuario : listaUsuarios) {
+                                            if (usuario.getUsername().equals(nomUsuario)) {
+                                                user2 = usuario;
+                                            }
+                                        }
 
-                                    JSONArray arr1 = JsonManager.FileAJsonTokener("habitaciones.json");
-                                    listaHabitaciones = JsonManager.jsonArrayAHabitaciones(arr1);
+                                        arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
+                                        JsonManager.JsonArrayAFile(arr, "usuarios.json");
 
-                                    //ver habitaciones sucias
-                                    for(Habitacion h : listaHabitaciones){
-                                        if(h.getEstado() == Estado.DISPONIBLE){
+                                        String msg3 = Menu.eliminarUsuarioAdmin(user2, listaUsuarios);
+
+                                        System.out.println(msg3);
+                                        break;
+
+                                    case 4:
+                                        JSONArray array1 = JsonManager.FileAJsonArray("reservas.json");
+                                        listaReservas = JsonManager.jsonArrayAMap(array1);
+
+                                        JSONArray arr1 = JsonManager.FileAJsonArray("habitaciones.json");
+                                        listaHabitaciones = JsonManager.jsonArrayAHabitaciones(arr1);
+
+                                        //ver habitaciones
+                                        for (Habitacion h : listaHabitaciones) {
                                             System.out.println(h.toString());
                                             System.out.println("\n");
                                         }
-                                    }
 
+                                        break;
 
-                                    System.out.println("Ingrese el numero de la habitacion a reservar:");
-                                    int numeroHab = leer.nextInt();
-                                    leer.nextLine();
-
-                                    for(Habitacion h : listaHabitaciones){
-                                        if(h.getNumero() == numeroHab){
-                                            habitacion1 = h;
-                                            habitacion1.setEstado(Estado.RESERVADO);
-                                        }
-                                    }
-
-                                    Reserva reserva1 = new Reserva(pasajero,Reserva.generarFechaAleatoria(),Reserva.generarFechaAleatoria(),habitacion1);
-
-                                    listaReservas.put(numeroHab,reserva1);
-
-                                    array1 = JsonManager.mapAJsonArray(listaReservas);
-                                    JsonManager.JsonArrayAFile(array1,"reservas.json");
-
-                                    break;
-
-                                case 2:
-                                    System.out.println("Ingrese el número de habitación donde se realiza el consumo:");
-                                    int numHabConsumo = leer.nextInt();
-                                    leer.nextLine();
-
-                                    System.out.println("Ingrese la descripción del consumo:");
-                                    String descripcionConsumo = leer.nextLine();
-
-                                    System.out.println("Ingrese el monto del consumo:");
-                                    double montoConsumo = leer.nextDouble();
-                                    leer.nextLine();
-
-                                    Reserva reservaConsumo = listaReservas.get(numHabConsumo);
-                                    if (reservaConsumo != null) {
-                                        reservaConsumo.registrarConsumo(descripcionConsumo, montoConsumo);
-                                        System.out.println("Consumo registrado exitosamente en la habitación número: " + numHabConsumo);
-                                    } else {
-                                        System.out.println("No existe una reserva activa para la habitación indicada.");
-                                    }
-                                    break;
-
-                                case 0:
-                                    opcionMenu = 0;
-                                    break;
+                                    case 0:
+                                        opcionMenu = 0;
+                                        break;
+                                }
                             }
                         }
+                        if (pasajero.getTipoIngreso() == Rol.CLIENTE) {
+                            while (opcionMenu != 0) {
+
+                                System.out.println("---------------------------------------");
+                                System.out.println("1. Realizar reserva");
+                                System.out.println("2. Realizar consumo");
+                                System.out.println("0. Cerrar sesión");
+                                System.out.println("---------------------------------------");
+
+                                opcionMenu = leer.nextInt();
+                                leer.nextLine();
+
+                                switch (opcionMenu) {
+                                    case 1:
+                                        Habitacion habitacion1 = null;
+
+                                        JSONArray array1 = JsonManager.FileAJsonArray("reservas.json");
+                                        listaReservas = JsonManager.jsonArrayAMap(array1);
+
+                                        JSONArray arr1 = JsonManager.FileAJsonArray("habitaciones.json");
+                                        listaHabitaciones = JsonManager.jsonArrayAHabitaciones(arr1);
+
+                                        //ver habitaciones sucias
+                                        for (Habitacion h : listaHabitaciones) {
+                                            if (h.getEstado() == Estado.DISPONIBLE) {
+                                                System.out.println(h.toString());
+                                                System.out.println("\n");
+                                            }
+                                        }
+
+
+                                        System.out.println("Ingrese el numero de la habitacion a reservar:");
+                                        int numeroHab = leer.nextInt();
+                                        leer.nextLine();
+
+                                        for (Habitacion h : listaHabitaciones) {
+                                            if (h.getNumero() == numeroHab) {
+                                                habitacion1 = h;
+                                                habitacion1.setEstado(Estado.RESERVADO);
+                                            }
+                                        }
+
+                                        Reserva reserva1 = new Reserva(pasajero, Reserva.generarFechaAleatoria(), Reserva.generarFechaAleatoria(), habitacion1);
+
+                                        listaReservas.put(numeroHab, reserva1);
+
+                                        array1 = JsonManager.mapAJsonArray(listaReservas);
+                                        JsonManager.JsonArrayAFile(array1, "reservas.json");
+
+                                        break;
+
+                                    case 2:
+                                        System.out.println("Ingrese el número de habitación donde se realiza el consumo:");
+                                        int numHabConsumo = leer.nextInt();
+                                        leer.nextLine();
+
+                                        System.out.println("Ingrese la descripción del consumo:");
+                                        String descripcionConsumo = leer.nextLine();
+
+                                        System.out.println("Ingrese el monto del consumo:");
+                                        double montoConsumo = leer.nextDouble();
+                                        leer.nextLine();
+
+                                        Reserva reservaConsumo = listaReservas.get(numHabConsumo);
+                                        if (reservaConsumo != null) {
+                                            reservaConsumo.registrarConsumo(descripcionConsumo, montoConsumo);
+                                            System.out.println("Consumo registrado exitosamente en la habitación número: " + numHabConsumo);
+                                        } else {
+                                            System.out.println("No existe una reserva activa para la habitación indicada.");
+                                        }
+                                        break;
+
+                                    case 0:
+                                        opcionMenu = 0;
+                                        break;
+                                }
+                            }
+                        }
+                        break;
+                    } else {
+                        break;
                     }
-                    break;
 
                 case 2:
                     System.out.println("Ingrese su nombre de usuario:");
-                    username = leer.nextLine();
+                    //username = leer.nextLine();
 
                     System.out.println("Ingrese su contraseña:");
-                    password = leer.nextLine();
+                    //password = leer.nextLine();
 
                     Personal personal = null;
 
-                    personal = gestorLogin.iniciarSesionPersonal(username, password);
+                    //personal = gestorLogin.iniciarSesionPersonal(username, password);
                     if (personal.getTipoIngreso() == Rol.PERSONAL_LIMPIEZA) {
                         while (opcionMenu != 0){
 
@@ -380,7 +369,7 @@ public class App
                             switch (opcionMenu) {
                                 case 1:
                                     //funciones para pasar archivo de habitaciones a lista de habitaciones
-                                    JSONArray arr1 = JsonManager.FileAJsonTokener("habitaciones.json");
+                                    JSONArray arr1 = JsonManager.FileAJsonArray("habitaciones.json");
                                     listaHabitaciones = JsonManager.jsonArrayAHabitaciones(arr1);
 
                                     //ver habitaciones sucias
@@ -409,7 +398,7 @@ public class App
                                     break;
 
                                 case 2:
-                                    JSONArray arr2 = JsonManager.FileAJsonTokener("habitaciones.json");
+                                    JSONArray arr2 = JsonManager.FileAJsonArray("habitaciones.json");
                                     listaHabitaciones = JsonManager.jsonArrayAHabitaciones(arr2);
 
 
@@ -440,7 +429,7 @@ public class App
 
                                 case 3:
 
-                                    JSONArray arr3 = JsonManager.FileAJsonTokener("reservas.json");
+                                    JSONArray arr3 = JsonManager.FileAJsonArray("reservas.json");
                                     listaReservas = JsonManager.jsonArrayAMap(arr3);
 
                                     System.out.println("Ingrese el numero de habitacion para realizar el Check-In:");
@@ -460,7 +449,7 @@ public class App
                                     break;
 
                                 case 4:
-                                    JSONArray arr4 = JsonManager.FileAJsonTokener("reservas.json");
+                                    JSONArray arr4 = JsonManager.FileAJsonArray("reservas.json");
                                     listaReservas = JsonManager.jsonArrayAMap(arr4);
 
                                     System.out.println("Ingrese el número de habitación para realizar el Check-Out:");
@@ -484,7 +473,7 @@ public class App
                                     break;
 
                                 case 5:
-                                    JSONArray arr5 = JsonManager.FileAJsonTokener("reservas.json");
+                                    JSONArray arr5 = JsonManager.FileAJsonArray("reservas.json");
                                     listaReservas = JsonManager.jsonArrayAMap(arr5);
 
                                     for (Map.Entry<Integer, Reserva> entry : listaReservas.entrySet()) {
@@ -534,7 +523,7 @@ public class App
 
 
                         //AGREGAR METODO PARA CARGAR TREESET DESDE ARCHIVO
-                        JSONArray arr = JsonManager.FileAJsonTokener("usuarios.json");
+                        JSONArray arr = JsonManager.FileAJsonArray("usuarios.json");
                         listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
 
                         listaUsuarios.add(pasajero1);
@@ -560,7 +549,7 @@ public class App
 
 
                         //AGREGAR METODO PARA CARGAR TREESET DESDE ARCHIVO
-                        JSONArray arr = JsonManager.FileAJsonTokener("usuarios.json");
+                        JSONArray arr = JsonManager.FileAJsonArray("usuarios.json");
                         listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
 
                         listaUsuarios.add(personal1);
