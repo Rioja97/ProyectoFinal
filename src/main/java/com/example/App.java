@@ -1,27 +1,16 @@
 package com.example;
 
-import com.example.Hotel.Clases.Habitacion;
-import com.example.Hotel.Clases.Reserva;
-import com.example.Hotel.Clases.enumeradores.Estado;
-import com.example.Login.Clases.LoginManager;
-import com.example.Login.Clases.Usuario;
-import com.example.Login.Enums.Rol;
-import com.example.Login.Exceptions.IngresoIncorrectoException;
-import com.example.Menu.Menu;
-import com.example.Personas.Clases.Administrador.Administrador;
-import com.example.Personas.Clases.Pasajero.Pasajero;
-import com.example.Personas.Clases.Personal.Personal;
-import com.example.Utils.JsonManager;
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.util.*;
+import com.example.Menu.GestionHotel;
 
 public class App 
 {
     public static void main( String[] args )
     {
-        TreeSet<Usuario> listaUsuarios = new TreeSet<>();
+
+        GestionHotel menu = new GestionHotel();
+
+
+        /*TreeSet<Usuario> listaUsuarios = new TreeSet<>();
         ArrayList<Habitacion> listaHabitaciones = new ArrayList<>();
         Map<Integer, Reserva> listaReservas = new HashMap<>();
 
@@ -207,7 +196,7 @@ public class App
                                                     System.out.println("Ingrese su nombre y apellido:");
                                                     admin0.setNombreApellido(leer.nextLine());
 
-                                                    String msg = Menu.agregarUsuarioAdmin(admin0, listaUsuarios);
+                                                    String msg = LoginManager.agregarUsuarioAdmin(admin0, listaUsuarios);
 
                                                     System.out.println(msg);
 
@@ -237,7 +226,7 @@ public class App
                                                     System.out.println("Ingrese su nacionalidad:");
                                                     pasajero0.setNacionalidad(leer.nextLine());
 
-                                                    String msg1 = Menu.agregarUsuarioAdmin(pasajero0, listaUsuarios);
+                                                    String msg1 = LoginManager.agregarUsuarioAdmin(pasajero0, listaUsuarios);
 
                                                     System.out.println(msg1);
                                                     break;
@@ -257,7 +246,7 @@ public class App
                                                     System.out.println("Ingrese su nombre y apellido:");
                                                     personal0.setNombreApellido(leer.nextLine());
 
-                                                    String msg2 = Menu.agregarUsuarioAdmin(personal0, listaUsuarios);
+                                                    String msg2 = LoginManager.agregarUsuarioAdmin(personal0, listaUsuarios);
 
                                                     System.out.println(msg2);
                                                     break;
@@ -302,7 +291,7 @@ public class App
                                         System.out.println("Ingrese su nuevo nombre y apellido:");
                                         String nuevoNombre = leer.nextLine();
 
-                                        String msg0 = Menu.modificarUsuarioAdmin(user1, nuevaContrasenia, nuevoRol, nuevoNombre, listaUsuarios);
+                                        String msg0 = LoginManager.modificarUsuarioAdmin(user1, nuevaContrasenia, nuevoRol, nuevoNombre, listaUsuarios);
 
                                         System.out.println(msg0);
                                         break;
@@ -329,7 +318,7 @@ public class App
                                         arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
                                         JsonManager.JsonArrayAFile(arr, "usuarios.json");
 
-                                        String msg3 = Menu.eliminarUsuarioAdmin(user2, listaUsuarios);
+                                        String msg3 = LoginManager.eliminarUsuarioAdmin(user2, listaUsuarios);
 
                                         System.out.println(msg3);
                                         break;
@@ -569,6 +558,6 @@ public class App
                 case 0:
                     break;
             }
-        }
+        }*/
     }
 }

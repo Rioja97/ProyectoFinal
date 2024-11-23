@@ -210,4 +210,42 @@ public class LoginManager {
         return scanner.nextLine();
     }
 
+    public static String agregarUsuarioAdmin(Usuario usuario, TreeSet<Usuario>listaUsuarios){
+        LoginManager gestorLogin = new LoginManager();
+        StringBuilder exito = new StringBuilder();
+
+        try{
+            exito.append(gestorLogin.agregarUsuario(usuario,listaUsuarios));
+        } catch (UsuarioRepetidoException e) {
+            e.printStackTrace();
+        }
+
+        return exito.toString();
+    }
+
+    public static String modificarUsuarioAdmin(Usuario usuario, String newPassword, Rol newRol, String nombreApellido, TreeSet<Usuario>listaUsuarios){
+        LoginManager gestorLogin = new LoginManager();
+        StringBuilder exito = new StringBuilder();
+
+        try{
+            exito.append(gestorLogin.modificarUsuario(usuario,newPassword,newRol,nombreApellido,listaUsuarios));
+        }catch (NoSuchElementException e){
+            e.printStackTrace();
+        }
+        return exito.toString();
+    }
+
+    public static String eliminarUsuarioAdmin(Usuario usuario,TreeSet<Usuario>listaUsuarios){
+        LoginManager gestorLogin = new LoginManager();
+        StringBuilder exito = new StringBuilder();
+
+        try{
+            exito.append(gestorLogin.eliminarUsuario(usuario,listaUsuarios));
+        }catch (NoSuchElementException e){
+            e.printStackTrace();
+        }
+        return exito.toString();
+    }
+
+
 }
