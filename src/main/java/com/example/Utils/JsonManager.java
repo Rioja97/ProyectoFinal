@@ -178,8 +178,8 @@ public class JsonManager {
     }
 
 
-    public static Map<Integer, Reserva> jsonArrayAMap(JSONArray jsonArray) {
-        Map<Integer, Reserva> reservas = new HashMap<>();
+    public static HashMap<Integer, Reserva> jsonArrayAMap(JSONArray jsonArray) {
+        HashMap<Integer, Reserva> reservas = new HashMap<>();
 
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject reservaJson = jsonArray.getJSONObject(i);
@@ -213,22 +213,35 @@ public class JsonManager {
     }
 
 
-    public static void crearArchivo(String nombreArchivo){
+    public static boolean comprobarExistenciaArchivo(String nombreArchivo) {
+        Path path = Paths.get(nombreArchivo);
+        boolean exists = Files.exists(path);
 
-        File file = new File(nombreArchivo);
+        return exists;
     }
 
-
-    public static boolean comprobarExistenciaArchivo(String nombreArchivo){
-
-        Path path = Paths.get(nombreArchivo);
-
-        if(Files.exists(path)){
-            return true;
-        } else{
-            return false;
+    public static void crearArchivo(String nombreArchivo) {
+        try {
+            File file = new File(nombreArchivo);
+            if (file.createNewFile()) {
+                System.out.println("Archivo creado exitosamente: " + file.getAbsolutePath());
+            } else {
+                System.out.println("El archivo ya existe: " + file.getAbsolutePath());
+            }
+        } catch (IOException e) {
+            System.err.println("Error al crear el archivo: " + e.getMessage());
         }
     }
+
+    public static void administrarArchivos(String nombreArchivo) {
+        if (!comprobarExistenciaArchivo(nombreArchivo)) {
+
+            crearArchivo(nombreArchivo);
+        } else {
+            System.out.println("El archivo ya existe.");
+        }
+    }
+
 
 
 }

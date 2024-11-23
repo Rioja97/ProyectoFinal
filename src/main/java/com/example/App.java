@@ -13,12 +13,10 @@ import com.example.Personas.Clases.Pasajero.Pasajero;
 import com.example.Personas.Clases.Personal.Personal;
 import com.example.Utils.JsonManager;
 import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.util.*;
 
-/**
- * Hello world!
- *
- */
 public class App 
 {
     public static void main( String[] args )
@@ -41,15 +39,11 @@ public class App
         int opUser = 1;
 
 
-        if(!JsonManager.comprobarExistenciaArchivo("usuarios.json")){
-            JsonManager.crearArchivo("usuarios.json");
-        }
-        if(!JsonManager.comprobarExistenciaArchivo("habitaciones.json")){
-            JsonManager.crearArchivo("habitaciones.json");
-        }
-        if(!JsonManager.comprobarExistenciaArchivo("reservas.json")){
-            JsonManager.crearArchivo("reservas.json");
-        }
+//        JsonManager.administrarArchivos("personas.json");
+//        JsonManager.administrarArchivos("reservas.json");
+//        JsonManager.administrarArchivos("habitaciones.json");
+
+        System.out.println("Directorio actual: " + System.getProperty("user.dir"));
 
         while (op != 0){
             opcionMenu = 1;
@@ -85,15 +79,27 @@ public class App
 
                                 switch (opcionMenu) {
                                     case 1:
-                                        Habitacion habitacion1 = null;
+                                        Habitacion habitacion1 = new Habitacion();
 
-                                        JSONArray array1 = JsonManager.FileAJsonArray("reservas.json");
-                                        listaReservas = JsonManager.jsonArrayAMap(array1);
+                                        try {
+                                            JSONArray array1 = new JSONArray(JsonManager.FileAJsonArray("reservas.json"));
+                                            listaReservas = new HashMap<>(JsonManager.jsonArrayAMap(array1));
+                                        } catch (JSONException e){
+                                            System.out.println("No hay registros cargados " + e.getMessage());
+                                            break;
+                                        }
 
-                                        JSONArray arr1 = JsonManager.FileAJsonArray("habitaciones.json");
-                                        listaHabitaciones = JsonManager.jsonArrayAHabitaciones(arr1);
 
-                                        //ver habitaciones sucias
+                                        try {
+                                            JSONArray arr1 = new JSONArray(JsonManager.FileAJsonArray("habitaciones.json"));
+                                            listaHabitaciones = new ArrayList<>(JsonManager.jsonArrayAHabitaciones(arr1));
+
+                                        } catch (JSONException e){
+                                            System.out.println("No hay registros cargados " + e.getMessage());
+                                            break;
+                                        }
+
+                                        //Ver habitaciones disponibles
                                         for (Habitacion h : listaHabitaciones) {
                                             if (h.getEstado() == Estado.DISPONIBLE) {
                                                 System.out.println(h.toString());
@@ -117,8 +123,7 @@ public class App
 
                                         listaReservas.put(numeroHab, reserva1);
 
-                                        array1 = JsonManager.mapAJsonArray(listaReservas);
-                                        JsonManager.JsonArrayAFile(array1, "reservas.json");
+                                        JsonManager.JsonArrayAFile(JsonManager.mapAJsonArray(listaReservas), "reservas.json");
 
                                         break;
 
