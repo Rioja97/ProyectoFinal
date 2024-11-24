@@ -3,6 +3,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 import com.example.Hotel.Clases.enumeradores.Estado;
+import com.example.Login.Clases.LoginManager;
 import com.example.Login.Clases.Usuario;
 
 
@@ -24,7 +25,8 @@ public class Hotel {
     }
 
     public void agregarUsuario(Usuario usuario){
-        usuarios.add(usuario);
+
+        LoginManager.agregarUsuario(usuario, usuarios);
     }
 
     public void eliminarUsuario(String idUsuario) {

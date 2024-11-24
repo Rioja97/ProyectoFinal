@@ -1,6 +1,7 @@
 package com.example.Menu;
 
 import com.example.Hotel.Clases.Habitacion;
+import com.example.Hotel.Clases.Hotel;
 import com.example.Hotel.Clases.Reserva;
 import com.example.Hotel.Clases.enumeradores.Estado;
 import com.example.Login.Clases.LoginManager;
@@ -17,8 +18,52 @@ import java.util.TreeSet;
 
 public final class GestionHotel {
 
-    public GestionHotel(){
+    Hotel lasVegas = new Hotel();
 
+    public GestionHotel() {
+
+        Scanner sc = new Scanner(System.in);
+        int opcion = -1;
+        while (opcion != 0) {
+
+            System.out.println("-------------------------------------------------------");
+            System.out.println("BIENVENIDO AL GESTOR DE HOTELES");
+            System.out.println("¿Que desea hacer?: ");
+            System.out.println("    1. Iniciar Sesión");
+            System.out.println("    2. Registrarse");
+            System.out.println("    3. Salir");
+
+            System.out.println("Su opcion: ");
+            opcion = sc.nextInt();
+            sc.nextLine();
+
+            switch (opcion) {
+                case 1:
+                    Usuario usuario = new Usuario();
+                    usuario = LoginManager.iniciarSesionConReintentos();
+
+                    if(usuario.getTipoIngreso().equals("CLIENTE")){
+                        System.out.println("Aca va el menu de usuarios");
+                        //mostrarMenuReservas();
+                    } else if(usuario.getTipoIngreso().equals("ADMINISTRADOR")) {
+                        System.out.println("Aca va el menu de adminitradores");
+                    //mostrarMenuUsuarios();
+                    } else {
+                        System.out.println("Aca va el menu de personas");
+                    }
+
+                case 2:
+                    Pasajero pasajero = crearPasajero();
+                    lasVegas.agregarUsuario(pasajero);
+                    break;
+                default:
+                    System.out.println("Opcion inválida");
+                    break;
+            }
+        }
+    }
+
+       /* public static void menuPrincipal(){
 
             Scanner leer = new Scanner(System.in);
             int opcionMenu = -1;
@@ -36,7 +81,7 @@ public final class GestionHotel {
 
                 switch (opcionMenu) {
                     case 1:
-                        LoginManager
+
                         mostrarMenuUsuarios(leer);
                         break;
 
@@ -45,7 +90,7 @@ public final class GestionHotel {
                         break;
 
                     case 3:
-                        registrarUsuario(leer);
+                        //registrarUsuario(leer);
                         break;
 
                     case 0:
@@ -55,8 +100,8 @@ public final class GestionHotel {
                     default:
                         System.out.println("Opción no válida, por favor intente nuevamente.");
                 }
-            }
-        }
+            }*/
+
 
         private void mostrarMenuUsuarios(Scanner leer) {
             int opcionMenuUsuarios = -1;
@@ -90,7 +135,7 @@ public final class GestionHotel {
             }
         }
 
-        private void verUsuarios() {
+        private  void verUsuarios() {
             JSONArray arrayUsuarios = JsonManager.FileAJsonArray("usuarios.json");
             TreeSet<Usuario> listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arrayUsuarios);
 
@@ -99,7 +144,7 @@ public final class GestionHotel {
             }
         }
 
-        private void eliminarUsuario(Scanner leer) {
+        private  void eliminarUsuario(Scanner leer) {
             System.out.println("Ingrese el username del usuario a eliminar:");
             String nomUsuario = leer.nextLine();
 
@@ -124,7 +169,7 @@ public final class GestionHotel {
             }
         }
 
-        private void mostrarMenuReservas(Scanner leer) {
+        private  void mostrarMenuReservas(Scanner leer) {
             int opcionMenuReservas = -1;
 
             while (opcionMenuReservas != 0) {
@@ -141,19 +186,19 @@ public final class GestionHotel {
 
                 switch (opcionMenuReservas) {
                     case 1:
-                        verReservas();
+                        //verReservas();
                         break;
 
                     case 2:
-                        realizarCheckIn(leer);
+                        //realizarCheckIn(leer);
                         break;
 
                     case 3:
-                        realizarCheckOut(leer);
+                        //realizarCheckOut(leer);
                         break;
 
                     case 4:
-                        verHabitaciones();
+                        //verHabitaciones();
                         break;
 
                     case 0:
@@ -166,138 +211,34 @@ public final class GestionHotel {
             }
         }
 
-        private void verReservas() {
-            JSONArray arr = JsonManager.FileAJsonArray("reservas.json");
-            Map<Integer, Reserva> listaReservas = JsonManager.jsonArrayAMap(arr);
 
-            for (Map.Entry<Integer, Reserva> entry : listaReservas.entrySet()) {
-                System.out.println("Reserva: " + entry.getKey() + " - " + entry.getValue());
-            }
-        }
 
-        private void realizarCheckIn(Scanner leer) {
-            System.out.println("Ingrese el número de habitación para realizar el Check-In:");
-            int numHabitacion = leer.nextInt();
-            leer.nextLine();
 
-            JSONArray arr = JsonManager.FileAJsonArray("reservas.json");
-            Map<Integer, Reserva> listaReservas = JsonManager.jsonArrayAMap(arr);
+    private  Pasajero crearPasajero(){
 
-            if (listaReservas.containsKey(numHabitacion)) {
-                Reserva reserva = listaReservas.get(numHabitacion);
-                reserva.getHabitacion().setEstado(Estado.OCUPADO);
-                arr = JsonManager.mapAJsonArray(listaReservas);
-                JsonManager.JsonArrayAFile(arr, "reservas.json");
-                System.out.println("Check-In realizado para la habitación " + numHabitacion);
-            } else {
-                System.out.println("No existe una reserva para la habitación " + numHabitacion);
-            }
-        }
+        Pasajero pasajero = new Pasajero();
+        Scanner leer = new Scanner(System.in);
 
-        private void realizarCheckOut(Scanner leer) {
-            System.out.println("Ingrese el número de habitación para realizar el Check-Out:");
-            int numHabitacion = leer.nextInt();
-            leer.nextLine();
+        System.out.println("Ingrese su nombre de usuario:");
+        pasajero.setUsername(leer.nextLine());
 
-            JSONArray arr = JsonManager.FileAJsonArray("reservas.json");
-            Map<Integer, Reserva> listaReservas = JsonManager.jsonArrayAMap(arr);
+        System.out.println("Ingrese la contraseña: ");
+        pasajero.setPassword(leer.nextLine());
 
-            if (listaReservas.containsKey(numHabitacion)) {
-                Reserva reserva = listaReservas.get(numHabitacion);
-                reserva.getHabitacion().setEstado(Estado.DISPONIBLE); // Cambiar el estado a LIBRE
-                arr = JsonManager.mapAJsonArray(listaReservas);
-                JsonManager.JsonArrayAFile(arr, "reservas.json");
-                System.out.println("Check-Out realizado para la habitación " + numHabitacion);
-            } else {
-                System.out.println("No existe una reserva para la habitación " + numHabitacion);
-            }
-        }
+        System.out.println("Ingrese su nombre y apellido:");
+        pasajero.setNombreApellido(leer.nextLine());
 
-        private void verHabitaciones() {
-            JSONArray arr = JsonManager.FileAJsonArray("habitaciones.json");
-            List<Habitacion> listaHabitaciones = JsonManager.jsonArrayAHabitaciones(arr);
+        System.out.println("Ingrese su DNI:");
+        pasajero.setDni(leer.nextInt());
+        leer.nextLine();
 
-            for (Habitacion h : listaHabitaciones) {
-                System.out.println(h.toString());
-            }
-        }
+        System.out.println("Ingrese su direccion:");
+        pasajero.setDireccion(leer.nextLine());
 
-        private void registrarUsuario(Scanner leer) {
-            System.out.println("Ingrese el tipo de usuario a registrar:");
-            System.out.println("1. Cliente");
-            System.out.println("2. Personal de hotel");
-            int rol = leer.nextInt();
-            leer.nextLine(); // Limpiar el buffer
+        System.out.println("Ingrese su nacionalidad:");
+        pasajero.setNacionalidad(leer.nextLine());
 
-            if (rol == 1) {
-                registrarCliente(leer);
-            } else if (rol == 2) {
-                registrarPersonal(leer);
-            } else {
-                System.out.println("Opción no válida.");
-            }
-        }
-
-        private void registrarCliente(Scanner leer) {
-            Pasajero pasajero1 = new Pasajero();
-
-            System.out.println("Ingrese su nombre de usuario:");
-            pasajero1.setUsername(leer.nextLine());
-
-            System.out.println("Ingrese su contraseña:");
-            pasajero1.setPassword(leer.nextLine());
-
-            pasajero1.setTipoIngreso(Rol.CLIENTE);
-
-            System.out.println("Ingrese su nombre y apellido:");
-            pasajero1.setNombreApellido(leer.nextLine());
-
-            System.out.println("Ingrese su DNI:");
-            pasajero1.setDni(leer.nextInt());
-            leer.nextLine();
-
-            System.out.println("Ingrese su direccion:");
-            pasajero1.setDireccion(leer.nextLine());
-
-            System.out.println("Ingrese su nacionalidad:");
-            pasajero1.setNacionalidad(leer.nextLine());
-
-            // Cargar usuarios desde archivo
-            JSONArray arr = JsonManager.FileAJsonArray("usuarios.json");
-            TreeSet<Usuario> listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
-
-            listaUsuarios.add(pasajero1);
-
-            // Guardar usuarios en archivo
-            arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
-            JsonManager.JsonArrayAFile(arr, "usuarios.json");
-            System.out.println("Cliente registrado correctamente.");
-        }
-
-        private void registrarPersonal(Scanner leer) {
-            Personal personal1 = new Personal();
-
-            System.out.println("Ingrese su nombre de usuario:");
-            personal1.setUsername(leer.nextLine());
-
-            System.out.println("Ingrese su contraseña:");
-            personal1.setPassword(leer.nextLine());
-
-            personal1.setTipoIngreso(Rol.PERSONAL_LIMPIEZA);
-
-            System.out.println("Ingrese su nombre y apellido:");
-            personal1.setNombreApellido(leer.nextLine());
-
-            // Cargar usuarios desde archivo
-            JSONArray arr = JsonManager.FileAJsonArray("usuarios.json");
-            TreeSet<Usuario> listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
-
-            listaUsuarios.add(personal1);
-
-            // Guardar usuarios en archivo
-            arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
-            JsonManager.JsonArrayAFile(arr, "usuarios.json");
-            System.out.println("Personal registrado correctamente.");
+        return pasajero;
     }
 }
 

@@ -10,13 +10,11 @@ import com.example.Personas.Clases.Administrador.Administrador;
 import com.example.Personas.Clases.Pasajero.Pasajero;
 import com.example.Personas.Clases.Personal.Personal;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -78,7 +76,6 @@ public class JsonManager {
 
             // Convertir datos de pasajero
             JSONObject pasajeroJson = new JSONObject();
-            pasajeroJson.put("nombreApellido", reserva.getPasajero().getNombreApellido());
             pasajeroJson.put("dni", reserva.getPasajero().getDni());
             pasajeroJson.put("direccion", reserva.getPasajero().getDireccion());
             pasajeroJson.put("nacionalidad", reserva.getPasajero().getNacionalidad());
@@ -134,22 +131,27 @@ public class JsonManager {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject obj = jsonArray.getJSONObject(i);
 
+                if(jsonArray == null){
+                    System.out.println("No se ha encontrado el archivo origen");
+                    return null;
+                }
+
                 // Obtener los valores de cada campo
                 String username = obj.getString("username");
-                String passwordHash = obj.getString("passworHash");
+                String password = obj.getString("passworHash");
                 Rol tipoIngreso = Rol.valueOf(obj.getString("tipoIngreso"));
                 String nombreApellido = obj.getString("nombreApellido");
 
                 // Crear una instancia de Usuario y agregarla al TreeSet
                 //ADMINISTRADOR, PERSONAL_LIMPIEZA, CLIENTE
                 if(tipoIngreso.toString() == "ADMINISTRADOR"){
-                    Administrador admin = new Administrador(username, passwordHash, tipoIngreso, nombreApellido);
+                    Administrador admin = new Administrador(username, password, tipoIngreso, nombreApellido);
                     listaUsuarios.add(admin);
                 } else if (tipoIngreso.toString() == "CLIENTE") {
-                    Pasajero pasajero = new Pasajero(username, passwordHash, tipoIngreso, nombreApellido);
+                    Pasajero pasajero = new Pasajero(username, password, tipoIngreso, nombreApellido);
                     listaUsuarios.add(pasajero);
                 } else{
-                    Personal personal = new Personal(username, passwordHash, tipoIngreso, nombreApellido);
+                    Personal personal = new Personal(username, password, tipoIngreso, nombreApellido);
                     listaUsuarios.add(personal);
                 }
             }
@@ -189,11 +191,10 @@ public class JsonManager {
 
             // Obtener los datos de pasajero
             JSONObject pasajeroJson = reservaJson.getJSONObject("pasajero");
-            String nombreApellido = pasajeroJson.getString("nombreApellido");
             int dni = pasajeroJson.getInt("dni");
             String direccion = pasajeroJson.getString("direccion");
             String nacionalidad = pasajeroJson.getString("nacionalidad");
-            Pasajero pasajero = new Pasajero(nombreApellido, dni, direccion, nacionalidad);
+            Pasajero pasajero = new Pasajero(dni, direccion, nacionalidad);
 
             // Obtener los datos de habitacion
             JSONObject habitacionJson = reservaJson.getJSONObject("habitacion");

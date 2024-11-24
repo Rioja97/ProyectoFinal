@@ -10,7 +10,7 @@ import com.example.Personas.Clases.Pasajero.Pasajero;
 import com.example.Personas.Clases.Personal.Personal;
 import org.json.JSONObject;
 
-public abstract class Usuario implements Comparable<Usuario>{
+public class Usuario implements Comparable<Usuario>{
 
     //Atributos
     private String username;

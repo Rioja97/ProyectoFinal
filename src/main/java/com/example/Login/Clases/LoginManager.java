@@ -9,90 +9,16 @@ import com.example.Personas.Clases.Personal.Personal;
 import com.example.Utils.JsonManager;
 import org.json.JSONArray;
 import org.json.JSONException;
+
+import java.awt.desktop.SystemSleepEvent;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.TreeSet;
 
-public class LoginManager {
-
-    public LoginManager(){
-    }
-
-    // Metodo para pasar un ENUM a String
-    public Rol agregarRol(String rol){
-        Rol r = null;
-
-        try{
-            String rolIngresado = rol.toUpperCase();
-            r = Rol.valueOf(rolIngresado);
-        }catch (IllegalArgumentException e){
-            e.getMessage();
-        }
-        return r;
-    }
-
-    public Tipo agregarTipo(String tipo){
-        Tipo t = null;
-
-        try{
-            String tipoIngresado = tipo.toUpperCase();
-            t = Tipo.valueOf(tipoIngresado);
-        }catch (IllegalArgumentException e){
-            e.getMessage();
-        }
-        return t;
-    }
-
-
-    //Metodo para iniciar sesion como Pasajero
-    public boolean iniciarSesionCliente(String username, String password) throws IngresoIncorrectoException {
-
-        TreeSet<Usuario> listaUsuarios = new TreeSet<>();
-
-        boolean flag = false;
-
-        //CARGAR TREESET DESDE ARCHIVO
-        JSONArray arr = JsonManager.FileAJsonArray("usuarios.json");
-        listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
-
-        //System.out.println(listaUsuarios.toString());
-
-        for(Usuario u : listaUsuarios){
-            if(u instanceof Pasajero){
-                if(u.getUsername().equals(username) && u.getPassword().equals(password)){
-                    flag = true;
-                }
-            }
-        }
-        if(flag == false){
-            throw new IngresoIncorrectoException("Nombre de usuario o contraseña incorrectos.");
-        }
-        return flag;
-    }
-
-    //Metodo para iniciar sesion como Personal
-    public Personal iniciarSesionPersonal(String username, String password){
-        Personal personal1 = new Personal();
-
-        TreeSet<Usuario> listaUsuarios = new TreeSet<>();
-
-        //CARGAR TREESET DESDE ARCHIVO
-        JSONArray arr = JsonManager.FileAJsonArray("usuarios.json");
-        listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
-
-
-        for(Usuario u : listaUsuarios){
-            if(u instanceof Personal){
-                if(u.getUsername().equals(username) && u.getPassword().equals(password)){
-                    personal1 = (Personal) u;
-                }else{
-                    throw new NoSuchElementException("Nombre de usuario o contraseña incorrectos.");
-                }
-            }
-        }
-        return personal1;
-    }
+public  class LoginManager {
 
 
     public static String agregarUsuario(Usuario usuario, TreeSet<Usuario> listaUsuarios) throws UsuarioRepetidoException{
@@ -151,42 +77,56 @@ public class LoginManager {
     }
 
 
-    public boolean aniadirArchivo(JSONArray jsonArray) {
+   /* public static Usuario iniciarSesion(Usuario usuario) throws FileNotFoundException{
 
-        if (jsonArray.isEmpty()) {
-            System.out.println("El arreglo está vacio");
-            return false;
-        }
-
-        try {
-            FileWriter file = new FileWriter("arregloUsuarios.json");
-            file.write(jsonArray.toString());
-            file.flush();
-            file.close();
-        } catch (IOException e) {
-            System.out.println("Error al abrir el archivo");
-        } catch (JSONException e) {
-            System.out.println("Error al escribir el archivo");
-        }
-        return true;
-    }
-
-    public boolean iniciarSesionConReintentos() {
-        int intentosRestantes = 3; // Máximo de intentos
-        boolean sesionIniciada = false;
+        TreeSet<Usuario> usuarios = new TreeSet<>();
+        JSONArray arr = JsonManager.FileAJsonArray("usuarios.json");
+        usuarios = JsonManager.jsonArrayAListaUsuarios(arr);
         boolean flag = false;
 
-        while (intentosRestantes > 0 && !sesionIniciada) {
+        if(usuarios == null){
+            throw new FileNotFoundException("No hay ningun usuario cargado, cargue uno please");
+        }
+
+        for(Usuario u : usuarios){
+            if(usuario.getUsername().equals(u.getUsername()) && usuario.getPassword().equals(u.getPassword())){
+                flag = true;
+                return u;
+            }
+        }
+        if(flag){
+            throw new IngresoIncorrectoException("El usuario no se encuentra registrado");
+        }
+        return null;
+
+    }
+
+    public static Usuario iniciarSesionConReintentos() {
+
+        int intentosRestantes = 3; // Máximo de intentos
+        boolean sesionIniciada = false;
+        Usuario enSesion = new Usuario();
+
+        while (intentosRestantes > 0) {
             try {
                 // Solicitar datos al usuario
                 String username = solicitarEntrada("Ingresa tu nombre de usuario:");
+                enSesion.setUsername(username);
                 String password = solicitarEntrada("Ingresa tu contraseña:");
+                enSesion.setPassword(password);
 
                 // Intentar iniciar sesión
-                sesionIniciada = iniciarSesionCliente(username, password);
+                try{
+                    enSesion = iniciarSesion(enSesion);
+                    sesionIniciada = true;
+
+                } catch (IngresoIncorrectoException e){
+                    e.getMessage();
+                } catch (FileNotFoundException e){
+                    e.getMessage();
+                }
                 if (sesionIniciada) {
                     System.out.println("¡Inicio de sesión exitoso!");
-                    flag = true;
                 }
             } catch (IngresoIncorrectoException e) {
                 intentosRestantes--;
@@ -195,15 +135,86 @@ public class LoginManager {
                     System.out.println("Te quedan " + intentosRestantes + " intentos.");
                 } else {
                     System.out.println("Demasiados intentos fallidos. Intenta más tarde.");
-                    flag = false;
                 }
             }
         }
-        return flag;
+
+        if(sesionIniciada){
+            return enSesion;
+        } else {
+            return null;
+        }
+    }
+*/
+
+
+    public static Usuario iniciarSesion(Usuario usuario) throws FileNotFoundException {
+
+        TreeSet<Usuario> usuarios = new TreeSet<>();
+        JSONArray arr = JsonManager.FileAJsonArray("usuarios.json");
+        usuarios = JsonManager.jsonArrayAListaUsuarios(arr);
+
+        if (usuarios == null) {
+            throw new FileNotFoundException("No hay ningún usuario cargado, cargue uno por favor.");
+        }
+
+        for (Usuario u : usuarios) {
+            if (usuario.getUsername().equals(u.getUsername()) && usuario.getPassword().equals(u.getPassword())) {
+                return u;  // Si se encuentra el usuario, devuelve el objeto Usuario
+            }
+        }
+
+        throw new IngresoIncorrectoException("El usuario no se encuentra registrado o las credenciales son incorrectas.");
     }
 
+
+    public static Usuario iniciarSesionConReintentos() {
+
+        int intentosRestantes = 3; // Máximo de intentos
+        Usuario enSesion = new Usuario();
+
+        while (intentosRestantes > 0) {
+            try {
+                // Solicitar datos al usuario
+                String username = solicitarEntrada("Ingresa tu nombre de usuario:");
+                enSesion.setUsername(username);
+                String password = solicitarEntrada("Ingresa tu contraseña:");
+                enSesion.setPassword(password);
+
+                try {
+                    // Intentar iniciar sesión
+                    enSesion = iniciarSesion(enSesion);  // Intenta iniciar sesión
+                    System.out.println("¡Inicio de sesión exitoso!");
+                    return enSesion;  // Si el inicio de sesión es exitoso, retorna el usuario
+
+                } catch (IngresoIncorrectoException e) {
+                    // Si las credenciales son incorrectas
+                    intentosRestantes--;
+                    System.out.println(e.getMessage());
+                    if (intentosRestantes > 0) {
+                        System.out.println("Te quedan " + intentosRestantes + " intentos.");
+                    } else {
+                        System.out.println("Demasiados intentos fallidos. Intenta más tarde.");
+                    }
+                } catch (FileNotFoundException e) {
+                    // Si no se encuentra el archivo de usuarios
+                    System.out.println(e.getMessage());
+                    break;  // Termina el ciclo si no se encuentra el archivo
+                }
+            } catch (Exception e) {
+                // Si hay algún error con la entrada
+                System.out.println("Hubo un error al leer la entrada: " + e.getMessage());
+                break;
+            }
+        }
+
+        return null;  // Si los intentos se agotaron o hubo un error, retorna null
+    }
+
+
+
     //Metodo para ingresar los datos al usuario
-    private String solicitarEntrada(String mensaje) {
+    private static String solicitarEntrada(String mensaje) {
         System.out.println(mensaje);
 
         java.util.Scanner scanner = new java.util.Scanner(System.in);

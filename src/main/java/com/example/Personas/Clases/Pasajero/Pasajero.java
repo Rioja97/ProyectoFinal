@@ -13,27 +13,23 @@ public class Pasajero extends Usuario {
     private String direccion;
     private String nacionalidad;
 
-    public Pasajero(String username, String passwordHash, Rol tipoIngreso, String nombreApellido){
-        super(username, passwordHash, tipoIngreso, nombreApellido);
-    }
-
-    public Pasajero(String nombreApellido, int dni, String direccion, String nacionalidad){
-        super(nombreApellido);
-        this.dni = dni;
-        this.direccion = direccion;
-        this.nacionalidad = nacionalidad;
+    public Pasajero(String username, String password, Rol tipoIngreso, String nombreApellido) {
+        super(username, password, tipoIngreso, nombreApellido);
 
     }
 
-    public Pasajero(String username, String passwordHash, Rol tipoIngreso, String nombreApellido, int dni, String direccion, String nacionalidad) {
-        super(username, passwordHash, tipoIngreso, nombreApellido);
+
+
+    public Pasajero(int dni, String direccion, String nacionalidad) {
         this.dni = dni;
         this.direccion = direccion;
         this.nacionalidad = nacionalidad;
     }
 
     public Pasajero() {
+        super();
     }
+
 
     public int getDni() {
         return dni;
