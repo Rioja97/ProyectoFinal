@@ -1,0 +1,162 @@
+[
+    {
+        "tipo": "SIMPLE",
+        "estado": "DISPONIBLE",
+        "precio": 25000,
+        "numero": 1,
+        "reparacion": "DISPONIBLE",
+        "limpia": "DISPONIBLE"
+    },
+    {
+        "tipo": "SIMPLE",
+        "estado": "DISPONIBLE",
+        "precio": 25000,
+        "numero": 2,
+        "reparacion": "DISPONIBLE",
+        "limpia": "DISPONIBLE"
+    },
+    {
+        "tipo": "SIMPLE",
+        "estado": "DISPONIBLE",
+        "precio": 25000,
+        "numero": 3,
+        "reparacion": "DISPONIBLE",
+        "limpia": "DISPONIBLE"
+    },
+    {
+        "tipo": "SIMPLE",
+        "estado": "DISPONIBLE",
+        "precio": 25000,
+        "numero": 4,
+        "reparacion": "DISPONIBLE",
+        "limpia": "DISPONIBLE"
+    },
+    {
+        "tipo": "SIMPLE",
+        "estado": "DISPONIBLE",
+        "precio": 25000,
+        "numero": 5,
+        "reparacion": "DISPONIBLE",
+        "limpia": "DISPONIBLE"
+    },
+    {
+        "tipo": "SIMPLE",
+        "estado": "DISPONIBLE",
+        "precio": 25000,
+        "numero": 6,
+        "reparacion": "DISPONIBLE",
+        "limpia": "DISPONIBLE"
+    },
+    {
+        "tipo": "SIMPLE",
+        "estado": "DISPONIBLE",
+        "precio": 25000,
+        "numero": 7,
+        "reparacion": "DISPONIBLE",
+        "limpia": "DISPONIBLE"
+    },
+    {
+        "tipo": "SIMPLE",
+        "estado": "DISPONIBLE",
+        "precio": 25000,
+        "numero": 8,
+        "reparacion": "DISPONIBLE",
+        "limpia": "DISPONIBLE"
+    },
+    {
+        "tipo": "SIMPLE",
+        "estado": "DISPONIBLE",
+        "precio": 25000,
+        "numero": 9,
+        "reparacion": "DISPONIBLE",
+        "limpia": "DISPONIBLE"
+    },
+    {
+        "tipo": "DOBLE",
+        "estado": "DISPONIBLE",
+        "precio": 45000,
+        "numero": 10,
+        "reparacion": "DISPONIBLE",
+        "limpia": "DISPONIBLE"
+    },
+    {
+        "tipo": "DOBLE",
+        "estado": "DISPONIBLE",
+        "precio": 45000,
+        "numero": 11,
+        "reparacion": "DISPONIBLE",
+        "limpia": "DISPONIBLE"
+    },
+    {
+        "tipo": "DOBLE",
+        "estado": "DISPONIBLE",
+        "precio": 45000,
+        "numero": 12,
+        "reparacion": "DISPONIBLE",
+        "limpia": "DISPONIBLE"
+    },
+    {
+        "tipo": "DOBLE",
+        "estado": "DISPONIBLE",
+        "precio": 45000,
+        "numero": 13,
+        "reparacion": "DISPONIBLE",
+        "limpia": "DISPONIBLE"
+    },
+    {
+        "tipo": "DOBLE",
+        "estado": "DISPONIBLE",
+        "precio": 45000,
+        "numero": 14,
+        "reparacion": "DISPONIBLE",
+        "limpia": "DISPONIBLE"
+    },
+    {
+        "tipo": "DOBLE",
+        "estado": "DISPONIBLE",
+        "precio": 45000,
+        "numero": 15,
+        "reparacion": "DISPONIBLE",
+        "limpia": "DISPONIBLE"
+    },
+    {
+        "tipo": "DOBLE",
+        "estado": "DISPONIBLE",
+        "precio": 45000,
+        "numero": 16,
+        "reparacion": "DISPONIBLE",
+        "limpia": "DISPONIBLE"
+    },
+    {
+        "tipo": "DOBLE",
+        "estado": "DISPONIBLE",
+        "precio": 45000,
+        "numero": 17,
+        "reparacion": "DISPONIBLE",
+        "limpia": "DISPONIBLE"
+    },
+    {
+        "tipo": "DOBLE",
+        "estado": "DISPONIBLE",
+        "precio": 45000,
+        "numero": 18,
+        "reparacion": "DISPONIBLE",
+        "limpia": "DISPONIBLE"
+    },
+    {
+        "tipo": "DOBLE",
+        "estado": "DISPONIBLE",
+        "precio": 45000,
+        "numero": 19,
+        "reparacion": "DISPONIBLE",
+        "limpia": "DISPONIBLE"
+    },
+    {
+        "tipo": "DOBLE",
+        "estado": "DISPONIBLE",
+        "precio": 45000,
+        "numero": 20,
+        "reparacion": "DISPONIBLE",
+        "limpia": "DISPONIBLE"
+    }
+]

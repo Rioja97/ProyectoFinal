@@ -13,9 +13,11 @@ public class Personal extends Usuario {
 
     public Personal(String username, String passwordHash, Rol tipoIngreso, String nombreApellido) {
         super(username, passwordHash, tipoIngreso, nombreApellido);
+        this.setTipoIngreso(Rol.PERSONAL_LIMPIEZA);
     }
 
     public Personal() {
+        this.setTipoIngreso(Rol.PERSONAL_LIMPIEZA);
     }
 
     public String limpiarHabitacion(Habitacion habitacion){

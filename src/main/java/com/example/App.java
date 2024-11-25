@@ -1,6 +1,13 @@
 package com.example;
 
+import com.example.Hotel.Clases.Habitacion;
+import com.example.Hotel.Clases.enumeradores.Estado;
+import com.example.Hotel.Clases.enumeradores.Tipo;
 import com.example.Menu.GestionHotel;
+import com.example.Utils.JsonManager;
+import org.json.JSONArray;
+
+import java.util.ArrayList;
 
 public class App 
 {

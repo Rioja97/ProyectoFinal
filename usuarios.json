@@ -34,5 +34,11 @@
         "passworHash": "d22feec4f8bcd231d43bf587b7886abf90cade6750df9bda4c4d20e611682306",
         "tipoIngreso": "CLIENTE",
         "username": "gonzaTorres1"
+    },
+    {
+        "nombreApellido": "Jorge Brito",
+        "passworHash": "jorge123",
+        "tipoIngreso": "CLIENTE",
+        "username": "jorge02"
     }
 ]

@@ -56,6 +56,11 @@ public final class GestionHotel {
                     Pasajero pasajero = crearPasajero();
                     lasVegas.agregarUsuario(pasajero);
                     break;
+
+                case 3:
+                    System.out.println("Cerrando programa...");
+                    opcion = 0;
+
                 default:
                     System.out.println("Opcion inválida");
                     break;
