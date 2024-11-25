@@ -18,8 +18,6 @@ public class Pasajero extends Usuario {
 
     }
 
-
-
     public Pasajero(int dni, String direccion, String nacionalidad) {
         this.dni = dni;
         this.direccion = direccion;

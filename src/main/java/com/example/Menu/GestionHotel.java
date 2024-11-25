@@ -195,6 +195,7 @@ public final class GestionHotel {
     private  void mostrarMenuClienteReservas(Usuario usuario) {
         int opcionMenuReservas = -1;
         Scanner sc = new Scanner(System.in);
+        Pasajero pasajero=new Pasajero(usuario.getUsername(),usuario.getPassword());
 
         while (opcionMenuReservas != 0) {
             System.out.println("---------------------------------------");
@@ -241,6 +242,10 @@ public final class GestionHotel {
                         System.out.println("La fecha de fin no puede ser anterior a la fecha de inicio.");
                         break;
                     }
+
+                    Reserva nuevaReserva = new Reserva(pasajero, fechaInicio, fechaFin, habitacionSeleccionada);
+                    lasVegas.realizarReserva(nuevaReserva);
+                    System.out.println("Reserva realizada con éxito: " + nuevaReserva);
                     break;
                 case 3:
                     System.out.println(lasVegas.obtenerHabitacionesDisponibles());
