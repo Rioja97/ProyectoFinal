@@ -18,10 +18,10 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.TreeSet;
 
-public class LoginManager implements com.example.Interfaces.iMetodosHotel {
+public  class LoginManager {
 
 
-    public String agregarUsuario(Usuario usuario) throws UsuarioRepetidoException{
+    public static String agregarUsuario(Usuario usuario) throws UsuarioRepetidoException{
         JSONArray arr = JsonManager.FileAJsonArray("usuarios.json");
         TreeSet<Usuario> listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
 
@@ -40,7 +40,7 @@ public class LoginManager implements com.example.Interfaces.iMetodosHotel {
     }
 
 
-    public String modificarUsuario(Usuario modificado,String nombreUsuario){
+    public static String modificarUsuario(String nombreUsuario, Usuario modificado){
 
         boolean encontrado = false;
         JSONArray arr = JsonManager.FileAJsonArray("usuarios.json");
@@ -68,7 +68,7 @@ public class LoginManager implements com.example.Interfaces.iMetodosHotel {
     }
 
 
-    public String eliminarUsuario(String nombreUsuario){
+    public static String eliminarUsuario(String nombreUsuario){
 
         JSONArray arr = JsonManager.FileAJsonArray("usuarios.json");
         TreeSet<Usuario> listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
@@ -234,5 +234,43 @@ public class LoginManager implements com.example.Interfaces.iMetodosHotel {
         java.util.Scanner scanner = new java.util.Scanner(System.in);
         return scanner.nextLine();
     }
+
+    public static String agregarUsuarioAdmin(Usuario usuario, TreeSet<Usuario>listaUsuarios){
+        LoginManager gestorLogin = new LoginManager();
+        StringBuilder exito = new StringBuilder();
+
+        try{
+            exito.append(gestorLogin.agregarUsuario(usuario,listaUsuarios));
+        } catch (UsuarioRepetidoException e) {
+            e.printStackTrace();
+        }
+
+        return exito.toString();
+    }
+
+    public static String modificarUsuarioAdmin(Usuario usuario, String newPassword, Rol newRol, String nombreApellido, TreeSet<Usuario>listaUsuarios){
+        LoginManager gestorLogin = new LoginManager();
+        StringBuilder exito = new StringBuilder();
+
+        try{
+            exito.append(gestorLogin.modificarUsuario(usuario,newPassword,newRol,nombreApellido,listaUsuarios));
+        }catch (NoSuchElementException e){
+            e.printStackTrace();
+        }
+        return exito.toString();
+    }
+
+    public static String eliminarUsuarioAdmin(Usuario usuario,TreeSet<Usuario>listaUsuarios){
+        LoginManager gestorLogin = new LoginManager();
+        StringBuilder exito = new StringBuilder();
+
+        try{
+            exito.append(gestorLogin.eliminarUsuario(usuario,listaUsuarios));
+        }catch (NoSuchElementException e){
+            e.printStackTrace();
+        }
+        return exito.toString();
+    }
+
 
 }

@@ -7,7 +7,7 @@ import com.example.Login.Clases.LoginManager;
 import com.example.Login.Clases.Usuario;
 
 
-public class Hotel implements com.example.Interfaces.iMetodosHotel {
+public class Hotel {
     private String nombre;
     private String direccion;
     private ArrayList<Habitacion> habitaciones;
@@ -24,23 +24,17 @@ public class Hotel implements com.example.Interfaces.iMetodosHotel {
         this.usuarios = new TreeSet<>();
     }
 
-    public String modificarUsuario(Usuario usuario,String username){
-        LoginManager gestorLogin = new LoginManager();
-
-        String msj = gestorLogin.modificarUsuario(usuario,username);
-        return msj;
+    public void modificarUsuario(Usuario usuario,String username){
+        String msj=LoginManager.modificarUsuario(username,usuario);
     }
 
-    public String agregarUsuario(Usuario usuario){
-        LoginManager gestorLogin = new LoginManager();
+    public void agregarUsuario(Usuario usuario){
 
-        String msj = gestorLogin.agregarUsuario(usuario);
-        return msj;
+        LoginManager.agregarUsuario(usuario);
     }
 
-    public String eliminarUsuario(String idUsuario) {
+    public void eliminarUsuario(String idUsuario) {
         usuarios.remove(idUsuario);
-        return "Usuario eliminado correctamente!";
     }
 
     public void agregarHabitacion(Habitacion habitacion) {
