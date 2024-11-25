@@ -26,7 +26,7 @@ public class Hotel {
 
     public void agregarUsuario(Usuario usuario){
 
-        LoginManager.agregarUsuario(usuario, usuarios);
+        LoginManager.agregarUsuario(usuario);
     }
 
     public void eliminarUsuario(String idUsuario) {
@@ -37,8 +37,13 @@ public class Hotel {
         habitaciones.add(habitacion);
     }
 
-    public void eliminarHabitacion(Habitacion habitacion){
-        habitaciones.remove(habitacion);
+    public void eliminarHabitacion(int habitacion){
+
+        for(Habitacion h: habitaciones){
+            if(h.getNumero() == habitacion){
+                habitaciones.remove(h);
+            }
+        }
     }
 
     public void realizarReserva(Reserva reserva) {

@@ -42,15 +42,15 @@ public final class GestionHotel {
                     Usuario usuario = new Usuario();
                     usuario = LoginManager.iniciarSesionConReintentos();
 
-                    if(usuario.getTipoIngreso().equals("CLIENTE")){
+                    if(usuario.getTipoIngreso().name().equals("CLIENTE")){
                         System.out.println("Aca va el menu de usuarios");
                         //mostrarMenuReservas();
-                    } else if(usuario.getTipoIngreso().equals("ADMINISTRADOR")) {
+                    } else if(usuario.getTipoIngreso().name().equals("ADMINISTRADOR")) {
                         System.out.println("Aca va el menu de adminitradores");
                         mostrarMenuAdministradores();
                     } else {
                         System.out.println("Aca va el menu de personas");
-                        mostrarMenuReservas(sc);
+                        mostrarMenuClienteReservas();
                     }
 
                 case 2:
@@ -117,7 +117,7 @@ public final class GestionHotel {
 
             switch (opcionMenuUsuarios) {
                 case 1:
-                    //lasVegas.verUsuarios();
+                    System.out.println(lasVegas.getUsuarios());
                     break;
 
                 case 2:
@@ -125,11 +125,13 @@ public final class GestionHotel {
                     break;
 
                 case 3:
-                    //lasVegas.modificarUsuario(usuario, pedirUsuario());
+                    System.out.println("Ingrese el nombre de usuario a modificar: ");
+                    String username = leer.nextLine();
+                    lasVegas.modificarUsuario(username, pedirUsuario());
                     break;
 
                 case 4:
-                    //lasVegas.eliminarUsuario(String username);
+                    lasVegas.eliminarUsuario(String username);
 
                 default:
                     System.out.println("Opción no válida, por favor intente nuevamente.");
@@ -156,19 +158,28 @@ public final class GestionHotel {
 
             switch (opcionMenuUsuarios) {
                 case 1:
-                    //lasVegas.agregarHabitacion();
+                    lasVegas.agregarHabitacion(crearHabitacion());
                     break;
 
                 case 2:
-                    lasVegas.agregarUsuario(pedirUsuario());
+                    System.out.println(lasVegas.getHabitaciones());
+                    System.out.println("Ingrese el numero de la habitación que desea eliminar: ");
+                    int numero = leer.nextInt();
+                    leer.nextLine();
+                    lasVegas.eliminarHabitacion(numero);
                     break;
 
                 case 3:
-                    //lasVegas.modificarUsuario(usuario, pedirUsuario());
+                    System.out.println(lasVegas.getHabitaciones());
+                    System.out.println("Ingrese el numero de la habitación que desea modificar: ");
+                    int numeroH = leer.nextInt();
+                    leer.nextLine();
+                    //lasVegas.modificarHabitacion(numeroH, crearHabitacion());
                     break;
 
                 case 4:
-                    //lasVegas.eliminarUsuario(String username);
+                    System.out.println(lasVegas.getReservas());
+                    break;
 
                 default:
                     System.out.println("Opción no válida, por favor intente nuevamente.");
@@ -177,14 +188,12 @@ public final class GestionHotel {
     }
 
 
-    private  void mostrarMenuReservas(Scanner leer) {
+    private  void mostrarMenuClienteReservas() {
         int opcionMenuReservas = -1;
 
         while (opcionMenuReservas != 0) {
             System.out.println("---------------------------------------");
             System.out.println("1. Ver Reservas");
-            System.out.println("2. Realizar Check-In");
-            System.out.println("3. Realizar Check-Out");
             System.out.println("4. Ver Habitaciones");
             System.out.println("0. Volver al menú principal");
             System.out.println("---------------------------------------");
@@ -218,6 +227,8 @@ public final class GestionHotel {
             }
         }
     }
+
+
 
      private  Pasajero crearPasajero(){
 
@@ -304,7 +315,7 @@ public final class GestionHotel {
             habitacion.setPrecioPorNoche(precio);
         } else{
             habitacion.setNumero(numero);
-            habitacion.setTipo(Tipo.SIMPLE);
+            habitacion.setTipo(Tipo.DOBLE);
             habitacion.setPrecioPorNoche(precio);
         }
         return habitacion;
