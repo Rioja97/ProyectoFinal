@@ -18,20 +18,15 @@ public class Administrador extends Usuario {
     public Administrador() {
     }
 
-    public void crearUsuario(Usuario usuario){
-        LoginManager gestorLogin = new LoginManager();
-        gestorLogin.agregarUsuario(usuario);
+    public void crearUsuario(Usuario usuario, Hotel hotel){
+        LoginManager.agregarUsuario(usuario, hotel.getUsuarios());
     }
 
-    public void modificarUsuario(Usuario usuario,String username){
-        LoginManager gestorLogin = new LoginManager();
-
-        gestorLogin.modificarUsuario(usuario,username);
+    public void modificarUsuario(Usuario usuario,  String newPassword, Rol newRol, String nombreApellidoNuevo, Hotel hotel){
+        LoginManager.modificarUsuario(usuario, newPassword, newRol, nombreApellidoNuevo, hotel.getUsuarios());
     }
 
-    public void eliminarUsuario(String idUsuario){
-        LoginManager gestorLogin = new LoginManager();
-
-        gestorLogin.eliminarUsuario(idUsuario);
+    public void eliminarUsuario(Usuario usuario, Hotel hotel){
+        LoginManager.eliminarUsuario(usuario, hotel.getUsuarios());
     }
 }
