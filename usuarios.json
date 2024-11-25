@@ -1,5 +1,11 @@
 [
     {
+        "nombreApellido": "Carlos Fontana",
+        "passworHash": "admin",
+        "tipoIngreso": "ADMINISTRADOR",
+        "username": "admin"
+    },
+    {
         "nombreApellido": "Daniela Fernandez",
         "passworHash": "252599746236ae3663e3bc13fe846fc63287836871698722ddd4084d87f895c4",
         "tipoIngreso": "CLIENTE",
@@ -16,6 +22,12 @@
         "passworHash": "123",
         "tipoIngreso": "CLIENTE",
         "username": "emmafossati"
+    },
+    {
+        "nombreApellido": "Fausto Conte",
+        "passworHash": "fausto123",
+        "tipoIngreso": "PERSONAL_LIMPIEZA",
+        "username": "fausto12"
     },
     {
         "nombreApellido": "Francisco Gomez",

@@ -3,11 +3,16 @@ package com.example;
 import com.example.Hotel.Clases.Habitacion;
 import com.example.Hotel.Clases.enumeradores.Estado;
 import com.example.Hotel.Clases.enumeradores.Tipo;
+import com.example.Login.Clases.Usuario;
+import com.example.Login.Enums.Rol;
 import com.example.Menu.GestionHotel;
+import com.example.Personas.Clases.Administrador.Administrador;
+import com.example.Personas.Clases.Personal.Personal;
 import com.example.Utils.JsonManager;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 public class App 
 {

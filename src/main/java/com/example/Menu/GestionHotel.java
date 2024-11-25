@@ -42,10 +42,10 @@ public final class GestionHotel {
                     Usuario usuario = new Usuario();
                     usuario = LoginManager.iniciarSesionConReintentos();
 
-                    if(usuario.getTipoIngreso().equals("CLIENTE")){
+                    if(usuario.getTipoIngreso().name().equals("CLIENTE")){
                         System.out.println("Aca va el menu de usuarios");
                         //mostrarMenuReservas();
-                    } else if(usuario.getTipoIngreso().equals("ADMINISTRADOR")) {
+                    } else if(usuario.getTipoIngreso().name().equals("ADMINISTRADOR")) {
                         System.out.println("Aca va el menu de adminitradores");
                     //mostrarMenuUsuarios();
                     } else {
