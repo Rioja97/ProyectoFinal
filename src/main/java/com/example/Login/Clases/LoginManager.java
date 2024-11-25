@@ -21,9 +21,9 @@ import java.util.TreeSet;
 public  class LoginManager {
 
 
-    public static String agregarUsuario(Usuario usuario, TreeSet<Usuario> listaUsuarios) throws UsuarioRepetidoException{
+    public static String agregarUsuario(Usuario usuario) throws UsuarioRepetidoException{
         JSONArray arr = JsonManager.FileAJsonArray("usuarios.json");
-        listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
+        TreeSet<Usuario> listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
 
         for(Usuario u: listaUsuarios){
 
@@ -40,40 +40,54 @@ public  class LoginManager {
     }
 
 
-    public static String modificarUsuario(Usuario usuario, String newPassword, Rol newRol, String nombreApellidoNuevo, TreeSet<Usuario> listaUsuarios){
+    public static String modificarUsuario(String nombreUsuario, Usuario modificado){
+
+        boolean encontrado = false;
         JSONArray arr = JsonManager.FileAJsonArray("usuarios.json");
-        listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
+        TreeSet<Usuario> listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
 
+        Usuario usuario = new Usuario();
 
-        if(!listaUsuarios.contains(usuario)){
-            throw new NoSuchElementException("Usuario no encontrado");
+        for (Usuario u: listaUsuarios){
+            if(u.getUsername().equals(nombreUsuario)){
+
+                usuario.setPassword(modificado.getPassword());
+                usuario.setTipoIngreso(modificado.getTipoIngreso());
+                usuario.setNombreApellido(modificado.getNombreApellido());
+                encontrado = true;
+            }
+            if(encontrado == true){
+                arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
+                JsonManager.JsonArrayAFile(arr,"usuarios.json");
+                return "Usuario modificado exitosamente";
+            } else{
+                throw new NoSuchElementException("Usuario no encontrado");
+            }
         }
-
-        usuario.setPassword(newPassword);
-        usuario.setTipoIngreso(newRol);
-        usuario.setNombreApellido(nombreApellidoNuevo);
-
-        arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
-        JsonManager.JsonArrayAFile(arr,"usuarios.json");
-
-        return "Usuario modificado exitosamente";
+        return null;
     }
 
 
-    public static String eliminarUsuario(Usuario usuario, TreeSet<Usuario> listaUsuarios){
+    public static String eliminarUsuario(String nombreUsuario){
+
         JSONArray arr = JsonManager.FileAJsonArray("usuarios.json");
-        listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
+        TreeSet<Usuario> listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
+        boolean eliminado = false;
 
-
-        if(!listaUsuarios.contains(usuario)){
-            throw new NoSuchElementException("Usuario no encontrado");
+        for (Usuario u: listaUsuarios){
+            if(u.getUsername().equals(nombreUsuario)){
+                listaUsuarios.remove(u);
+                eliminado = true;
+            }
+            if(eliminado == true){
+                arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
+                JsonManager.JsonArrayAFile(arr,"usuarios.json");
+                return "Usuario eliminado exitosamente";
+            } else{
+                throw new NoSuchElementException("Usuario no encontrado");
+            }
         }
-        listaUsuarios.remove(usuario);
-
-        arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
-        JsonManager.JsonArrayAFile(arr,"usuarios.json");
-
-        return "Usuario eliminado exitosamente";
+        return null;
     }
 
 

@@ -16,11 +16,15 @@ public class Habitacion {
     private boolean limpia;
     private boolean reparacion;
 
-    public Habitacion(){}
-
     public Habitacion(int numero,Tipo tipo){
         this.numero = numero;
         this.tipo = tipo;
+    }
+
+    public Habitacion(){
+        this.estado = DISPONIBLE;
+        this.limpia = true;
+        this.reparacion = false;
     }
 
     public Habitacion(int numero, Tipo tipo, Estado estado, double precio,boolean limpia,boolean reparacion) {

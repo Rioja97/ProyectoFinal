@@ -4,9 +4,11 @@ import com.example.Hotel.Clases.Habitacion;
 import com.example.Hotel.Clases.Hotel;
 import com.example.Hotel.Clases.Reserva;
 import com.example.Hotel.Clases.enumeradores.Estado;
+import com.example.Hotel.Clases.enumeradores.Tipo;
 import com.example.Login.Clases.LoginManager;
 import com.example.Login.Clases.Usuario;
 import com.example.Login.Enums.Rol;
+import com.example.Personas.Clases.Administrador.Administrador;
 import com.example.Personas.Clases.Pasajero.Pasajero;
 import com.example.Personas.Clases.Personal.Personal;
 import com.example.Utils.JsonManager;
@@ -40,12 +42,12 @@ public final class GestionHotel {
                     Usuario usuario = new Usuario();
                     usuario = LoginManager.iniciarSesionConReintentos();
 
-                    if(usuario.getTipoIngreso().name().equals("CLIENTE")){
+                    if(usuario.getTipoIngreso().equals("CLIENTE")){
                         System.out.println("Aca va el menu de usuarios");
                         //mostrarMenuReservas();
-                    } else if(usuario.getTipoIngreso().name().equals("ADMINISTRADOR")) {
+                    } else if(usuario.getTipoIngreso().equals("ADMINISTRADOR")) {
                         System.out.println("Aca va el menu de adminitradores");
-                    //mostrarMenuUsuarios();
+                        mostrarMenuAdministradores();
                     } else {
                         System.out.println("Aca va el menu de personas");
                         mostrarMenuReservas(sc);
@@ -67,179 +69,246 @@ public final class GestionHotel {
         }
     }
 
-       /* public static void menuPrincipal(){
+
+    private void mostrarMenuAdministradores() {
+        int opcionMenuUsuarios = -1;
+
+        while (opcionMenuUsuarios != 0) {
+            System.out.println("---------------------------------------");
+            System.out.println("0. Cerrar Sesión");
+            System.out.println("1. Gestion de usuarios");
+            System.out.println("2. Gestion de hotel");
+            System.out.println("---------------------------------------");
 
             Scanner leer = new Scanner(System.in);
-            int opcionMenu = -1;
+            opcionMenuUsuarios = leer.nextInt();
+            leer.nextLine(); // Limpiar el buffer
 
-            while (opcionMenu != 0) {
-                System.out.println("---------------------------------------");
-                System.out.println("1. Gestión de Usuarios");
-                System.out.println("2. Gestión de Reservas");
-                System.out.println("3. Registro de Usuario");
-                System.out.println("0. Cerrar sesión");
-                System.out.println("---------------------------------------");
-
-                opcionMenu = leer.nextInt();
-                leer.nextLine();  // Para limpiar el buffer
-
-                switch (opcionMenu) {
-                    case 1:
-
-                        mostrarMenuUsuarios(leer);
-                        break;
-
-                    case 2:
-                        mostrarMenuReservas(leer);
-                        break;
-
-                    case 3:
-                        //registrarUsuario(leer);
-                        break;
-
-                    case 0:
-                        System.out.println("Sesión cerrada.");
-                        break;
-
-                    default:
-                        System.out.println("Opción no válida, por favor intente nuevamente.");
-                }
-            }*/
-
-
-        private void mostrarMenuUsuarios(Scanner leer) {
-            int opcionMenuUsuarios = -1;
-
-            while (opcionMenuUsuarios != 0) {
-                System.out.println("---------------------------------------");
-                System.out.println("1. Ver Usuarios");
-                System.out.println("2. Eliminar Usuario");
-                System.out.println("0. Volver al menú principal");
-                System.out.println("---------------------------------------");
-
-                opcionMenuUsuarios = leer.nextInt();
-                leer.nextLine(); // Limpiar el buffer
-
-                switch (opcionMenuUsuarios) {
-                    case 1:
-                        verUsuarios();
-                        break;
-
-                    case 2:
-                        eliminarUsuario(leer);
-                        break;
-
-                    case 0:
-                        System.out.println("Volviendo al menú principal.");
-                        break;
-
-                    default:
-                        System.out.println("Opción no válida, por favor intente nuevamente.");
-                }
-            }
-        }
-
-        private  void verUsuarios() {
-            JSONArray arrayUsuarios = JsonManager.FileAJsonArray("usuarios.json");
-            TreeSet<Usuario> listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arrayUsuarios);
-
-            for (Usuario u : listaUsuarios) {
-                System.out.println(u.toString());
-            }
-        }
-
-        private  void eliminarUsuario(Scanner leer) {
-            System.out.println("Ingrese el username del usuario a eliminar:");
-            String nomUsuario = leer.nextLine();
-
-            JSONArray arrayUsuarios = JsonManager.FileAJsonArray("usuarios.json");
-            TreeSet<Usuario> listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arrayUsuarios);
-
-            Usuario usuarioAEliminar = null;
-            for (Usuario usuario : listaUsuarios) {
-                if (usuario.getUsername().equals(nomUsuario)) {
-                    usuarioAEliminar = usuario;
+            switch (opcionMenuUsuarios) {
+                case 1:
+                    mostrarMenuGestionUsuarios();
                     break;
-                }
-            }
 
-            if (usuarioAEliminar != null) {
-                listaUsuarios.remove(usuarioAEliminar);
-                JSONArray arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
-                JsonManager.JsonArrayAFile(arr, "usuarios.json");
-                System.out.println("Usuario " + nomUsuario + " eliminado correctamente.");
-            } else {
-                System.out.println("Usuario no encontrado.");
+                case 2:
+                    mostrarMenuGestionHotel();
+                    break;
+
+                default:
+                    System.out.println("Opción no válida, por favor intente nuevamente.");
             }
         }
+    }
 
-        private  void mostrarMenuReservas(Scanner leer) {
-            int opcionMenuReservas = -1;
+    private void mostrarMenuGestionUsuarios() {
+        int opcionMenuUsuarios = -1;
 
-            while (opcionMenuReservas != 0) {
-                System.out.println("---------------------------------------");
-                System.out.println("1. Ver Reservas");
-                System.out.println("2. Realizar Check-In");
-                System.out.println("3. Realizar Check-Out");
-                System.out.println("4. Ver Habitaciones");
-                System.out.println("0. Volver al menú principal");
-                System.out.println("---------------------------------------");
+        while (opcionMenuUsuarios != 0) {
+            System.out.println("---------------------------------------");
+            System.out.println("1. Ver Usuarios");
+            System.out.println("2. Agregar Usuario");
+            System.out.println("3. Modificar Usuario");
+            System.out.println("3. Eliminar Usuario");
+            System.out.println("0. Volver al menú anterior");
+            System.out.println("---------------------------------------");
 
-                opcionMenuReservas = leer.nextInt();
-                leer.nextLine(); // Limpiar el buffer
-
-                switch (opcionMenuReservas) {
-                    case 1:
-                        //verReservas();
-                        break;
-
-                    case 2:
-                        //realizarCheckIn(leer);
-                        break;
-
-                    case 3:
-                        //realizarCheckOut(leer);
-                        break;
-
-                    case 4:
-                        //verHabitaciones();
-                        break;
-
-                    case 0:
-                        System.out.println("Volviendo al menú principal.");
-                        break;
-
-                    default:
-                        System.out.println("Opción no válida, por favor intente nuevamente.");
-                }
-            }
-        }
-
-         private  Pasajero crearPasajero(){
-
-            Pasajero pasajero = new Pasajero();
             Scanner leer = new Scanner(System.in);
+            opcionMenuUsuarios = leer.nextInt();
+            leer.nextLine(); // Limpiar el buffer
 
-            System.out.println("Ingrese su nombre de usuario:");
-            pasajero.setUsername(leer.nextLine());
+            switch (opcionMenuUsuarios) {
+                case 1:
+                    //lasVegas.verUsuarios();
+                    break;
 
-            System.out.println("Ingrese la contraseña: ");
-            pasajero.setPassword(leer.nextLine());
+                case 2:
+                    lasVegas.agregarUsuario(pedirUsuario());
+                    break;
 
-            System.out.println("Ingrese su nombre y apellido:");
-            pasajero.setNombreApellido(leer.nextLine());
+                case 3:
+                    //lasVegas.modificarUsuario(usuario, pedirUsuario());
+                    break;
 
-            System.out.println("Ingrese su DNI:");
-            pasajero.setDni(leer.nextInt());
-            leer.nextLine();
+                case 4:
+                    //lasVegas.eliminarUsuario(String username);
 
-            System.out.println("Ingrese su direccion:");
-            pasajero.setDireccion(leer.nextLine());
-
-            System.out.println("Ingrese su nacionalidad:");
-            pasajero.setNacionalidad(leer.nextLine());
-
-            return pasajero;
+                default:
+                    System.out.println("Opción no válida, por favor intente nuevamente.");
+            }
         }
+    }
+
+
+    private void mostrarMenuGestionHotel() {
+        int opcionMenuUsuarios = -1;
+
+        while (opcionMenuUsuarios != 0) {
+            System.out.println("---------------------------------------");
+            System.out.println("1. Añadir habitacion");
+            System.out.println("2. Quitar habitacion");
+            System.out.println("3. Modificar habitacion");
+            System.out.println("3. Ver todas las reservas");
+            System.out.println("0. Volver al menú anterior");
+            System.out.println("---------------------------------------");
+
+            Scanner leer = new Scanner(System.in);
+            opcionMenuUsuarios = leer.nextInt();
+            leer.nextLine(); // Limpiar el buffer
+
+            switch (opcionMenuUsuarios) {
+                case 1:
+                    //lasVegas.agregarHabitacion();
+                    break;
+
+                case 2:
+                    lasVegas.agregarUsuario(pedirUsuario());
+                    break;
+
+                case 3:
+                    //lasVegas.modificarUsuario(usuario, pedirUsuario());
+                    break;
+
+                case 4:
+                    //lasVegas.eliminarUsuario(String username);
+
+                default:
+                    System.out.println("Opción no válida, por favor intente nuevamente.");
+            }
+        }
+    }
+
+
+    private  void mostrarMenuReservas(Scanner leer) {
+        int opcionMenuReservas = -1;
+
+        while (opcionMenuReservas != 0) {
+            System.out.println("---------------------------------------");
+            System.out.println("1. Ver Reservas");
+            System.out.println("2. Realizar Check-In");
+            System.out.println("3. Realizar Check-Out");
+            System.out.println("4. Ver Habitaciones");
+            System.out.println("0. Volver al menú principal");
+            System.out.println("---------------------------------------");
+
+            opcionMenuReservas = leer.nextInt();
+            leer.nextLine(); // Limpiar el buffer
+
+            switch (opcionMenuReservas) {
+                case 1:
+                    //verReservas();
+                    break;
+
+                case 2:
+                    //realizarCheckIn(leer);
+                    break;
+
+                case 3:
+                    //realizarCheckOut(leer);
+                    break;
+
+                case 4:
+                    //verHabitaciones();
+                    break;
+
+                case 0:
+                    System.out.println("Volviendo al menú principal.");
+                    break;
+
+                default:
+                    System.out.println("Opción no válida, por favor intente nuevamente.");
+            }
+        }
+    }
+
+     private  Pasajero crearPasajero(){
+
+        Pasajero pasajero = new Pasajero();
+        Scanner leer = new Scanner(System.in);
+
+        System.out.println("Ingrese su nombre de usuario:");
+        pasajero.setUsername(leer.nextLine());
+
+        System.out.println("Ingrese la contraseña: ");
+        pasajero.setPassword(leer.nextLine());
+
+        System.out.println("Ingrese su nombre y apellido:");
+        pasajero.setNombreApellido(leer.nextLine());
+
+        System.out.println("Ingrese su DNI:");
+        pasajero.setDni(leer.nextInt());
+        leer.nextLine();
+
+        System.out.println("Ingrese su direccion:");
+        pasajero.setDireccion(leer.nextLine());
+
+        System.out.println("Ingrese su nacionalidad:");
+        pasajero.setNacionalidad(leer.nextLine());
+
+        return pasajero;
+    }
+
+    public <T extends Usuario> Usuario pedirUsuario(){
+
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("Creación del usuario...");
+        System.out.println("    Ingrese el nombre del usuario: ");
+        String username = scan.nextLine();
+
+        System.out.println("    Ingrese la contraseña del usuario: ");
+        String password = scan.nextLine();
+
+        System.out.println("    Ingrese el nombre y apellido del usuario: ");
+        String nombreApellido = scan.nextLine();
+
+        System.out.println("Ingrese el rol del usuario nuevo: ");
+        System.out.println("    1. Personal general del hotel");
+        System.out.println("    1. Administrador de sistema");
+        System.out.println("    Su opcion: ");
+
+        int opcion = scan.nextInt();
+        scan.nextLine();
+
+        if(opcion == 1){
+            Personal personal = new Personal(username, password, Rol.PERSONAL_LIMPIEZA, nombreApellido);
+            return personal;
+        } else{
+            Administrador administrador = new Administrador(username, password, Rol.ADMINISTRADOR, nombreApellido);
+            return administrador;
+        }
+    }
+
+
+    public static Habitacion crearHabitacion(){
+
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("Creacion de la habitacion...");
+        System.out.println("    Ingrese el número de la habitación");
+        int numero = scan.nextInt();
+        scan.nextLine();
+
+        System.out.println("    Ingrese el precio de la habitación");
+        int precio = scan.nextInt();
+        scan.nextLine();
+
+        System.out.println("    Ingrese el tipo de la habitación");
+        System.out.println("        1. Simple");
+        System.out.println("        2. Doble");
+        String tipo = scan.nextLine();
+
+        Habitacion habitacion = new Habitacion();
+
+        if (tipo.equals("SIMPLE")){
+            habitacion.setNumero(numero);
+            habitacion.setTipo(Tipo.SIMPLE);
+            habitacion.setPrecioPorNoche(precio);
+        } else{
+            habitacion.setNumero(numero);
+            habitacion.setTipo(Tipo.SIMPLE);
+            habitacion.setPrecioPorNoche(precio);
+        }
+        return habitacion;
+    }
+
 }
 
