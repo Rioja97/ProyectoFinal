@@ -50,7 +50,7 @@ public final class GestionHotel {
                         mostrarMenuAdministradores();
                     } else {
                         System.out.println("Aca va el menu de personas");
-                        mostrarMenuClienteReservas();
+                        mostrarMenuClienteReservas(usuario);
                     }
 
                 case 2:
@@ -188,34 +188,23 @@ public final class GestionHotel {
     }
 
 
-    private  void mostrarMenuClienteReservas() {
+    private  void mostrarMenuClienteReservas(Usuario usuario) {
         int opcionMenuReservas = -1;
 
         while (opcionMenuReservas != 0) {
             System.out.println("---------------------------------------");
             System.out.println("1. Ver Reservas");
-            System.out.println("4. Ver Habitaciones");
+            System.out.println("2. Realizar Reserva");
+            System.out.println("2. Ver Habitaciones disponibles");
             System.out.println("0. Volver al menú principal");
             System.out.println("---------------------------------------");
 
-            opcionMenuReservas = leer.nextInt();
-            leer.nextLine(); // Limpiar el buffer
-
             switch (opcionMenuReservas) {
                 case 1:
-                    //verReservas();
+                    System.out.println(lasVegas.getReservas());
                     break;
-
                 case 2:
-                    //realizarCheckIn(leer);
-                    break;
 
-                case 3:
-                    //realizarCheckOut(leer);
-                    break;
-
-                case 4:
-                    //verHabitaciones();
                     break;
 
                 case 0:
@@ -319,6 +308,17 @@ public final class GestionHotel {
             habitacion.setPrecioPorNoche(precio);
         }
         return habitacion;
+    }
+
+    private static Reserva crearReserva(Pasajero pasajero, int habitacion){
+
+        Scanner scan = new Scanner(System.in);
+        Reserva reserva = new Reserva();
+
+        System.out.println("Creacion de la reserva...");
+
+        reserva.set
+
     }
 
 }
