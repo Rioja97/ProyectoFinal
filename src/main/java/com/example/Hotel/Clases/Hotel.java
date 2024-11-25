@@ -24,6 +24,10 @@ public class Hotel {
         this.usuarios = new TreeSet<>();
     }
 
+    public void modificarUsuario(Usuario usuario,String username){
+        String msj=LoginManager.modificarUsuario(username,usuario);
+    }
+
     public void agregarUsuario(Usuario usuario){
 
         LoginManager.agregarUsuario(usuario);
