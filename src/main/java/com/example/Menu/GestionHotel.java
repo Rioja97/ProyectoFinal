@@ -127,7 +127,7 @@ public final class GestionHotel {
                 case 3:
                     System.out.println("Ingrese el nombre de usuario a modificar: ");
                     String username = leer.nextLine();
-                    lasVegas.modificarUsuario(username, pedirUsuario());
+                    lasVegas.modificarUsuario(pedirUsuario(),username);
                     break;
 
                 case 4:
