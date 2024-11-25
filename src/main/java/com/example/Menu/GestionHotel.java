@@ -11,10 +11,8 @@ import com.example.Personas.Clases.Pasajero.Pasajero;
 import com.example.Personas.Clases.Personal.Personal;
 import com.example.Utils.JsonManager;
 import org.json.JSONArray;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.TreeSet;
+
+import java.util.*;
 
 public final class GestionHotel {
 
@@ -50,6 +48,7 @@ public final class GestionHotel {
                     //mostrarMenuUsuarios();
                     } else {
                         System.out.println("Aca va el menu de personas");
+                        mostrarMenuReservas(sc);
                     }
 
                 case 2:
@@ -216,34 +215,31 @@ public final class GestionHotel {
             }
         }
 
+         private  Pasajero crearPasajero(){
 
+            Pasajero pasajero = new Pasajero();
+            Scanner leer = new Scanner(System.in);
 
+            System.out.println("Ingrese su nombre de usuario:");
+            pasajero.setUsername(leer.nextLine());
 
-    private  Pasajero crearPasajero(){
+            System.out.println("Ingrese la contraseña: ");
+            pasajero.setPassword(leer.nextLine());
 
-        Pasajero pasajero = new Pasajero();
-        Scanner leer = new Scanner(System.in);
+            System.out.println("Ingrese su nombre y apellido:");
+            pasajero.setNombreApellido(leer.nextLine());
 
-        System.out.println("Ingrese su nombre de usuario:");
-        pasajero.setUsername(leer.nextLine());
+            System.out.println("Ingrese su DNI:");
+            pasajero.setDni(leer.nextInt());
+            leer.nextLine();
 
-        System.out.println("Ingrese la contraseña: ");
-        pasajero.setPassword(leer.nextLine());
+            System.out.println("Ingrese su direccion:");
+            pasajero.setDireccion(leer.nextLine());
 
-        System.out.println("Ingrese su nombre y apellido:");
-        pasajero.setNombreApellido(leer.nextLine());
+            System.out.println("Ingrese su nacionalidad:");
+            pasajero.setNacionalidad(leer.nextLine());
 
-        System.out.println("Ingrese su DNI:");
-        pasajero.setDni(leer.nextInt());
-        leer.nextLine();
-
-        System.out.println("Ingrese su direccion:");
-        pasajero.setDireccion(leer.nextLine());
-
-        System.out.println("Ingrese su nacionalidad:");
-        pasajero.setNacionalidad(leer.nextLine());
-
-        return pasajero;
-    }
+            return pasajero;
+        }
 }
 
