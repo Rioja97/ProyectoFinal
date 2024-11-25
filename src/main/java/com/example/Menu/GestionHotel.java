@@ -14,6 +14,8 @@ import com.example.Personas.Clases.Personal.Personal;
 import com.example.Utils.JsonManager;
 import org.json.JSONArray;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public final class GestionHotel {
@@ -131,7 +133,9 @@ public final class GestionHotel {
                     break;
 
                 case 4:
-                    lasVegas.eliminarUsuario(String username);
+                    System.out.println("Ingrese el nombre de usuario a modificar: ");
+                    String username1 = leer.nextLine();
+                    lasVegas.eliminarUsuario(username1);
 
                 default:
                     System.out.println("Opción no válida, por favor intente nuevamente.");
@@ -190,23 +194,57 @@ public final class GestionHotel {
 
     private  void mostrarMenuClienteReservas(Usuario usuario) {
         int opcionMenuReservas = -1;
+        Scanner sc = new Scanner(System.in);
 
         while (opcionMenuReservas != 0) {
             System.out.println("---------------------------------------");
             System.out.println("1. Ver Reservas");
             System.out.println("2. Realizar Reserva");
-            System.out.println("2. Ver Habitaciones disponibles");
+            System.out.println("3. Ver Habitaciones disponibles");
             System.out.println("0. Volver al menú principal");
             System.out.println("---------------------------------------");
 
             switch (opcionMenuReservas) {
                 case 1:
-                    System.out.println(lasVegas.getReservas());
+                    for (Reserva reserva : lasVegas.getReservas().values()) {
+                    if (reserva.getPasajero().getUsername().equals(usuario.getUsername())) {
+                        System.out.println(reserva);
+                    }
+                }
                     break;
                 case 2:
+                    System.out.print("Elige el número de la habitación: ");
+                    int numeroHabitacion = sc.nextInt();
 
+                    Habitacion habitacionSeleccionada = null;
+                    for (Habitacion habitacion : lasVegas.obtenerHabitacionesDisponibles()) {
+                        if (habitacion.getNumero() == numeroHabitacion) {
+                            habitacionSeleccionada = habitacion;
+                            break;
+                        }
+                    }
+
+                    if (habitacionSeleccionada == null) {
+                        System.out.println("Habitación no válida.");
+                        break;
+                    }
+
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+                    System.out.print("\nIntroduce la fecha de inicio (yyyy-MM-dd): ");
+                    LocalDate fechaInicio = LocalDate.parse(sc.nextLine(), formatter);
+
+                    System.out.print("Introduce la fecha de fin (yyyy-MM-dd): ");
+                    LocalDate fechaFin = LocalDate.parse(sc.nextLine(), formatter);
+
+                    if (fechaFin.isBefore(fechaInicio)) {
+                        System.out.println("La fecha de fin no puede ser anterior a la fecha de inicio.");
+                        break;
+                    }
                     break;
-
+                case 3:
+                    System.out.println(lasVegas.obtenerHabitacionesDisponibles());
+                    break;
                 case 0:
                     System.out.println("Volviendo al menú principal.");
                     break;
