@@ -280,8 +280,10 @@ public class JsonManager {
     public static Pasajero encontrarPasajeroHotel(String userName, Hotel hotel) {
 
 
+        TreeSet<Usuario> listaUsuarios = hotel.getUsuarios();
+
         // Iterar sobre la lista de usuarios
-        for (Usuario usuario: hotel.getUsuarios()) {
+        for (Usuario usuario: listaUsuarios) {
             // Comprobar si el usuario es una instancia de Pasajero y si el nombre de usuario coincide
             if (usuario instanceof Pasajero && usuario.getUsername().equals(userName)) {
                 // Realizar el casting a Pasajero y devolverlo
@@ -289,6 +291,16 @@ public class JsonManager {
             }
         }
             throw new NoSuchElementException("No se ha encontrado el usuario especificado.");
+    }
+
+    public static Habitacion encontrarHabitacionHotel(int idHabitacion, Hotel hotel) {
+
+        for (Habitacion habitacion : hotel.getHabitaciones()) {
+            if (habitacion.getNumero() == idHabitacion) {
+                return habitacion;
+            }
+        }
+        throw new NoSuchElementException("No se ha encontrado la habitacion especificada.");
     }
 
 
