@@ -41,5 +41,14 @@
         "nombreApellido": "Nahuel Ramirez",
         "tipoIngreso": "ADMINISTRADOR",
         "username": "nahu2004"
+    },
+    {
+        "password": "123",
+        "nombreApellido": "Santiago Sala",
+        "direccion": "san lorenzo 4743",
+        "tipoIngreso": "CLIENTE",
+        "dni": 47156620,
+        "username": "santi",
+        "nacionalidad": "Argentina"
     }
 ]

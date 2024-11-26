@@ -297,7 +297,11 @@ public final class GestionHotel {
                     System.out.println("Ingrese el numero de la habitación: ");
                     int numeroHabitacion = scan.nextInt();
                     scan.nextLine();
-                    personal.hacerCheckIn(JsonManager.encontrarReservaHotel(numeroHabitacion, lasVegas), lasVegas);
+                    try{
+                        personal.hacerCheckIn(JsonManager.encontrarReservaHotel(numeroHabitacion, lasVegas), lasVegas);
+                    }catch(NoSuchElementException e){
+                        System.out.println("Numero de habitacion invalido");
+                    }
                     break;
 
                 case 2:
@@ -305,7 +309,11 @@ public final class GestionHotel {
                     System.out.println("Ingrese el numero de la habitación: ");
                     int numeroHabitacion2 = scan.nextInt();
                     scan.nextLine();
-                    personal.hacerCheckOut(JsonManager.encontrarHabitacionHotel(numeroHabitacion2, lasVegas));
+                    try{
+                        personal.hacerCheckOut(JsonManager.encontrarHabitacionHotel(numeroHabitacion2, lasVegas));
+                    }catch(NoSuchElementException e){
+                        System.out.println("Numero de habitacion invalido");
+                    }
                     break;
 
                 case 3:
@@ -313,14 +321,26 @@ public final class GestionHotel {
                     System.out.println("Ingrese el numero de la habitación: ");
                     int numeroHabitacion3 = scan.nextInt();
                     scan.nextLine();
-                    personal.limpiarHabitacion(JsonManager.encontrarHabitacionHotel(numeroHabitacion3, lasVegas));
+                    for(Habitacion h : lasVegas.getHabitaciones()){
+                        if(h.getLimpia()==false){
+                            personal.limpiarHabitacion(JsonManager.encontrarHabitacionHotel(numeroHabitacion3, lasVegas));
+                            break;
+                        }
+                    }
+                    System.out.println("La habitacion ya esta limpia");
                     break;
                 case 4:
                     System.out.println(lasVegas.obtenerHabitacionesNoDisponibles());
                     System.out.println("Ingrese el numero de la habitación: ");
                     int numeroHabitacion4 = scan.nextInt();
                     scan.nextLine();
-                    personal.repararHabitacion(JsonManager.encontrarHabitacionHotel(numeroHabitacion4, lasVegas));
+                    for(Habitacion h : lasVegas.getHabitaciones()){
+                        if(h.getReparacion()==true){
+                            personal.repararHabitacion(JsonManager.encontrarHabitacionHotel(numeroHabitacion4, lasVegas));
+                            break;
+                        }
+                    }
+                    System.out.println("La habitacion no necesita reparacion");
                     break;
                 case 0:
                     System.out.println("Volviendo al Menú Principal...");
