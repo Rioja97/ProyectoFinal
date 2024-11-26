@@ -1,0 +1,18 @@
+[{
+    "pasajero": {
+        "direccion": "Brown 4146",
+        "dni": 3970261,
+        "nacionalidad": "Argentino"
+    },
+    "fechaInicio": "2024-11-26",
+    "id": 2,
+    "fechaFin": "2024-11-27",
+    "habitacion": {
+        "tipo": "SIMPLE",
+        "estado": "RESERVADO",
+        "precio": 25000,
+        "numero": 2,
+        "reparacion": false,
+        "limpia": true
+    }
+}]

@@ -437,35 +437,59 @@ public final class GestionHotel {
         return habitacion;
     }
 
-    private static Reserva crearReserva(Pasajero pasajero, Hotel hotel) throws FechaInvalidaException{
-
+    private static Reserva crearReserva(Pasajero pasajero, Hotel hotel) throws FechaInvalidaException {
         Scanner sc = new Scanner(System.in);
+
+        // Solicitar número de habitación
         System.out.print("Ingrese el número de la habitación: ");
         int numeroHabitacion = sc.nextInt();
-        Habitacion habitacion1 = new Habitacion();
 
-        try{
+        Habitacion habitacion1 = null;
+        try {
+            // Buscar la habitación en el hotel
             habitacion1 = JsonManager.encontrarHabitacionHotel(numeroHabitacion, hotel);
-        } catch (NoSuchElementException e){
-            e.printStackTrace();
+            // Si no se encuentra la habitación, lanzamos una excepción personalizada o mostramos un mensaje
+            if (habitacion1 == null) {
+                throw new NoSuchElementException("La habitación con el número " + numeroHabitacion + " no fue encontrada.");
+            }
+        } catch (NoSuchElementException e) {
+            System.err.println(e.getMessage());
+            return null; // O puedes lanzar la excepción si lo prefieres
         }
+
+        // Cambiar el estado de la habitación
         habitacion1.setEstado(Estado.RESERVADO);
 
+        // Solicitamos las fechas al usuario
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fechaInicio = null;
+        LocalDate fechaFin = null;
 
-        System.out.print("\nIntroduce la fecha de inicio (yyyy-MM-dd): ");
-        LocalDate fechaInicio = LocalDate.parse(sc.nextLine(), formatter);
+        // Limpiar el buffer
+        sc.nextLine(); // Limpiar el salto de línea residual
 
-        System.out.print("Introduce la fecha de fin (yyyy-MM-dd): ");
-        LocalDate fechaFin = LocalDate.parse(sc.nextLine(), formatter);
+        try {
+            // Solicitar fecha de inicio
+            System.out.print("\nIntroduce la fecha de inicio (yyyy-MM-dd): ");
+            fechaInicio = LocalDate.parse(sc.nextLine(), formatter);
 
-        if (fechaFin.isBefore(fechaInicio)) {
-            throw new FechaInvalidaException("La fecha de fin no puede ser menor a la fecha de comienzo");
+            // Solicitar fecha de fin
+            System.out.print("Introduce la fecha de fin (yyyy-MM-dd): ");
+            fechaFin = LocalDate.parse(sc.nextLine(), formatter);
 
+            // Validar que la fecha de fin no sea anterior a la fecha de inicio
+            if (fechaFin.isBefore(fechaInicio)) {
+                throw new FechaInvalidaException("La fecha de fin no puede ser menor a la fecha de comienzo");
+            }
+
+        } catch (FechaInvalidaException e) {
+            // Manejo de excepciones si la fecha es inválida
+            System.err.println("Error al ingresar la fecha: " + e.getMessage());
+            return null; // O puedes lanzar una excepción personalizada si lo prefieres
         }
 
-        Reserva nuevaReserva = new Reserva(pasajero, fechaInicio, fechaFin, habitacion1);
-        return nuevaReserva;
+        // Crear y devolver la nueva reserva
+        return new Reserva(pasajero, fechaInicio, fechaFin, habitacion1);
     }
 
 }

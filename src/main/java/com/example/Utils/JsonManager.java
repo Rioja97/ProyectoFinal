@@ -32,12 +32,13 @@ public class JsonManager {
         for (Usuario u : listaUsuarios) {
             JSONObject obj = new JSONObject();
 
+            // Agregar los atributos comunes de Usuario
             obj.put("username", u.getUsername());
             obj.put("passworHash", u.getPassword());
             obj.put("tipoIngreso", u.getTipoIngreso().toString());
             obj.put("nombreApellido", u.getNombreApellido());
 
-            // Verificar si el usuario es un pasajero para agregar sus atributos adicionales
+            // Si el usuario es un Pasajero, agregar atributos adicionales
             if (u instanceof Pasajero) {
                 Pasajero pasajero = (Pasajero) u;
                 obj.put("dni", pasajero.getDni());
@@ -45,8 +46,10 @@ public class JsonManager {
                 obj.put("nacionalidad", pasajero.getNacionalidad());
             }
 
+            // Agregar el objeto usuario al JSONArray
             jsonArray.put(obj);
         }
+
         return jsonArray;
     }
 
@@ -94,18 +97,12 @@ public class JsonManager {
             habitacionJson.put("limpia", reserva.getHabitacion().getLimpia());
             habitacionJson.put("reparacion", reserva.getHabitacion().getReparacion());
 
-            // Convertir consumos
-            JSONObject consumosJson = new JSONObject();
-            for (Map.Entry<Integer, String> consumoEntry : reserva.getConsumos().entrySet()) {
-                consumosJson.put(String.valueOf(consumoEntry.getKey()), consumoEntry.getValue());
-            }
 
             // Agregar atributos a reservaJson
             reservaJson.put("pasajero", pasajeroJson);
             reservaJson.put("fechaInicio", reserva.getFechaInicio().toString());
             reservaJson.put("fechaFin", reserva.getFechaFin().toString());
             reservaJson.put("habitacion", habitacionJson);
-            reservaJson.put("consumos", consumosJson);
 
             // Agregar reservaJson al arreglo
             jsonArray.put(reservaJson);
@@ -168,9 +165,20 @@ public class JsonManager {
                 listaUsuarios.add(admin);
             } else if (tipoIngreso.equals(Rol.CLIENTE)) {
                 // Si es un pasajero, necesitamos deserializar los atributos adicionales
-                int dni = obj.getInt("dni");
-                String direccion = obj.getString("direccion");
-                String nacionalidad = obj.getString("nacionalidad");
+                int dni = 0; // Valor predeterminado por si no está presente
+                String direccion = null; // Valor predeterminado por si no está presente
+                String nacionalidad = null; // Valor predeterminado por si no está presente
+
+                // Comprobamos si las claves específicas existen
+                if (obj.has("dni")) {
+                    dni = obj.getInt("dni");
+                }
+                if (obj.has("direccion")) {
+                    direccion = obj.getString("direccion");
+                }
+                if (obj.has("nacionalidad")) {
+                    nacionalidad = obj.getString("nacionalidad");
+                }
 
                 // Crear el objeto Pasajero con los atributos adicionales
                 Pasajero pasajero = new Pasajero(username, password, tipoIngreso, nombreApellido, dni, direccion, nacionalidad);
@@ -183,6 +191,7 @@ public class JsonManager {
         }
         return listaUsuarios;
     }
+
 
 
 
@@ -255,13 +264,6 @@ public class JsonManager {
             // Crear una instancia de Reserva y agregarla al mapa
             Reserva reserva = new Reserva(pasajero, fechaInicio, fechaFin, habitacion);
             reservas.put(id, reserva);
-
-            JSONObject consumosJson = reservaJson.getJSONObject("serviciosExtras");
-            Map<Integer, String> consumos = new HashMap<>();
-            for (String key : consumosJson.keySet()) {
-                consumos.put(Integer.parseInt(key), consumosJson.getString(key));
-            }
-            reserva.setConsumos(consumos);
 
         }
         return reservas;

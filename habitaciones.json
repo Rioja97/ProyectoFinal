@@ -9,7 +9,7 @@
     },
     {
         "tipo": "SIMPLE",
-        "estado": "DISPONIBLE",
+        "estado": "RESERVADO",
         "precio": 25000,
         "numero": 2,
         "reparacion": false,
