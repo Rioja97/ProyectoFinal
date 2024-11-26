@@ -297,13 +297,11 @@ public final class GestionHotel {
                     System.out.println("Ingrese el numero de la habitación: ");
                     int numeroHabitacion = scan.nextInt();
                     scan.nextLine();
-                    for(Habitacion h : lasVegas.getHabitaciones()){
-                        if(h.getNumero()==numeroHabitacion){
-                            personal.hacerCheckIn(JsonManager.encontrarReservaHotel(numeroHabitacion, lasVegas), lasVegas);
-                            break;
-                        }
+                    try{
+                        personal.hacerCheckIn(JsonManager.encontrarReservaHotel(numeroHabitacion, lasVegas), lasVegas);
+                    }catch(NoSuchElementException e){
+                        System.out.println("Numero de habitacion invalido");
                     }
-                    System.out.println("Numero de habitacion incorrecto");
                     break;
 
                 case 2:
@@ -311,13 +309,11 @@ public final class GestionHotel {
                     System.out.println("Ingrese el numero de la habitación: ");
                     int numeroHabitacion2 = scan.nextInt();
                     scan.nextLine();
-                    for(Habitacion h : lasVegas.obtenerHabitacionesNoDisponibles()){
-                        if(h.getNumero()==numeroHabitacion2){
-                            personal.hacerCheckOut(JsonManager.encontrarHabitacionHotel(numeroHabitacion2, lasVegas));
-                            break;
-                        }
+                    try{
+                        personal.hacerCheckOut(JsonManager.encontrarHabitacionHotel(numeroHabitacion2, lasVegas));
+                    }catch(NoSuchElementException e){
+                        System.out.println("Numero de habitacion invalido");
                     }
-                    System.out.println("Numero de habitacion incorrecto");
                     break;
 
                 case 3:

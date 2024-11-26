@@ -21,21 +21,15 @@ public class Personal extends Usuario{
     }
 
     public void limpiarHabitacion(Habitacion habitacion){
-
         habitacion.setLimpia(true);
     }
 
     public void repararHabitacion(Habitacion habitacion){
-
         habitacion.setReparacion(false);
-
     }
 
     public void hacerCheckIn(Reserva reserva, Hotel hotel){
-
-
         reserva.getHabitacion().setEstado(Estado.OCUPADO);
-
     }
 
 
