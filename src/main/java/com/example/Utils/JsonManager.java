@@ -54,8 +54,8 @@ public class JsonManager {
             obj.put("tipo", h.getTipo().toString());
             obj.put("estado", h.getEstado().toString());
             obj.put("precio", h.getPrecio());
-            obj.put("limpia", h.getEstado().toString());
-            obj.put("reparacion", h.getEstado().toString());
+            obj.put("limpia", h.getLimpia());
+            obj.put("reparacion", h.getReparacion());
 
             jsonArray.put(obj);
         }
@@ -77,21 +77,28 @@ public class JsonManager {
             pasajeroJson.put("direccion", reserva.getPasajero().getDireccion());
             pasajeroJson.put("nacionalidad", reserva.getPasajero().getNacionalidad());
 
-            // Convertir datos de habitacion
+            // Convertir datos de habitacion (todos los atributos)
             JSONObject habitacionJson = new JSONObject();
             habitacionJson.put("numero", reserva.getHabitacion().getNumero());
-            habitacionJson.put("tipo", reserva.getHabitacion().getTipo());
+            habitacionJson.put("tipo", reserva.getHabitacion().getTipo().toString());  // Asegúrate de convertir a String
+            habitacionJson.put("estado", reserva.getHabitacion().getEstado().toString()); // Agregado estado
+            habitacionJson.put("precio", reserva.getHabitacion().getPrecio());  // Agregado precio
+            habitacionJson.put("limpia", reserva.getHabitacion().getLimpia()); // Agregado limpia
+            habitacionJson.put("reparacion", reserva.getHabitacion().getReparacion());  // Agregado reparacion
 
             // Agregar atributos a reservaJson
             reservaJson.put("pasajero", pasajeroJson);
-            reservaJson.put("fechaInicio", reserva.getFechaInicio().toString());
-            reservaJson.put("fechaFin", reserva.getFechaFin().toString());
+            reservaJson.put("fechaInicio", reserva.getFechaInicio().toString());  // Convertir la fecha de inicio
+            reservaJson.put("fechaFin", reserva.getFechaFin().toString());  // Convertir la fecha de fin
             reservaJson.put("habitacion", habitacionJson);
 
             jsonArray.put(reservaJson);
         }
         return jsonArray;
     }
+
+
+
 
     public static void JsonArrayAFile(JSONArray jsonArray, String nombreArchivo) {
         try (FileWriter fileWriter = new FileWriter(nombreArchivo)) {
@@ -122,38 +129,40 @@ public class JsonManager {
     }
 
 
-        public static TreeSet<Usuario> jsonArrayAListaUsuarios(JSONArray jsonArray) {
-            TreeSet<Usuario> listaUsuarios = new TreeSet<>();
+    public static TreeSet<Usuario> jsonArrayAListaUsuarios(JSONArray jsonArray) {
+        TreeSet<Usuario> listaUsuarios = new TreeSet<>();
 
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject obj = jsonArray.getJSONObject(i);
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject obj = jsonArray.getJSONObject(i);
 
-                if(jsonArray == null){
-                    System.out.println("No se ha encontrado el archivo origen");
-                    return null;
-                }
-
-                // Obtener los valores de cada campo
-                String username = obj.getString("username");
-                String password = obj.getString("passworHash");
-                Rol tipoIngreso = Rol.valueOf(obj.getString("tipoIngreso"));
-                String nombreApellido = obj.getString("nombreApellido");
-
-                // Crear una instancia de Usuario y agregarla al TreeSet
-                //ADMINISTRADOR, PERSONAL_LIMPIEZA, CLIENTE
-                if(tipoIngreso.toString() == "ADMINISTRADOR"){
-                    Administrador admin = new Administrador(username, password, tipoIngreso, nombreApellido);
-                    listaUsuarios.add(admin);
-                } else if (tipoIngreso.toString() == "CLIENTE") {
-                    Pasajero pasajero = new Pasajero(username, password, tipoIngreso, nombreApellido);
-                    listaUsuarios.add(pasajero);
-                } else{
-                    Personal personal = new Personal(username, password, tipoIngreso, nombreApellido);
-                    listaUsuarios.add(personal);
-                }
+            if(jsonArray == null){
+                System.out.println("No se ha encontrado el archivo origen");
+                return null;
             }
-            return listaUsuarios;
+
+            // Obtener los valores de cada campo
+            String username = obj.getString("username");
+            String password = obj.getString("passworHash");
+            Rol tipoIngreso = Rol.valueOf(obj.getString("tipoIngreso"));
+            String nombreApellido = obj.getString("nombreApellido");
+
+            // Crear una instancia de Usuario y agregarla al TreeSet
+            //ADMINISTRADOR, PERSONAL_LIMPIEZA, CLIENTE
+            if(tipoIngreso.equals(Rol.ADMINISTRADOR)){
+                Administrador admin = new Administrador(username, password, tipoIngreso, nombreApellido);
+                listaUsuarios.add(admin);
+            } else if (tipoIngreso.equals(Rol.CLIENTE)) {
+                Pasajero pasajero = new Pasajero(username, password, tipoIngreso, nombreApellido);
+                listaUsuarios.add(pasajero);
+            } else {
+                Personal personal = new Personal(username, password, tipoIngreso, nombreApellido);
+                listaUsuarios.add(personal);
+            }
         }
+        return listaUsuarios;
+    }
+
+
 
     public static ArrayList<Habitacion> jsonArrayAHabitaciones(JSONArray jsonArray) {
         ArrayList<Habitacion> listaHabitaciones = new ArrayList<>();
@@ -166,15 +175,16 @@ public class JsonManager {
             Tipo tipo = Tipo.valueOf(obj.getString("tipo"));
             Estado estado = Estado.valueOf(obj.getString("estado"));
             double precio = obj.getDouble("precio");
-            boolean limpia = obj.getBoolean("limpia");
-            boolean reparacion = obj.getBoolean("reparacion");
+            boolean limpia = obj.getBoolean("limpia");  // Corregido, ahora se guarda correctamente
+            boolean reparacion = obj.getBoolean("reparacion");  // Corregido, ahora se guarda correctamente
 
             // Crear una instancia de Habitacion y agregarla al ArrayList
-            Habitacion habitacion = new Habitacion(numero,tipo,estado,precio,limpia,reparacion);
+            Habitacion habitacion = new Habitacion(numero, tipo, estado, precio, limpia, reparacion);
             listaHabitaciones.add(habitacion);
         }
         return listaHabitaciones;
     }
+
 
 
     public static HashMap<Integer, Reserva> jsonArrayAResevas(JSONArray jsonArray) {
@@ -193,13 +203,17 @@ public class JsonManager {
             String nacionalidad = pasajeroJson.getString("nacionalidad");
             Pasajero pasajero = new Pasajero(dni, direccion, nacionalidad);
 
-            // Obtener los datos de habitacion
+            // Obtener los datos de habitacion (todos los atributos)
             JSONObject habitacionJson = reservaJson.getJSONObject("habitacion");
             int numeroHabitacion = habitacionJson.getInt("numero");
             Tipo tipo = Tipo.valueOf(habitacionJson.getString("tipo"));
-            Habitacion habitacion = new Habitacion(numeroHabitacion,tipo);
+            Estado estado = Estado.valueOf(habitacionJson.getString("estado"));  // Convertir el estado de String a Estado
+            double precio = habitacionJson.getDouble("precio");  // Obtener el precio
+            boolean limpia = habitacionJson.getBoolean("limpia");  // Obtener el estado de limpieza
+            boolean reparacion = habitacionJson.getBoolean("reparacion");  // Obtener el estado de reparación
+            Habitacion habitacion = new Habitacion(numeroHabitacion, tipo, estado, precio, limpia, reparacion);
 
-            // Obtener las fechas de la reserva
+            // Obtener las fechas de la reserva (convertir de String a LocalDate)
             LocalDate fechaInicio = LocalDate.parse(reservaJson.getString("fechaInicio"));
             LocalDate fechaFin = LocalDate.parse(reservaJson.getString("fechaFin"));
 
@@ -209,6 +223,8 @@ public class JsonManager {
         }
         return reservas;
     }
+
+
 
 
     public static boolean comprobarExistenciaArchivo(String nombreArchivo) {

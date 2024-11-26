@@ -51,11 +51,11 @@ public class Habitacion {
         this.numero = numero;
     }
 
-    public boolean isReparacion() {return reparacion;}
+    public boolean getReparacion() {return reparacion;}
 
     public void setReparacion(boolean reparacion) {this.reparacion = reparacion;}
 
-    public boolean isLimpia() {return limpia;}
+    public boolean getLimpia() {return limpia;}
 
     public void setLimpia(boolean limpia) {this.limpia = limpia;}
 
