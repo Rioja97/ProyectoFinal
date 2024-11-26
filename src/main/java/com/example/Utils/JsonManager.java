@@ -27,10 +27,9 @@ public class JsonManager {
 
     // Convertir TreeSet a JSONArray
     public static JSONArray listaUsuariosAJsonArray(TreeSet<Usuario> listaUsuarios) {
-
         JSONArray jsonArray = new JSONArray();
 
-        for (Usuario u: listaUsuarios){
+        for (Usuario u : listaUsuarios) {
             JSONObject obj = new JSONObject();
 
             obj.put("username", u.getUsername());
@@ -38,10 +37,19 @@ public class JsonManager {
             obj.put("tipoIngreso", u.getTipoIngreso().toString());
             obj.put("nombreApellido", u.getNombreApellido());
 
+            // Verificar si el usuario es un pasajero para agregar sus atributos adicionales
+            if (u instanceof Pasajero) {
+                Pasajero pasajero = (Pasajero) u;
+                obj.put("dni", pasajero.getDni());
+                obj.put("direccion", pasajero.getDireccion());
+                obj.put("nacionalidad", pasajero.getNacionalidad());
+            }
+
             jsonArray.put(obj);
         }
         return jsonArray;
     }
+
 
 
     public static JSONArray habitacionesAJsonArray(ArrayList<Habitacion> listaHabitaciones) {
@@ -140,35 +148,42 @@ public class JsonManager {
     public static TreeSet<Usuario> jsonArrayAListaUsuarios(JSONArray jsonArray) {
         TreeSet<Usuario> listaUsuarios = new TreeSet<>();
 
+        if (jsonArray == null) {
+            System.out.println("No se ha encontrado el archivo origen");
+            return null;
+        }
+
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
 
-            if(jsonArray == null){
-                System.out.println("No se ha encontrado el archivo origen");
-                return null;
-            }
-
-            // Obtener los valores de cada campo
+            // Obtener los valores comunes de cada usuario
             String username = obj.getString("username");
             String password = obj.getString("passworHash");
             Rol tipoIngreso = Rol.valueOf(obj.getString("tipoIngreso"));
             String nombreApellido = obj.getString("nombreApellido");
 
             // Crear una instancia de Usuario y agregarla al TreeSet
-            //ADMINISTRADOR, PERSONAL_LIMPIEZA, CLIENTE
-            if(tipoIngreso.equals(Rol.ADMINISTRADOR)){
+            if (tipoIngreso.equals(Rol.ADMINISTRADOR)) {
                 Administrador admin = new Administrador(username, password, tipoIngreso, nombreApellido);
                 listaUsuarios.add(admin);
             } else if (tipoIngreso.equals(Rol.CLIENTE)) {
-                Pasajero pasajero = new Pasajero(username, password, tipoIngreso, nombreApellido);
+                // Si es un pasajero, necesitamos deserializar los atributos adicionales
+                int dni = obj.getInt("dni");
+                String direccion = obj.getString("direccion");
+                String nacionalidad = obj.getString("nacionalidad");
+
+                // Crear el objeto Pasajero con los atributos adicionales
+                Pasajero pasajero = new Pasajero(username, password, tipoIngreso, nombreApellido, dni, direccion, nacionalidad);
                 listaUsuarios.add(pasajero);
             } else {
+                // Si es un personal, no tiene atributos adicionales
                 Personal personal = new Personal(username, password, tipoIngreso, nombreApellido);
                 listaUsuarios.add(personal);
             }
         }
         return listaUsuarios;
     }
+
 
 
 

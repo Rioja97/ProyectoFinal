@@ -15,6 +15,13 @@ public class Pasajero extends Usuario {
 
     }
 
+    public Pasajero(String username, String password, Rol tipoIngreso, String nombreApellido, int dni, String direccion, String nacionalidad) {
+        super(username, password, tipoIngreso, nombreApellido);
+        this.dni = dni;
+        this.direccion = direccion;
+        this.nacionalidad = nacionalidad;
+    }
+
     public Pasajero(int dni, String direccion, String nacionalidad) {
         this.dni = dni;
         this.direccion = direccion;
