@@ -29,7 +29,6 @@ public class Administrador extends Usuario {
             }
         }
         listaUsuarios.add(usuario);
-
         hotel.setUsuarios(listaUsuarios);
 
         return "Se ha agregado el usuario exitosamente";
@@ -43,19 +42,20 @@ public class Administrador extends Usuario {
 
         Usuario usuario = new Usuario();
 
-        for (Usuario u: listaUsuarios){
+        for (Usuario u: listaUsuarios) {
 
-            if(u.getUsername().equals(nombreUsuario)){
+            if (u.getUsername().equals(nombreUsuario)) {
                 usuario.setPassword(modificado.getPassword());
                 usuario.setTipoIngreso(modificado.getTipoIngreso());
                 usuario.setNombreApellido(modificado.getNombreApellido());
 
+                hotel.setUsuarios(listaUsuarios);
                 return "Se ha modificado el usuario exitosamente";
             }
-            hotel.setUsuarios(listaUsuarios);
 
-            throw new NoSuchElementException("Usuario no encontrado");
         }
+        hotel.setUsuarios(listaUsuarios);
+        throw new NoSuchElementException("Usuario no encontrado");
     }
 
 
@@ -66,13 +66,13 @@ public class Administrador extends Usuario {
         for (Usuario u: listaUsuarios){
             if(u.getUsername().equals(nombreUsuario)){
                 listaUsuarios.remove(u);
+                hotel.setUsuarios(listaUsuarios);
+
                 return "Se ha eliminado el usuario exitosamente";
             }
-            hotel.setUsuarios(listaUsuarios);
-
-            throw new NoSuchElementException("Usuario no encontrado");
-
         }
+        hotel.setUsuarios(listaUsuarios);
+        throw new NoSuchElementException("Usuario no encontrado");
     }
 
 

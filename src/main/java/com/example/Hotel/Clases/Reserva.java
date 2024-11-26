@@ -12,7 +12,6 @@ public class Reserva {
     private Habitacion habitacion;
     private Map<Integer,String> consumos;
 
-    public Reserva(){}
 
     public Reserva(Pasajero pasajero, LocalDate fechaInicio, LocalDate fechaFin, Habitacion habitacion) {
         this.pasajero = pasajero;

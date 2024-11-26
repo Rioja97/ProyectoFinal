@@ -1,27 +1,20 @@
 [
     {
-        "nombreApellido": "Carlos Fontana",
         "password": "admin",
+        "nombreApellido": "Carlos Fontana",
         "tipoIngreso": "ADMINISTRADOR",
         "username": "admin"
     },
     {
-        "nombreApellido": "Daniela Fernandez",
-        "password": "252599746236ae3663e3bc13fe846fc63287836871698722ddd4084d87f895c4",
-        "tipoIngreso": "CLIENTE",
-        "dni": 0,
-        "username": "daniela1"
-    },
-    {
-        "nombreApellido": "Emamnuel Fossati",
         "password": "123",
+        "nombreApellido": "Emamnuel Fossati",
         "tipoIngreso": "CLIENTE",
         "dni": 0,
         "username": "emma"
     },
     {
-        "nombreApellido": "Emmanuel Fossati",
         "password": "123",
+        "nombreApellido": "Emmanuel Fossati",
         "direccion": "Brown 4146",
         "tipoIngreso": "CLIENTE",
         "dni": 3970261,
@@ -29,28 +22,28 @@
         "nacionalidad": "Argentino"
     },
     {
-        "nombreApellido": "Emmanuel Fossati",
         "password": "123",
+        "nombreApellido": "Emmanuel Fossati",
         "tipoIngreso": "CLIENTE",
         "dni": 0,
         "username": "emmafossati"
     },
     {
-        "nombreApellido": "Fausto Conte",
         "password": "fausto123",
+        "nombreApellido": "Fausto Conte",
         "tipoIngreso": "PERSONAL_LIMPIEZA",
         "username": "fausto12"
     },
     {
-        "nombreApellido": "Jorge Brito",
         "password": "jorge123",
+        "nombreApellido": "Jorge Brito",
         "tipoIngreso": "CLIENTE",
         "dni": 0,
         "username": "jorge02"
     },
     {
+        "password": "123",
         "nombreApellido": "Santiago Sala",
-        "passworHash": "123",
         "tipoIngreso": "CLIENTE",
         "dni": 0,
         "username": "santi"

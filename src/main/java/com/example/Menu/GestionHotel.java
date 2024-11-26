@@ -43,8 +43,7 @@ public final class GestionHotel {
 
             switch (opcion) {
                 case 1:
-                    Usuario usuario = new Usuario();
-                    usuario = LoginManager.iniciarSesionConReintentos();
+                    Usuario usuario = LoginManager.iniciarSesionConReintentos();
 
                     if(usuario.getTipoIngreso().name().equals("CLIENTE")){
                         System.out.println("Aca va el menu de usuarios");
@@ -111,6 +110,7 @@ public final class GestionHotel {
         }
     }
 
+
     private void mostrarMenuGestionUsuarios(Administrador administrador) {
         int opcionMenuUsuarios = -1;
 
@@ -123,7 +123,8 @@ public final class GestionHotel {
             System.out.println("1. Ver Usuarios");
             System.out.println("2. Agregar Usuario");
             System.out.println("3. Modificar Usuario");
-            System.out.println("3. Eliminar Usuario");
+            System.out.println("4. Eliminar Usuario");
+            System.out.println("5. Aplicar cambios");
             System.out.println("0. Volver al menú anterior");
             System.out.println("---------------------------------------");
 
@@ -138,7 +139,7 @@ public final class GestionHotel {
 
                 case 2:
                     try {
-                        lasVegas.agregarUsuario(crearPersonaloAdmin(), administrador, lasVegas);
+                        System.out.println(lasVegas.agregarUsuario(crearPersonaloAdmin(), administrador, lasVegas));
                     } catch (UsuarioRepetidoException e) {
                         System.out.println(e.getMessage());
                     }
@@ -148,7 +149,7 @@ public final class GestionHotel {
                     try {
                         System.out.println("Ingrese el nombre de usuario a modificar: ");
                         String username = leer.nextLine();
-                        lasVegas.modificarUsuario(crearPersonaloAdmin(),username, administrador, lasVegas);
+                        System.out.println(lasVegas.modificarUsuario(crearPersonaloAdmin(),username, administrador, lasVegas));
                     } catch (NoSuchElementException e) {
                         System.out.println(e.getMessage());
                     }
@@ -158,17 +159,21 @@ public final class GestionHotel {
                     try {
                         System.out.println("Ingrese el nombre de usuario a modificar: ");
                         String username1 = leer.nextLine();
-                        lasVegas.eliminarUsuario(username1, administrador, lasVegas);
+                        System.out.println(lasVegas.eliminarUsuario(username1, administrador, lasVegas));
                     } catch (NoSuchElementException e) {
                         System.out.println(e.getMessage());
                     }
+                    break;
+
+                case 5:
+                    array = JsonManager.listaUsuariosAJsonArray(usuarios);
+                    JsonManager.JsonArrayAFile(array, "usuarios.json");
+                    break;
 
                 default:
                     System.out.println("Opción no válida, por favor intente nuevamente.");
             }
         }
-        array = JsonManager.listaUsuariosAJsonArray(usuarios);
-        JsonManager.JsonArrayAFile(array, "usuarios.json");
     }
 
 

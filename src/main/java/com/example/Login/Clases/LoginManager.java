@@ -1,16 +1,10 @@
 package com.example.Login.Clases;
 
-import com.example.Hotel.Clases.Hotel;
-import com.example.Interfaces.MetodosUsuarios;
 import com.example.Login.LoginExceptions.IngresoIncorrectoException;
-import com.example.Login.LoginExceptions.UsuarioRepetidoException;
 import com.example.Utils.JsonManager;
 import org.json.JSONArray;
-
 import java.io.FileNotFoundException;
-import java.util.NoSuchElementException;
 import java.util.TreeSet;
-
 public class LoginManager{
 
 
@@ -76,8 +70,6 @@ public class LoginManager{
         }
         return null;  // Si los intentos se agotaron o hubo un error, retorna null
     }
-
-
 
     //Metodo para ingresar los datos al usuario
     private static String solicitarEntrada(String mensaje) {
