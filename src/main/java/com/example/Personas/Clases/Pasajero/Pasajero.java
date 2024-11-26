@@ -76,3 +76,4 @@ public class Pasajero extends Usuario {
                 + super.toString();
     }
 }
+
