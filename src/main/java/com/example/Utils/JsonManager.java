@@ -1,6 +1,7 @@
 package com.example.Utils;
 
 import com.example.Hotel.Clases.Habitacion;
+import com.example.Hotel.Clases.Hotel;
 import com.example.Hotel.Clases.Reserva;
 import com.example.Hotel.Clases.enumeradores.Estado;
 import com.example.Hotel.Clases.enumeradores.Tipo;
@@ -10,7 +11,6 @@ import com.example.Personas.Clases.Administrador.Administrador;
 import com.example.Personas.Clases.Pasajero.Pasajero;
 import com.example.Personas.Clases.Personal.Personal;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -242,9 +242,8 @@ public class JsonManager {
 
 
 
-    public static Pasajero encontrarPasajero(String userName) {
+    public static Pasajero encontrarPasajeroArchivo(String userName) {
 
-        boolean flag = false;
         // Leer el arreglo JSON del archivo
         JSONArray array = JsonManager.FileAJsonArray("usuarios.json");
 
@@ -256,36 +255,40 @@ public class JsonManager {
             // Comprobar si el usuario es una instancia de Pasajero y si el nombre de usuario coincide
             if (usuario instanceof Pasajero && usuario.getUsername().equals(userName)) {
                 // Realizar el casting a Pasajero y devolverlo
-                flag = true;
                 return (Pasajero) usuario;
             }
         }
-        if(!flag){
-            throw new NoSuchElementException("No se ha encontrado el usuario especificado.");
-        }
-
-        // Devolver null si no se encuentra un Pasajero que coincida
-        return null;
+        throw new NoSuchElementException("No se ha encontrado el usuario especificado.");
     }
 
 
-    public static Habitacion encontrarHabitacion(int idHabitacion) {
+    public static Habitacion encontrarHabitacionArchivo(int idHabitacion) {
 
-        boolean flag = false;
         JSONArray array = JsonManager.FileAJsonArray("habitaciones.json");
 
         ArrayList<Habitacion> listaHabitaciones = new ArrayList<>(JsonManager.jsonArrayAHabitaciones(array));
 
         for (Habitacion habitacion : listaHabitaciones) {
             if (habitacion.getNumero() == idHabitacion) {
-                flag = true;
                 return habitacion;
             }
         }
-        if(!flag){
             throw new NoSuchElementException("No se ha encontrado la habitacion especificada.");
+    }
+
+
+    public static Pasajero encontrarPasajeroHotel(String userName, Hotel hotel) {
+
+
+        // Iterar sobre la lista de usuarios
+        for (Usuario usuario: hotel.getUsuarios()) {
+            // Comprobar si el usuario es una instancia de Pasajero y si el nombre de usuario coincide
+            if (usuario instanceof Pasajero && usuario.getUsername().equals(userName)) {
+                // Realizar el casting a Pasajero y devolverlo
+                return (Pasajero) usuario;
+            }
         }
-        return null;
+            throw new NoSuchElementException("No se ha encontrado el usuario especificado.");
     }
 
 

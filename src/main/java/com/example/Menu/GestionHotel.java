@@ -213,7 +213,7 @@ public final class GestionHotel {
                     System.out.println(lasVegas.getReservas().toString());
                     break;
                 case 2:
-                    lasVegas.
+                    lasVegas.realizarReserva(crearReserva());
                     break;
                 case 3:
                     System.out.println(lasVegas.obtenerHabitacionesDisponibles());
@@ -328,7 +328,7 @@ public final class GestionHotel {
         Habitacion habitacion1 = new Habitacion();
 
         try{
-            habitacion1 = JsonManager.encontrarHabitacion(numeroHabitacion);
+            habitacion1 = JsonManager.encontrarHabitacionArchivo(numeroHabitacion);
         } catch (NoSuchElementException e){
             e.printStackTrace();
         }
