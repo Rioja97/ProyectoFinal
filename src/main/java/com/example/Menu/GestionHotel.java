@@ -144,6 +144,47 @@ public final class GestionHotel {
         }
     }
 
+    private void mostrarMenuPersonal() {
+        int opcionMenuPersonal = -1;
+        Personal personal=new Personal();
+
+        while (opcionMenuPersonal != 0) {
+            System.out.println("---------------------------------------");
+            System.out.println("1. Realizar check-in");
+            System.out.println("2. Realizar check-out");
+            System.out.println("3. Realizar limpieza");
+            System.out.println("4. Realizar reparacion");
+            System.out.println("0. Volver al Menú Principal");
+            System.out.println("---------------------------------------");
+
+            Scanner leer = new Scanner(System.in);
+            opcionMenuPersonal = leer.nextInt();
+            leer.nextLine(); // Limpiar el buffer
+
+            switch (opcionMenuPersonal) {
+                case 1:
+                    personal.hacerCheckIn();
+                    break;
+
+                case 2:
+                    personal.hacerCheckOut();
+                    break;
+
+                case 3:
+                    personal.limpiarHabitacion();
+                    break;
+                case 4:
+                    personal.repararHabitacion();
+                    break;
+                case 0:
+                    System.out.println("Volviendo al Menú Principal...");
+                    break;
+
+                default:
+                    System.out.println("Opción no válida, por favor intente nuevamente.");
+            }
+        }
+    }
 
     private void mostrarMenuGestionHotel() {
         int opcionMenuUsuarios = -1;
@@ -340,7 +381,7 @@ public final class GestionHotel {
         Habitacion habitacion1 = new Habitacion();
 
         try{
-            habitacion1 = JsonManager.encontrarHabitacionArchivo(numeroHabitacion);
+            habitacion1 = JsonManager.encontrarHabitacion(numeroHabitacion);
         } catch (NoSuchElementException e){
             e.printStackTrace();
         }
