@@ -1,12 +1,8 @@
 package com.example.Hotel.Clases;
-import com.example.Hotel.Clases.enumeradores.Estado;
-import com.example.Hotel.Clases.enumeradores.Tipo;
-import com.example.Utils.Consumo;
+import com.example.Hotel.Enum.Estado;
+import com.example.Hotel.Enum.Tipo;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.example.Hotel.Clases.enumeradores.Estado.DISPONIBLE;
+import static com.example.Hotel.Enum.Estado.DISPONIBLE;
 
 public class Habitacion {
     private int numero;

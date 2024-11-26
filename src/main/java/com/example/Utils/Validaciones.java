@@ -6,9 +6,9 @@ import java.util.regex.Pattern;
 import com.example.Excepciones.*;
 import com.example.Hotel.Clases.Habitacion;
 import com.example.Hotel.Clases.Reserva;
-import com.example.Hotel.Clases.enumeradores.Estado;
+import com.example.Hotel.Enum.Estado;
 import com.example.Login.Clases.Usuario;
-import com.example.Personas.Clases.Administrador.Administrador;
+import com.example.Login.Clases.Administrador;
 
 
 public class Validaciones{

@@ -1,14 +1,8 @@
 package com.example.Login.Clases;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 import com.example.Login.Enums.Rol;
-import com.example.Personas.Clases.Administrador.Administrador;
-import com.example.Personas.Clases.Pasajero.Pasajero;
-import com.example.Personas.Clases.Personal.Personal;
-import org.json.JSONObject;
 
 public class Usuario implements Comparable<Usuario>{
 

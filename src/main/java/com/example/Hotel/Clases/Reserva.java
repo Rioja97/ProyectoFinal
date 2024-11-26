@@ -1,13 +1,9 @@
 package com.example.Hotel.Clases;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.Map;
-import java.util.Random;
-import java.util.SplittableRandom;
 
-import com.example.Personas.Clases.Pasajero.Pasajero;
-import com.example.Utils.Consumo;
+import com.example.Login.Clases.Pasajero;
 
 public class Reserva {
     private Pasajero pasajero;

@@ -1,20 +1,11 @@
 package com.example.Login.Clases;
 
-import com.example.Hotel.Clases.enumeradores.Tipo;
-import com.example.Login.Enums.Rol;
-import com.example.Login.Exceptions.IngresoIncorrectoException;
-import com.example.Login.Exceptions.UsuarioRepetidoException;
-import com.example.Personas.Clases.Pasajero.Pasajero;
-import com.example.Personas.Clases.Personal.Personal;
+import com.example.Login.LoginExceptions.IngresoIncorrectoException;
+import com.example.Login.LoginExceptions.UsuarioRepetidoException;
 import com.example.Utils.JsonManager;
 import org.json.JSONArray;
-import org.json.JSONException;
 
-import java.awt.desktop.SystemSleepEvent;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.TreeSet;
 

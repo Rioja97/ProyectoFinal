@@ -1,11 +1,6 @@
-package com.example.Personas.Clases.Administrador;
+package com.example.Login.Clases;
 
-import com.example.Hotel.Clases.Hotel;
-import com.example.Login.Clases.LoginManager;
-import com.example.Login.Clases.Usuario;
 import com.example.Login.Enums.Rol;
-
-import java.util.TreeSet;
 
 public class Administrador extends Usuario {
 

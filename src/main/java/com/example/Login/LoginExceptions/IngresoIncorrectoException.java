@@ -1,4 +1,4 @@
-package com.example.Login.Exceptions;
+package com.example.Login.LoginExceptions;
 
 public class IngresoIncorrectoException extends RuntimeException {
     public IngresoIncorrectoException(String message) {

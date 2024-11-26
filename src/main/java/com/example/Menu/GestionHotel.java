@@ -4,14 +4,14 @@ import com.example.Excepciones.FechaInvalidaException;
 import com.example.Hotel.Clases.Habitacion;
 import com.example.Hotel.Clases.Hotel;
 import com.example.Hotel.Clases.Reserva;
-import com.example.Hotel.Clases.enumeradores.Estado;
-import com.example.Hotel.Clases.enumeradores.Tipo;
+import com.example.Hotel.Enum.Estado;
+import com.example.Hotel.Enum.Tipo;
 import com.example.Login.Clases.LoginManager;
 import com.example.Login.Clases.Usuario;
 import com.example.Login.Enums.Rol;
-import com.example.Personas.Clases.Administrador.Administrador;
-import com.example.Personas.Clases.Pasajero.Pasajero;
-import com.example.Personas.Clases.Personal.Personal;
+import com.example.Login.Clases.Administrador;
+import com.example.Login.Clases.Pasajero;
+import com.example.Login.Clases.Personal;
 import com.example.Utils.JsonManager;
 import org.json.JSONArray;
 
@@ -279,10 +279,17 @@ public final class GestionHotel {
 
     private  void mostrarMenuClienteReservas(Pasajero usuario) {
 
+        Scanner leer = new Scanner(System.in);
+
         int opcionMenuReservas = -1;
         JSONArray array = new JSONArray(JsonManager.FileAJsonArray("reservas.json"));
         HashMap<Integer, Reserva> reservas = new HashMap<>(JsonManager.jsonArrayAMap(array));
         lasVegas.setReservas(reservas);
+
+        JSONArray arrayHabitaciones = new JSONArray(JsonManager.FileAJsonArray("habitaciones.json"));
+        ArrayList<Habitacion> habitaciones = new ArrayList<>(JsonManager.jsonArrayAHabitaciones(arrayHabitaciones));
+        lasVegas.setHabitaciones(habitaciones);
+
 
         while (opcionMenuReservas != 0) {
             System.out.println("---------------------------------------");
@@ -292,9 +299,16 @@ public final class GestionHotel {
             System.out.println("0. Volver al menú principal");
             System.out.println("---------------------------------------");
 
+            opcionMenuReservas = leer.nextInt();
+            leer.nextLine();
+
             switch (opcionMenuReservas) {
                 case 1:
-                    System.out.println(lasVegas.getReservas().toString());
+                    if(lasVegas.getReservas().isEmpty()){
+                        System.out.println("No hay ninguna reserva, realice una para verlas");
+                    } else{
+                        System.out.println(lasVegas.getReservas().toString());
+                    }
                     break;
 
                 case 2:
@@ -321,6 +335,9 @@ public final class GestionHotel {
 
         array = JsonManager.mapAJsonArray(reservas);
         JsonManager.JsonArrayAFile(array, "reservas.json");
+
+        arrayHabitaciones = JsonManager.habitacionesAJsonArray(habitaciones);
+        JsonManager.JsonArrayAFile(arrayHabitaciones, "habitaciones.json");
 
     }
 

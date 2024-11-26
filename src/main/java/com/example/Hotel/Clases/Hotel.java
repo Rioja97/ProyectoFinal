@@ -1,8 +1,7 @@
 package com.example.Hotel.Clases;
-import java.lang.reflect.Array;
 import java.util.*;
 
-import com.example.Hotel.Clases.enumeradores.Estado;
+import com.example.Hotel.Enum.Estado;
 import com.example.Login.Clases.LoginManager;
 import com.example.Login.Clases.Usuario;
 

@@ -1,11 +1,9 @@
-package com.example.Personas.Clases.Personal;
+package com.example.Login.Clases;
 
 import com.example.Hotel.Clases.Habitacion;
 import com.example.Hotel.Clases.Reserva;
-import com.example.Hotel.Clases.enumeradores.Estado;
-import com.example.Login.Clases.Usuario;
+import com.example.Hotel.Enum.Estado;
 import com.example.Login.Enums.Rol;
-import com.example.Personas.Clases.Pasajero.Pasajero;
 
 import java.util.Random;
 

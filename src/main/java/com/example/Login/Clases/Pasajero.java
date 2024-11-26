@@ -1,11 +1,8 @@
-package com.example.Personas.Clases.Pasajero;
+package com.example.Login.Clases;
 
-import com.example.Hotel.Clases.Reserva;
-import com.example.Login.Clases.Usuario;
 import com.example.Login.Enums.Rol;
 
 import java.util.Objects;
-import java.util.TreeSet;
 
 public class Pasajero extends Usuario {
 
