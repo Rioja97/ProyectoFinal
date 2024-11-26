@@ -79,11 +79,10 @@ public class Reserva {
 
     @Override
     public String toString() {
-        return "Reserva{" +
-                "pasajero=" + pasajero +
-                ", fechaInicio=" + fechaInicio +
-                ", fechaFin=" + fechaFin +
-                ", habitacion=" + habitacion +
-                '}';
+        return "Reserva:" +
+                "Pasajero = " + pasajero + "\n" +
+                ", Fecha de Inicio = " + fechaInicio + "\n" +
+                ", Fecha Fin = " + fechaFin + "\n" +
+                ", Habitacion = " + habitacion + "\n";
     }
 }

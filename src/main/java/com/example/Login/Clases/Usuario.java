@@ -79,6 +79,6 @@ public class Usuario implements Comparable<Usuario>{
                 "Username = '" + username + '\n' +
                 ", Password = '" + password + '\n' +
                 ", Tipo de Ingreso = " + tipoIngreso + '\n' +
-                ", Nombre y Apellido = '" + nombreApellido + '\n';
+                ", Nombre y Apellido = '" + nombreApellido + "\n\n";
     }
 }

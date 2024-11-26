@@ -89,12 +89,12 @@ public class Habitacion {
 
     @Override
     public String toString() {
-        return "Habitacion{" +
-                "numero=" + numero +
-                ", tipo='" + tipo + '\'' +
-                ", estado='" + estado + '\'' +
-                ", precio=" + precio +
-                ", limpia=" + limpia +
-                ", reparacion=" + reparacion +'}';
+        return "Habitacion:" +
+                "Numero = " + numero + "\n" +
+                ", Tipo = '" + tipo + "\n" +
+                ", Estado = '" + estado + "\n" +
+                ", Precio = " + precio + "\n" +
+                ", ¿Esta limpia? = " + limpia + "\n" +
+                ", ¿Necesita Reparacion? = " + reparacion + "\n\n";
     }
 }

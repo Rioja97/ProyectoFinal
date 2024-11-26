@@ -69,10 +69,10 @@ public class Pasajero extends Usuario {
 
     @Override
     public String toString() {
-        return "Pasajero{" +
-                "dni=" + dni +
-                ", direccion='" + direccion + '\'' +
-                ", nacionalidad='" + nacionalidad + '\'' +
-                "} " + super.toString();
+        return "Pasajero: " +
+                "Dni = " + dni + "\n" +
+                ", Direccion = '" + direccion + "\n" +
+                ", Nacionalidad='" + nacionalidad + "\n"
+                + super.toString();
     }
 }
