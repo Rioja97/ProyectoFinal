@@ -56,7 +56,7 @@ public class Hotel {
 
         for (Habitacion h : habitaciones) {
             if(h.getNumero() == habitacion.getNumero()) {
-                throw new HabitacionNoDisponibleException("La habitacion ya está cargada");
+                throw new HabitacionNoDisponibleException("Esta habitacion ya existe");
             }
         }
         habitaciones.add(habitacion);
@@ -66,10 +66,10 @@ public class Hotel {
 
     public String modificarHabitacion(int numeroHabitacion, Habitacion habitacion) {
 
-        boolean encontrado = false;
         for(Habitacion h: habitaciones){
             if(numeroHabitacion == h.getNumero()){
-                h = habitacion;
+                habitaciones.remove(h);
+                habitaciones.add(habitacion);
                 return "Se ha modificado la habitacion correctamente";
             }
         }
@@ -79,11 +79,10 @@ public class Hotel {
 
     public String eliminarHabitacion(int habitacion){
 
-        boolean encontrado = false;
+
         for(Habitacion h: habitaciones){
             if(h.getNumero() == habitacion){
                 habitaciones.remove(h);
-                encontrado = true;
                 return "Se ha eliminado la habitacion correctamente";
             }
         }
@@ -164,7 +163,7 @@ public class Hotel {
         this.direccion = direccion;
     }
 
-    public List<Habitacion> getHabitaciones() {
+    public ArrayList<Habitacion> getHabitaciones() {
         return habitaciones;
     }
 

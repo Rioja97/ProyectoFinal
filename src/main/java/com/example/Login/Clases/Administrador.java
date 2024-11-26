@@ -36,25 +36,21 @@ public class Administrador extends Usuario {
     }
 
 
-    public String modificarUsuario(Usuario modificado,String nombreUsuario, Hotel hotel) throws UsuarioRepetidoException{
+    public String modificarUsuario(Usuario modificado, String nombreUsuario, Hotel hotel) throws UsuarioRepetidoException{
 
         TreeSet<Usuario> listaUsuarios = new TreeSet<>(hotel.getUsuarios());
-
-        Usuario usuario = new Usuario();
 
         for (Usuario u: listaUsuarios) {
 
             if (u.getUsername().equals(nombreUsuario)) {
-                usuario.setPassword(modificado.getPassword());
-                usuario.setTipoIngreso(modificado.getTipoIngreso());
-                usuario.setNombreApellido(modificado.getNombreApellido());
+                listaUsuarios.remove(u);
+                listaUsuarios.add(modificado);
 
                 hotel.setUsuarios(listaUsuarios);
                 return "Se ha modificado el usuario exitosamente";
             }
 
         }
-        hotel.setUsuarios(listaUsuarios);
         throw new NoSuchElementException("Usuario no encontrado");
     }
 
@@ -71,7 +67,6 @@ public class Administrador extends Usuario {
                 return "Se ha eliminado el usuario exitosamente";
             }
         }
-        hotel.setUsuarios(listaUsuarios);
         throw new NoSuchElementException("Usuario no encontrado");
     }
 

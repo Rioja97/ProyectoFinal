@@ -84,6 +84,9 @@ public class JsonManager {
 
             // Convertir datos de pasajero
             JSONObject pasajeroJson = new JSONObject();
+            pasajeroJson.put("username", reserva.getPasajero().getUsername());
+            pasajeroJson.put("password", reserva.getPasajero().getPassword());
+            pasajeroJson.put("nombreApellido", reserva.getPasajero().getNombreApellido());
             pasajeroJson.put("dni", reserva.getPasajero().getDni());
             pasajeroJson.put("direccion", reserva.getPasajero().getDireccion());
             pasajeroJson.put("nacionalidad", reserva.getPasajero().getNacionalidad());
@@ -242,10 +245,14 @@ public class JsonManager {
 
             // Obtener los datos de pasajero
             JSONObject pasajeroJson = reservaJson.getJSONObject("pasajero");
+            String username = pasajeroJson.getString("username");
+            String password = pasajeroJson.getString("password");
+            String nombreApellido = pasajeroJson.getString("nombreApellido");
             int dni = pasajeroJson.getInt("dni");
             String direccion = pasajeroJson.getString("direccion");
             String nacionalidad = pasajeroJson.getString("nacionalidad");
-            Pasajero pasajero = new Pasajero(dni, direccion, nacionalidad);
+
+            Pasajero pasajero = new Pasajero(username, password, nombreApellido, dni, direccion, nacionalidad);
 
             // Obtener los datos de habitacion (todos los atributos)
             JSONObject habitacionJson = reservaJson.getJSONObject("habitacion");

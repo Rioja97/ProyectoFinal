@@ -1,7 +1,13 @@
 [
     {
+        "password": "100",
+        "nombreApellido": "Santiago Limpia",
+        "tipoIngreso": "PERSONAL_LIMPIEZA",
+        "username": "Santi"
+    },
+    {
         "password": "admin",
-        "nombreApellido": "Carlos Fontana",
+        "nombreApellido": "Santiago Negro",
         "tipoIngreso": "ADMINISTRADOR",
         "username": "admin"
     },
@@ -22,10 +28,9 @@
         "nacionalidad": "Argentino"
     },
     {
-        "password": "123",
-        "nombreApellido": "Emmanuel Fossati",
-        "tipoIngreso": "CLIENTE",
-        "dni": 0,
-        "username": "emmafossati"
+        "password": "2004",
+        "nombreApellido": "Nahuel Ramirez",
+        "tipoIngreso": "ADMINISTRADOR",
+        "username": "nahu2004"
     }
 ]

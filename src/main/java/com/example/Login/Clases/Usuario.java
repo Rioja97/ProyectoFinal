@@ -22,10 +22,11 @@ public class Usuario implements Comparable<Usuario>{
         this.nombreApellido = nombreApellido;
     }
 
-    public Usuario(String nombreApellido){
+    public Usuario(String username, String password, String nombreApellido) {
+        this.username = username;
+        this.password = password;
         this.nombreApellido = nombreApellido;
     }
-
 
     //Constructor sin parametros para creacion de pasajero
     public Usuario() {

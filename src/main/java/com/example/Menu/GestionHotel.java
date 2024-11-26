@@ -167,7 +167,7 @@ public final class GestionHotel {
                     break;
 
                 default:
-                    System.out.println("Opción no válida, por favor intente nuevamente.");
+                    //System.out.println("Opción no válida, por favor intente nuevamente.");
             }
                 usuarios = lasVegas.getUsuarios();
                 array = JsonManager.listaUsuariosAJsonArray(usuarios);
@@ -180,15 +180,20 @@ public final class GestionHotel {
         int opcionMenuUsuarios = -1;
 
         JSONArray array = JsonManager.FileAJsonArray("habitaciones.json");
-        ArrayList habitaciones = new ArrayList(JsonManager.jsonArrayAHabitaciones(array));
+        ArrayList<Habitacion> habitaciones = new ArrayList(JsonManager.jsonArrayAHabitaciones(array));
         lasVegas.setHabitaciones(habitaciones);
+
+        JSONArray array1 = JsonManager.FileAJsonArray("reservas.json");
+        HashMap<Integer, Reserva> reservas = new HashMap<>(JsonManager.jsonArrayAResevas(array1));
+        lasVegas.setReservas(reservas);
 
         while (opcionMenuUsuarios != 0) {
             System.out.println("---------------------------------------");
             System.out.println("1. Añadir habitacion");
             System.out.println("2. Quitar habitacion");
             System.out.println("3. Modificar habitacion");
-            System.out.println("3. Ver todas las reservas");
+            System.out.println("4. Ver todas las habitaciones");
+            System.out.println("5. Ver todas las reservas");
             System.out.println("0. Volver al menú anterior");
             System.out.println("---------------------------------------");
 
@@ -211,7 +216,7 @@ public final class GestionHotel {
                         System.out.println("Ingrese el numero de la habitación que desea eliminar: ");
                         int numero = leer.nextInt();
                         leer.nextLine();
-                        lasVegas.eliminarHabitacion(numero);
+                        System.out.println(lasVegas.eliminarHabitacion(numero));
                     } catch (NoSuchElementException e) {
                         System.out.println(e.getMessage());
                     }
@@ -230,6 +235,10 @@ public final class GestionHotel {
                     break;
 
                 case 4:
+                    System.out.println(lasVegas.getHabitaciones().toString());
+                    break;
+
+                case 5:
                     System.out.println(lasVegas.getReservas());
                     break;
 
@@ -238,11 +247,14 @@ public final class GestionHotel {
                     break;
 
                 default:
-                    System.out.println("Opción no válida, por favor intente nuevamente.");
+                    //System.out.println("Opción no válida, por favor intente nuevamente.");
+                    break;
             }
-        }
+
+        habitaciones = lasVegas.getHabitaciones();
         array = JsonManager.habitacionesAJsonArray(habitaciones);
         JsonManager.JsonArrayAFile(array, "habitaciones.json");
+        }
     }
 
 
@@ -420,7 +432,7 @@ public final class GestionHotel {
 
         System.out.println("Ingrese el rol del usuario nuevo: ");
         System.out.println("    1. Personal general del hotel");
-        System.out.println("    1. Administrador de sistema");
+        System.out.println("    2. Administrador de sistema");
         System.out.println("    Su opcion: ");
 
         int opcion = scan.nextInt();

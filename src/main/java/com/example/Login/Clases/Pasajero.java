@@ -22,6 +22,13 @@ public class Pasajero extends Usuario {
         this.nacionalidad = nacionalidad;
     }
 
+    public Pasajero(String username, String password, String nombreApellido, int dni, String direccion, String nacionalidad) {
+        super(username, password, nombreApellido);
+        this.dni = dni;
+        this.direccion = direccion;
+        this.nacionalidad = nacionalidad;
+    }
+
     public Pasajero(int dni, String direccion, String nacionalidad) {
         this.dni = dni;
         this.direccion = direccion;

@@ -154,8 +154,8 @@
     {
         "tipo": "DOBLE",
         "estado": "DISPONIBLE",
-        "precio": 45000,
-        "numero": 20,
+        "precio": 13860,
+        "numero": 30,
         "reparacion": false,
         "limpia": true
     }
