@@ -166,15 +166,12 @@ public final class GestionHotel {
                     }
                     break;
 
-                case 5:
-                    usuarios = lasVegas.getUsuarios();
-                    array = JsonManager.listaUsuariosAJsonArray(usuarios);
-                    JsonManager.JsonArrayAFile(array, "usuarios.json");
-                    break;
-
                 default:
                     System.out.println("Opción no válida, por favor intente nuevamente.");
             }
+                usuarios = lasVegas.getUsuarios();
+                array = JsonManager.listaUsuariosAJsonArray(usuarios);
+                JsonManager.JsonArrayAFile(array, "usuarios.json");
         }
     }
 

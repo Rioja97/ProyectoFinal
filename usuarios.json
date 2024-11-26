@@ -27,12 +27,5 @@
         "tipoIngreso": "CLIENTE",
         "dni": 0,
         "username": "emmafossati"
-    },
-    {
-        "password": "jorge123",
-        "nombreApellido": "Jorge Brito",
-        "tipoIngreso": "CLIENTE",
-        "dni": 0,
-        "username": "jorge02"
     }
 ]
