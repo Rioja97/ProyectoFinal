@@ -60,10 +60,14 @@ public class Hotel implements MetodosUsuarios{
     }
 
     public void realizarReserva(Reserva reserva) {
+
+        reserva.getHabitacion().setEstado(Estado.RESERVADO);
         reservas.put(reserva.getHabitacion().getNumero(),reserva);
     }
 
     public void cancerlarReserva(Reserva reserva) {
+
+        reserva.getHabitacion().setEstado(Estado.DISPONIBLE);
         reservas.remove(reserva);
     }
 

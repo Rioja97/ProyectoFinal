@@ -14,7 +14,6 @@ import com.example.Login.Clases.Pasajero;
 import com.example.Login.Clases.Personal;
 import com.example.Utils.JsonManager;
 import org.json.JSONArray;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -54,7 +53,6 @@ public final class GestionHotel {
                     } else {
                         System.out.println("Aca va el menu de personal");
                         mostrarMenuPersonal((Personal) usuario);
-
                     }
 
                 case 2:
@@ -130,13 +128,13 @@ public final class GestionHotel {
                     break;
 
                 case 2:
-                    lasVegas.agregarUsuario(pedirUsuario());
+                    lasVegas.agregarUsuario(crearPersonaloAdmin());
                     break;
 
                 case 3:
                     System.out.println("Ingrese el nombre de usuario a modificar: ");
                     String username = leer.nextLine();
-                    lasVegas.modificarUsuario(pedirUsuario(),username);
+                    lasVegas.modificarUsuario(crearPersonaloAdmin(),username);
                     break;
 
                 case 4:
@@ -191,7 +189,7 @@ public final class GestionHotel {
                     System.out.println("Ingrese el numero de la habitación que desea modificar: ");
                     int numeroH = leer.nextInt();
                     leer.nextLine();
-                    //lasVegas.modificarHabitacion(numeroH, crearHabitacion());
+                    lasVegas.mod(numeroH, crearHabitacion());
                     break;
 
                 case 4:
@@ -369,7 +367,7 @@ public final class GestionHotel {
         return pasajero;
     }
 
-    public <T extends Usuario> Usuario pedirUsuario(){
+    public <T extends Usuario> Usuario crearPersonaloAdmin(){
 
         Scanner scan = new Scanner(System.in);
 
@@ -393,10 +391,10 @@ public final class GestionHotel {
 
         if(opcion == 1){
             Personal personal = new Personal(username, password, Rol.PERSONAL_LIMPIEZA, nombreApellido);
-            return personal;
+            return (Personal)personal;
         } else{
             Administrador administrador = new Administrador(username, password, Rol.ADMINISTRADOR, nombreApellido);
-            return administrador;
+            return (Administrador)administrador;
         }
     }
 
