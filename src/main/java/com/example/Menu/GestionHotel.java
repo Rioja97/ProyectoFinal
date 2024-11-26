@@ -53,7 +53,7 @@ public final class GestionHotel {
                         mostrarMenuAdministradores();
                     } else {
                         System.out.println("Aca va el menu de personas");
-                        mostrarMenuClienteReservas(usuario);
+                        mostrarMenuClienteReservas((Pasajero) usuario);
                     }
 
                 case 2:
@@ -148,6 +148,10 @@ public final class GestionHotel {
     private void mostrarMenuGestionHotel() {
         int opcionMenuUsuarios = -1;
 
+        JsonManager.FileAJsonArray("habitaciones.json");
+        ArrayList habitaciones = new ArrayList();
+
+
         while (opcionMenuUsuarios != 0) {
             System.out.println("---------------------------------------");
             System.out.println("1. Añadir habitacion");
@@ -193,12 +197,12 @@ public final class GestionHotel {
     }
 
 
-    private  void mostrarMenuClienteReservas(Usuario usuario) {
+    private  void mostrarMenuClienteReservas(Pasajero usuario) {
 
         int opcionMenuReservas = -1;
         JSONArray array = new JSONArray(JsonManager.FileAJsonArray("reservas.json"));
         HashMap<Integer, Reserva> reservas = new HashMap<>(JsonManager.jsonArrayAMap(array));
-
+        lasVegas.setReservas(reservas);
 
         while (opcionMenuReservas != 0) {
             System.out.println("---------------------------------------");
@@ -212,20 +216,28 @@ public final class GestionHotel {
                 case 1:
                     System.out.println(lasVegas.getReservas().toString());
                     break;
+
                 case 2:
-                    lasVegas.realizarReserva(crearReserva());
+                    try {
+                        lasVegas.realizarReserva(crearReserva(usuario));
+                    } catch (FechaInvalidaException e) {
+                        System.out.println(e.getMessage());
+                        break;
+                    }
                     break;
+
                 case 3:
                     System.out.println(lasVegas.obtenerHabitacionesDisponibles());
-                    break;
-                case 0:
-                    System.out.println("Volviendo al menú principal.");
                     break;
 
                 default:
                     System.out.println("Opción no válida, por favor intente nuevamente.");
             }
         }
+
+        array = JsonManager.mapAJsonArray(reservas);
+        JsonManager.JsonArrayAFile(array, "reservas.json");
+
     }
 
 
@@ -320,7 +332,7 @@ public final class GestionHotel {
         return habitacion;
     }
 
-    private static Reserva crearReserva(Pasajero pasajero, int habitacion) throws FechaInvalidaException{
+    private static Reserva crearReserva(Pasajero pasajero) throws FechaInvalidaException{
 
         Scanner sc = new Scanner(System.in);
         System.out.print("Ingrese el número de la habitación: ");

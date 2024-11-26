@@ -279,7 +279,6 @@ public class JsonManager {
 
     public static Pasajero encontrarPasajeroHotel(String userName, Hotel hotel) {
 
-
         TreeSet<Usuario> listaUsuarios = hotel.getUsuarios();
 
         // Iterar sobre la lista de usuarios
@@ -292,6 +291,8 @@ public class JsonManager {
         }
             throw new NoSuchElementException("No se ha encontrado el usuario especificado.");
     }
+
+
 
     public static Habitacion encontrarHabitacionHotel(int idHabitacion, Hotel hotel) {
 

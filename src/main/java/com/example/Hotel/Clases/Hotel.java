@@ -113,5 +113,17 @@ public class Hotel implements com.example.Interfaces.iMetodosHotel {
     public TreeSet getUsuarios() {
         return usuarios;
     }
+
+    public void setHabitaciones(ArrayList<Habitacion> habitaciones) {
+        this.habitaciones = habitaciones;
+    }
+
+    public void setReservas(HashMap<Integer, Reserva> reservas) {
+        this.reservas = reservas;
+    }
+
+    public void setUsuarios(TreeSet<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
 }
 
