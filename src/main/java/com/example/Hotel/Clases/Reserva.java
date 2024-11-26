@@ -73,6 +73,14 @@ public class Reserva {
         this.habitacion = habitacion;
     }
 
+    public Map<Integer, String> getConsumos() {
+        return consumos;
+    }
+
+    public void setConsumos(Map<Integer, String> consumos) {
+        this.consumos = consumos;
+    }
+
     @Override
     public String toString() {
         return "Reserva:" +
