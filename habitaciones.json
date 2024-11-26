@@ -108,7 +108,7 @@
         "estado": "DISPONIBLE",
         "precio": 45000,
         "numero": 14,
-        "reparacion": "DISPONIBLE",
+        "reparacion": false,
         "limpia": "DISPONIBLE"
     },
     {
@@ -116,7 +116,7 @@
         "estado": "DISPONIBLE",
         "precio": 45000,
         "numero": 15,
-        "reparacion": "DISPONIBLE",
+        "reparacion": true,
         "limpia": "DISPONIBLE"
     },
     {

@@ -12,6 +12,7 @@ import com.example.Login.Enums.Rol;
 import com.example.Login.Clases.Administrador;
 import com.example.Login.Clases.Pasajero;
 import com.example.Login.Clases.Personal;
+import com.example.Login.LoginExceptions.UsuarioRepetidoException;
 import com.example.Utils.JsonManager;
 import org.json.JSONArray;
 import java.time.LocalDate;
@@ -57,12 +58,17 @@ public final class GestionHotel {
 
                 case 2:
                     Pasajero pasajero = crearPasajero();
-                    lasVegas.agregarUsuario(pasajero);
+                    try {
+                        lasVegas.agregarUsuario(pasajero);
+                    } catch (UsuarioRepetidoException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
 
                 case 3:
                     System.out.println("Cerrando programa...");
                     opcion = 0;
+                    break;
 
                 default:
                     System.out.println("Opcion inválida");
@@ -189,7 +195,7 @@ public final class GestionHotel {
                     System.out.println("Ingrese el numero de la habitación que desea modificar: ");
                     int numeroH = leer.nextInt();
                     leer.nextLine();
-                    lasVegas.mod(numeroH, crearHabitacion());
+                    lasVegas.modificarHabitacion(numeroH, crearHabitacion());
                     break;
 
                 case 4:

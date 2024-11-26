@@ -178,13 +178,20 @@ public class JsonManager {
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
 
+
+            if(jsonArray == null){
+                System.out.println("No se ha encontrado el archivo origen");
+                return null;
+            }
+
+
             // Obtener los valores de cada campo
             int numero = obj.getInt("numero");
             Tipo tipo = Tipo.valueOf(obj.getString("tipo"));
             Estado estado = Estado.valueOf(obj.getString("estado"));
             double precio = obj.getDouble("precio");
-            boolean limpia = obj.getBoolean("limpia");  // Corregido, ahora se guarda correctamente
-            boolean reparacion = obj.getBoolean("reparacion");  // Corregido, ahora se guarda correctamente
+            boolean limpia = obj.getBoolean("limpia");
+            boolean reparacion = obj.getBoolean("reparacion");
 
             // Crear una instancia de Habitacion y agregarla al ArrayList
             Habitacion habitacion = new Habitacion(numero, tipo, estado, precio, limpia, reparacion);
@@ -200,6 +207,11 @@ public class JsonManager {
 
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject reservaJson = jsonArray.getJSONObject(i);
+
+            if(jsonArray == null){
+                System.out.println("No se ha encontrado el archivo origen");
+                return null;
+            }
 
             // Obtener la clave "id" para el mapa
             int id = reservaJson.getInt("id");

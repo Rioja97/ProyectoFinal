@@ -65,6 +65,15 @@ public class Hotel implements MetodosUsuarios{
         reservas.put(reserva.getHabitacion().getNumero(),reserva);
     }
 
+    public void modificarHabitacion(int numeroHabitacion, Habitacion habitacion) {
+
+        for(Habitacion h: habitaciones){
+            if(numeroHabitacion == h.getNumero()){
+                h = habitacion;
+            }
+        }
+    }
+
     public void cancerlarReserva(Reserva reserva) {
 
         reserva.getHabitacion().setEstado(Estado.DISPONIBLE);
