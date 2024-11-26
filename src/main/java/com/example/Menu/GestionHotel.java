@@ -124,6 +124,7 @@ public final class GestionHotel {
             System.out.println("2. Agregar Usuario");
             System.out.println("3. Modificar Usuario");
             System.out.println("4. Eliminar Usuario");
+            System.out.println("\n");
             System.out.println("5. Aplicar cambios");
             System.out.println("0. Volver al menú anterior");
             System.out.println("---------------------------------------");
@@ -166,6 +167,7 @@ public final class GestionHotel {
                     break;
 
                 case 5:
+                    usuarios = lasVegas.getUsuarios();
                     array = JsonManager.listaUsuariosAJsonArray(usuarios);
                     JsonManager.JsonArrayAFile(array, "usuarios.json");
                     break;

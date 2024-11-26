@@ -29,23 +29,10 @@
         "username": "emmafossati"
     },
     {
-        "password": "fausto123",
-        "nombreApellido": "Fausto Conte",
-        "tipoIngreso": "PERSONAL_LIMPIEZA",
-        "username": "fausto12"
-    },
-    {
         "password": "jorge123",
         "nombreApellido": "Jorge Brito",
         "tipoIngreso": "CLIENTE",
         "dni": 0,
         "username": "jorge02"
-    },
-    {
-        "password": "123",
-        "nombreApellido": "Santiago Sala",
-        "tipoIngreso": "CLIENTE",
-        "dni": 0,
-        "username": "santi"
     }
 ]
