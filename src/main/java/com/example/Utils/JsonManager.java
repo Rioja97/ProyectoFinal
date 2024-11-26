@@ -34,7 +34,7 @@ public class JsonManager {
 
             // Agregar los atributos comunes de Usuario
             obj.put("username", u.getUsername());
-            obj.put("passworHash", u.getPassword());
+            obj.put("password", u.getPassword());
             obj.put("tipoIngreso", u.getTipoIngreso().toString());
             obj.put("nombreApellido", u.getNombreApellido());
 
@@ -155,7 +155,7 @@ public class JsonManager {
 
             // Obtener los valores comunes de cada usuario
             String username = obj.getString("username");
-            String password = obj.getString("passworHash");
+            String password = obj.getString("password");
             Rol tipoIngreso = Rol.valueOf(obj.getString("tipoIngreso"));
             String nombreApellido = obj.getString("nombreApellido");
 
@@ -264,7 +264,6 @@ public class JsonManager {
             // Crear una instancia de Reserva y agregarla al mapa
             Reserva reserva = new Reserva(pasajero, fechaInicio, fechaFin, habitacion);
             reservas.put(id, reserva);
-
         }
         return reservas;
     }
