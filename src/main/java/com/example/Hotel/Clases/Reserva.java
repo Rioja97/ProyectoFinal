@@ -41,8 +41,6 @@ public class Reserva {
     }
 
 
-
-
     public Pasajero getPasajero() {
         return pasajero;
     }

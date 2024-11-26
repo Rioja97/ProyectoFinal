@@ -133,7 +133,19 @@ public class Hotel {
     }
 
 
-
+    public ArrayList verReservasCliente(String username){
+        ArrayList reservasCliente=new ArrayList();
+        if(reservas.values().isEmpty()){
+            System.out.println("No hay reservas");
+            return null;
+        }
+        for (Reserva reserva:reservas.values()){
+            if(reserva.getPasajero().getUsername().equals(username)){
+                reservasCliente.add(reserva);
+            }
+        }
+        return reservasCliente;
+    }
 
 
     public String getNombre() {
