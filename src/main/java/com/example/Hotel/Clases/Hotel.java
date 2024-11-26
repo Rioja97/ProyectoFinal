@@ -1,13 +1,15 @@
 package com.example.Hotel.Clases;
 import java.util.*;
 
+import com.example.Excepciones.HabitacionNoDisponibleException;
 import com.example.Hotel.Enum.Estado;
 import com.example.Interfaces.MetodosUsuarios;
+import com.example.Login.Clases.Administrador;
 import com.example.Login.Clases.LoginManager;
 import com.example.Login.Clases.Usuario;
 
 
-public class Hotel implements MetodosUsuarios{
+public class Hotel {
     private String nombre;
     private String direccion;
     private ArrayList<Habitacion> habitaciones;
@@ -24,61 +26,89 @@ public class Hotel implements MetodosUsuarios{
         this.usuarios = new TreeSet<>();
     }
 
-    @Override
-    public void modificarUsuario(Usuario usuario,String username){
 
-        LoginManager login = new LoginManager();
-        login.modificarUsuario(usuario,username);
+    public String agregarUsuario(Usuario usuario, Administrador admin, Hotel hotel){
+
+        return admin.agregarUsuario(usuario, hotel);
     }
 
-    @Override
-    public void agregarUsuario(Usuario usuario){
+    public String agregarUsuario(Usuario usuario, Hotel hotel){
 
-        LoginManager login = new LoginManager();
-        login.agregarUsuario(usuario);
+        Administrador admin = new Administrador();
+        return admin.agregarUsuario(usuario, hotel);
     }
 
-    @Override
-    public void eliminarUsuario(String idUsuario) {
 
-        LoginManager login = new LoginManager();
-        login.eliminarUsuario(idUsuario);
+    public String modificarUsuario(Usuario usuario,String username, Administrador admin, Hotel hotel){
+
+        return admin.modificarUsuario(usuario,username, hotel);
     }
 
-    public void agregarHabitacion(Habitacion habitacion) {
 
-        habitaciones.add(habitacion);
+
+    public String eliminarUsuario(String idUsuario, Administrador admin, Hotel hotel) {
+
+        return admin.eliminarUsuario(idUsuario, hotel);
     }
 
-    public void eliminarHabitacion(int habitacion){
 
-        for(Habitacion h: habitaciones){
-            if(h.getNumero() == habitacion){
-                habitaciones.remove(h);
+    public String agregarHabitacion(Habitacion habitacion) throws HabitacionNoDisponibleException{
+
+        for (Habitacion h : habitaciones) {
+            if(h.getNumero() == habitacion.getNumero()) {
+                throw new HabitacionNoDisponibleException("La habitacion ya está cargada");
             }
         }
+        habitaciones.add(habitacion);
+        return "Se ha agregado la habitacion correctamente";
     }
 
-    public void realizarReserva(Reserva reserva) {
 
-        reserva.getHabitacion().setEstado(Estado.RESERVADO);
-        reservas.put(reserva.getHabitacion().getNumero(),reserva);
-    }
+    public String modificarHabitacion(int numeroHabitacion, Habitacion habitacion) {
 
-    public void modificarHabitacion(int numeroHabitacion, Habitacion habitacion) {
-
+        boolean encontrado = false;
         for(Habitacion h: habitaciones){
             if(numeroHabitacion == h.getNumero()){
                 h = habitacion;
+                return "Se ha modificado la habitacion correctamente";
             }
         }
+        throw new NoSuchElementException("No se encontro la habitación");
     }
 
-    public void cancerlarReserva(Reserva reserva) {
+
+    public String eliminarHabitacion(int habitacion){
+
+        boolean encontrado = false;
+        for(Habitacion h: habitaciones){
+            if(h.getNumero() == habitacion){
+                habitaciones.remove(h);
+                encontrado = true;
+                return "Se ha eliminado la habitacion correctamente";
+            }
+        }
+        throw new NoSuchElementException("No se encontro la habitación");
+    }
+
+
+    public String realizarReserva(Reserva reserva) {
+
+        if(reserva.getHabitacion().getEstado().name() == "RESERVADO" || reserva.getHabitacion().getEstado().name() == "OCUPADO"){
+            throw new NoSuchElementException("No se puede realizar la reserva. Habitación no disponible");
+        }
+        reserva.getHabitacion().setEstado(Estado.RESERVADO);
+        reservas.put(reserva.getHabitacion().getNumero(),reserva);
+        return "Se ha realizado la reserva correctamente";
+    }
+
+
+    public String cancerlarReserva(Reserva reserva) {
 
         reserva.getHabitacion().setEstado(Estado.DISPONIBLE);
         reservas.remove(reserva);
+        return "Se ha cancelado la reserva correctamente";
     }
+
 
     public List<Habitacion> obtenerHabitacionesDisponibles() {
         List<Habitacion> habitacionesDisponibles = new ArrayList<>();
@@ -89,6 +119,7 @@ public class Hotel implements MetodosUsuarios{
         }
         return habitacionesDisponibles;
     }
+
 
     public List<Habitacion> obtenerHabitacionesNoDisponibles() {
         List<Habitacion> habitacionesNoDisponibles = new ArrayList<>();

@@ -1,27 +1,27 @@
 [
     {
         "nombreApellido": "Carlos Fontana",
-        "passworHash": "admin",
+        "password": "admin",
         "tipoIngreso": "ADMINISTRADOR",
         "username": "admin"
     },
     {
         "nombreApellido": "Daniela Fernandez",
-        "passworHash": "252599746236ae3663e3bc13fe846fc63287836871698722ddd4084d87f895c4",
+        "password": "252599746236ae3663e3bc13fe846fc63287836871698722ddd4084d87f895c4",
         "tipoIngreso": "CLIENTE",
         "dni": 0,
         "username": "daniela1"
     },
     {
         "nombreApellido": "Emamnuel Fossati",
-        "passworHash": "123",
+        "password": "123",
         "tipoIngreso": "CLIENTE",
         "dni": 0,
         "username": "emma"
     },
     {
         "nombreApellido": "Emmanuel Fossati",
-        "passworHash": "123",
+        "password": "123",
         "direccion": "Brown 4146",
         "tipoIngreso": "CLIENTE",
         "dni": 3970261,
@@ -30,41 +30,20 @@
     },
     {
         "nombreApellido": "Emmanuel Fossati",
-        "passworHash": "123",
+        "password": "123",
         "tipoIngreso": "CLIENTE",
         "dni": 0,
         "username": "emmafossati"
     },
     {
         "nombreApellido": "Fausto Conte",
-        "passworHash": "fausto123",
+        "password": "fausto123",
         "tipoIngreso": "PERSONAL_LIMPIEZA",
         "username": "fausto12"
     },
     {
-        "nombreApellido": "Francisco Gomez",
-        "passworHash": "7e760e1cecae18280969495bc11de2be3d69ebada71474295cdc32e2a12d0887",
-        "tipoIngreso": "CLIENTE",
-        "dni": 0,
-        "username": "francisco00"
-    },
-    {
-        "nombreApellido": "Giselle Diaz",
-        "passworHash": "be6267ecb97674c77540c385e3aa2a9f7da93de52f9e25fee5e076428571c2ee",
-        "tipoIngreso": "CLIENTE",
-        "dni": 0,
-        "username": "giselle23"
-    },
-    {
-        "nombreApellido": "Gonzalo Torres",
-        "passworHash": "d22feec4f8bcd231d43bf587b7886abf90cade6750df9bda4c4d20e611682306",
-        "tipoIngreso": "CLIENTE",
-        "dni": 0,
-        "username": "gonzaTorres1"
-    },
-    {
         "nombreApellido": "Jorge Brito",
-        "passworHash": "jorge123",
+        "password": "jorge123",
         "tipoIngreso": "CLIENTE",
         "dni": 0,
         "username": "jorge02"

@@ -1,6 +1,7 @@
 package com.example.Menu;
 
 import com.example.Excepciones.FechaInvalidaException;
+import com.example.Excepciones.HabitacionNoDisponibleException;
 import com.example.Hotel.Clases.Habitacion;
 import com.example.Hotel.Clases.Hotel;
 import com.example.Hotel.Clases.Reserva;
@@ -48,9 +49,11 @@ public final class GestionHotel {
                     if(usuario.getTipoIngreso().name().equals("CLIENTE")){
                         System.out.println("Aca va el menu de usuarios");
                         mostrarMenuClienteReservas((Pasajero) usuario);
+
                     } else if(usuario.getTipoIngreso().name().equals("ADMINISTRADOR")) {
                         System.out.println("Aca va el menu de adminitradores");
                         mostrarMenuAdministradores((Administrador) usuario);
+
                     } else {
                         System.out.println("Aca va el menu de personal");
                         mostrarMenuPersonal((Personal) usuario);
@@ -59,7 +62,7 @@ public final class GestionHotel {
                 case 2:
                     Pasajero pasajero = crearPasajero();
                     try {
-                        lasVegas.agregarUsuario(pasajero);
+                        lasVegas.agregarUsuario(pasajero, lasVegas);
                     } catch (UsuarioRepetidoException e) {
                         System.out.println(e.getMessage());
                     }
@@ -79,8 +82,8 @@ public final class GestionHotel {
 
 
     private void mostrarMenuAdministradores(Administrador administrador) {
-        int opcionMenuUsuarios = -1;
 
+        int opcionMenuUsuarios = -1;
 
         while (opcionMenuUsuarios != 0) {
             System.out.println("---------------------------------------");
@@ -95,7 +98,7 @@ public final class GestionHotel {
 
             switch (opcionMenuUsuarios) {
                 case 1:
-                    mostrarMenuGestionUsuarios();
+                    mostrarMenuGestionUsuarios(administrador);
                     break;
 
                 case 2:
@@ -108,7 +111,7 @@ public final class GestionHotel {
         }
     }
 
-    private void mostrarMenuGestionUsuarios() {
+    private void mostrarMenuGestionUsuarios(Administrador administrador) {
         int opcionMenuUsuarios = -1;
 
         JSONArray array = new JSONArray(JsonManager.FileAJsonArray("usuarios.json"));
@@ -134,19 +137,31 @@ public final class GestionHotel {
                     break;
 
                 case 2:
-                    lasVegas.agregarUsuario(crearPersonaloAdmin());
+                    try {
+                        lasVegas.agregarUsuario(crearPersonaloAdmin(), administrador, lasVegas);
+                    } catch (UsuarioRepetidoException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
 
                 case 3:
-                    System.out.println("Ingrese el nombre de usuario a modificar: ");
-                    String username = leer.nextLine();
-                    lasVegas.modificarUsuario(crearPersonaloAdmin(),username);
+                    try {
+                        System.out.println("Ingrese el nombre de usuario a modificar: ");
+                        String username = leer.nextLine();
+                        lasVegas.modificarUsuario(crearPersonaloAdmin(),username, administrador, lasVegas);
+                    } catch (NoSuchElementException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
 
                 case 4:
-                    System.out.println("Ingrese el nombre de usuario a modificar: ");
-                    String username1 = leer.nextLine();
-                    lasVegas.eliminarUsuario(username1);
+                    try {
+                        System.out.println("Ingrese el nombre de usuario a modificar: ");
+                        String username1 = leer.nextLine();
+                        lasVegas.eliminarUsuario(username1, administrador, lasVegas);
+                    } catch (NoSuchElementException e) {
+                        System.out.println(e.getMessage());
+                    }
 
                 default:
                     System.out.println("Opción no válida, por favor intente nuevamente.");
@@ -179,23 +194,35 @@ public final class GestionHotel {
 
             switch (opcionMenuUsuarios) {
                 case 1:
-                    lasVegas.agregarHabitacion(crearHabitacion());
+                    try {
+                        System.out.println(lasVegas.agregarHabitacion(crearHabitacion()));
+                    } catch (HabitacionNoDisponibleException e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
 
                 case 2:
-                    System.out.println(lasVegas.getHabitaciones());
-                    System.out.println("Ingrese el numero de la habitación que desea eliminar: ");
-                    int numero = leer.nextInt();
-                    leer.nextLine();
-                    lasVegas.eliminarHabitacion(numero);
+                    try {
+                        System.out.println(lasVegas.getHabitaciones());
+                        System.out.println("Ingrese el numero de la habitación que desea eliminar: ");
+                        int numero = leer.nextInt();
+                        leer.nextLine();
+                        lasVegas.eliminarHabitacion(numero);
+                    } catch (NoSuchElementException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
 
                 case 3:
-                    System.out.println(lasVegas.getHabitaciones().toString());
-                    System.out.println("Ingrese el numero de la habitación que desea modificar: ");
-                    int numeroH = leer.nextInt();
-                    leer.nextLine();
-                    lasVegas.modificarHabitacion(numeroH, crearHabitacion());
+                    try {
+                        System.out.println(lasVegas.getHabitaciones().toString());
+                        System.out.println("Ingrese el numero de la habitación que desea modificar: ");
+                        int numeroH = leer.nextInt();
+                        leer.nextLine();
+                        lasVegas.modificarHabitacion(numeroH, crearHabitacion());
+                    } catch (NoSuchElementException e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
 
                 case 4:

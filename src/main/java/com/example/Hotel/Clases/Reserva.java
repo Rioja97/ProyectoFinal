@@ -21,7 +21,7 @@ public class Reserva {
         this.habitacion = habitacion;
     }
 
-    public long calcularDiasEstancia() {
+    public int calcularDiasEstancia() {
         return (int) ChronoUnit.DAYS.between(fechaInicio, fechaFin);
     }
 
@@ -40,6 +40,9 @@ public class Reserva {
     public double precioFinalSinConsumo(){
         return getHabitacion().getPrecio()*(calcularDiasEstancia());
     }
+
+
+
 
     public Pasajero getPasajero() {
         return pasajero;

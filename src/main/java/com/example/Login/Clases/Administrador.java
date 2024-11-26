@@ -1,6 +1,11 @@
 package com.example.Login.Clases;
 
+import com.example.Hotel.Clases.Hotel;
 import com.example.Login.Enums.Rol;
+import com.example.Login.LoginExceptions.UsuarioRepetidoException;
+
+import java.util.NoSuchElementException;
+import java.util.TreeSet;
 
 public class Administrador extends Usuario {
 
@@ -13,20 +18,63 @@ public class Administrador extends Usuario {
     public Administrador() {
     }
 
-    public void crearUsuario(Usuario usuario){
-        LoginManager gestorLogin = new LoginManager();
-        gestorLogin.agregarUsuario(usuario);
+    public String agregarUsuario(Usuario usuario, Hotel hotel) throws UsuarioRepetidoException {
+
+        TreeSet<Usuario> listaUsuarios = new TreeSet<>(hotel.getUsuarios());
+
+        for(Usuario u: listaUsuarios){
+
+            if(u.getUsername().equals(usuario.getUsername())){
+                throw new UsuarioRepetidoException("Usuario repetido");
+            }
+        }
+        listaUsuarios.add(usuario);
+
+        hotel.setUsuarios(listaUsuarios);
+
+        return "Se ha agregado el usuario exitosamente";
+
     }
 
-    public void modificarUsuario(Usuario usuario,String username){
-        LoginManager gestorLogin = new LoginManager();
 
-        gestorLogin.modificarUsuario(usuario,username);
+    public String modificarUsuario(Usuario modificado,String nombreUsuario, Hotel hotel) throws UsuarioRepetidoException{
+
+        TreeSet<Usuario> listaUsuarios = new TreeSet<>(hotel.getUsuarios());
+
+        Usuario usuario = new Usuario();
+
+        for (Usuario u: listaUsuarios){
+
+            if(u.getUsername().equals(nombreUsuario)){
+                usuario.setPassword(modificado.getPassword());
+                usuario.setTipoIngreso(modificado.getTipoIngreso());
+                usuario.setNombreApellido(modificado.getNombreApellido());
+
+                return "Se ha modificado el usuario exitosamente";
+            }
+            hotel.setUsuarios(listaUsuarios);
+
+            throw new NoSuchElementException("Usuario no encontrado");
+        }
     }
 
-    public void eliminarUsuario(String idUsuario){
-        LoginManager gestorLogin = new LoginManager();
 
-        gestorLogin.eliminarUsuario(idUsuario);
+    public String eliminarUsuario(String nombreUsuario, Hotel hotel){
+
+        TreeSet<Usuario> listaUsuarios = new TreeSet<>(hotel.getUsuarios());
+
+        for (Usuario u: listaUsuarios){
+            if(u.getUsername().equals(nombreUsuario)){
+                listaUsuarios.remove(u);
+                return "Se ha eliminado el usuario exitosamente";
+            }
+            hotel.setUsuarios(listaUsuarios);
+
+            throw new NoSuchElementException("Usuario no encontrado");
+
+        }
     }
+
+
+
 }
