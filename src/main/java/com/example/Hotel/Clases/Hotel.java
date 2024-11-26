@@ -113,9 +113,18 @@ public class Hotel {
     }
 
     //Este metodo tiene que quitar la reserva del map, y cambiar el estado de esa habitacion a ocupada.
-    public String hacerChechIn(Reserva reserva){
+    public String hacerCheckIn(Reserva reserva)throws HabitacionNoDisponibleException{
 
-        return "";
+        for(Reserva reserva1 : reservas.values()){
+            if(reserva1.getHabitacion().getNumero() == reserva.getHabitacion().getNumero()){
+                reserva1.getHabitacion().setEstado(Estado.OCUPADO);
+                reservas.remove(reserva);
+            }else{
+                throw new HabitacionNoDisponibleException("Esta habitacion no existe.");
+            }
+
+        }
+        return "Check In realizado con exito.";
     }
 
     //Revisar que no esta quitando la reserva al map
@@ -126,7 +135,7 @@ public class Hotel {
         for(Reserva reserva: hotel.getReservas().values()){
             if(reserva.getHabitacion().getEstado() == Estado.RESERVADO && reserva.getHabitacion().getNumero() == numeroHabitacion){
                 reserva.getHabitacion().setEstado(Estado.DISPONIBLE);
-                reservas.remove(reserva);
+                reservas.remove(reserva.getHabitacion().getNumero());
             }
         }
         hotel.setReservas(reservas);
