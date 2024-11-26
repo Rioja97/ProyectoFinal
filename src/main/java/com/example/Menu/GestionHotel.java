@@ -1,5 +1,6 @@
 package com.example.Menu;
 
+import com.example.Excepciones.FechaInvalidaException;
 import com.example.Hotel.Clases.Habitacion;
 import com.example.Hotel.Clases.Hotel;
 import com.example.Hotel.Clases.Reserva;
@@ -174,7 +175,7 @@ public final class GestionHotel {
                     break;
 
                 case 3:
-                    System.out.println(lasVegas.getHabitaciones());
+                    System.out.println(lasVegas.getHabitaciones().toString());
                     System.out.println("Ingrese el numero de la habitación que desea modificar: ");
                     int numeroH = leer.nextInt();
                     leer.nextLine();
@@ -193,9 +194,11 @@ public final class GestionHotel {
 
 
     private  void mostrarMenuClienteReservas(Usuario usuario) {
+
         int opcionMenuReservas = -1;
-        Scanner sc = new Scanner(System.in);
-        Pasajero pasajero=new Pasajero(usuario.getUsername(),usuario.getPassword());
+        JSONArray array = new JSONArray(JsonManager.FileAJsonArray("reservas.json"));
+        HashMap<Integer, Reserva> reservas = new HashMap<>(JsonManager.jsonArrayAMap(array));
+
 
         while (opcionMenuReservas != 0) {
             System.out.println("---------------------------------------");
@@ -207,45 +210,10 @@ public final class GestionHotel {
 
             switch (opcionMenuReservas) {
                 case 1:
-                    for (Reserva reserva : lasVegas.getReservas().values()) {
-                    if (reserva.getPasajero().getUsername().equals(usuario.getUsername())) {
-                        System.out.println(reserva);
-                    }
-                }
+                    System.out.println(lasVegas.getReservas().toString());
                     break;
                 case 2:
-                    System.out.print("Elige el número de la habitación: ");
-                    int numeroHabitacion = sc.nextInt();
-
-                    Habitacion habitacionSeleccionada = null;
-                    for (Habitacion habitacion : lasVegas.obtenerHabitacionesDisponibles()) {
-                        if (habitacion.getNumero() == numeroHabitacion) {
-                            habitacionSeleccionada = habitacion;
-                            break;
-                        }
-                    }
-
-                    if (habitacionSeleccionada == null) {
-                        System.out.println("Habitación no válida.");
-                        break;
-                    }
-
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-                    System.out.print("\nIntroduce la fecha de inicio (yyyy-MM-dd): ");
-                    LocalDate fechaInicio = LocalDate.parse(sc.nextLine(), formatter);
-
-                    System.out.print("Introduce la fecha de fin (yyyy-MM-dd): ");
-                    LocalDate fechaFin = LocalDate.parse(sc.nextLine(), formatter);
-
-                    if (fechaFin.isBefore(fechaInicio)) {
-                        System.out.println("La fecha de fin no puede ser anterior a la fecha de inicio.");
-                        break;
-                    }
-
-                    Reserva nuevaReserva = new Reserva(pasajero, fechaInicio, fechaFin, habitacionSeleccionada);
-                    lasVegas.realizarReserva(nuevaReserva);
-                    System.out.println("Reserva realizada con éxito: " + nuevaReserva);
+                    lasVegas.
                     break;
                 case 3:
                     System.out.println(lasVegas.obtenerHabitacionesDisponibles());
@@ -259,7 +227,6 @@ public final class GestionHotel {
             }
         }
     }
-
 
 
      private  Pasajero crearPasajero(){
@@ -353,15 +320,35 @@ public final class GestionHotel {
         return habitacion;
     }
 
-    private static Reserva crearReserva(Pasajero pasajero, int habitacion){
+    private static Reserva crearReserva(Pasajero pasajero, int habitacion) throws FechaInvalidaException{
 
-        Scanner scan = new Scanner(System.in);
-        Reserva reserva = new Reserva();
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Ingrese el número de la habitación: ");
+        int numeroHabitacion = sc.nextInt();
+        Habitacion habitacion1 = new Habitacion();
 
-        System.out.println("Creacion de la reserva...");
+        try{
+            habitacion1 = JsonManager.encontrarHabitacion(numeroHabitacion);
+        } catch (NoSuchElementException e){
+            e.printStackTrace();
+        }
+        habitacion1.setEstado(Estado.RESERVADO);
 
-        reserva.set
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+        System.out.print("\nIntroduce la fecha de inicio (yyyy-MM-dd): ");
+        LocalDate fechaInicio = LocalDate.parse(sc.nextLine(), formatter);
+
+        System.out.print("Introduce la fecha de fin (yyyy-MM-dd): ");
+        LocalDate fechaFin = LocalDate.parse(sc.nextLine(), formatter);
+
+        if (fechaFin.isBefore(fechaInicio)) {
+            throw new FechaInvalidaException("La fecha de fin no puede ser menor a la fecha de comienzo");
+
+        }
+
+        Reserva nuevaReserva = new Reserva(pasajero, fechaInicio, fechaFin, habitacion1);
+        return nuevaReserva;
     }
 
 }

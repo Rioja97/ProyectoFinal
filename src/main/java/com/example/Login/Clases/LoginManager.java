@@ -91,76 +91,6 @@ public class LoginManager implements com.example.Interfaces.iMetodosHotel {
     }
 
 
-   /* public static Usuario iniciarSesion(Usuario usuario) throws FileNotFoundException{
-
-        TreeSet<Usuario> usuarios = new TreeSet<>();
-        JSONArray arr = JsonManager.FileAJsonArray("usuarios.json");
-        usuarios = JsonManager.jsonArrayAListaUsuarios(arr);
-        boolean flag = false;
-
-        if(usuarios == null){
-            throw new FileNotFoundException("No hay ningun usuario cargado, cargue uno please");
-        }
-
-        for(Usuario u : usuarios){
-            if(usuario.getUsername().equals(u.getUsername()) && usuario.getPassword().equals(u.getPassword())){
-                flag = true;
-                return u;
-            }
-        }
-        if(flag){
-            throw new IngresoIncorrectoException("El usuario no se encuentra registrado");
-        }
-        return null;
-
-    }
-
-    public static Usuario iniciarSesionConReintentos() {
-
-        int intentosRestantes = 3; // Máximo de intentos
-        boolean sesionIniciada = false;
-        Usuario enSesion = new Usuario();
-
-        while (intentosRestantes > 0) {
-            try {
-                // Solicitar datos al usuario
-                String username = solicitarEntrada("Ingresa tu nombre de usuario:");
-                enSesion.setUsername(username);
-                String password = solicitarEntrada("Ingresa tu contraseña:");
-                enSesion.setPassword(password);
-
-                // Intentar iniciar sesión
-                try{
-                    enSesion = iniciarSesion(enSesion);
-                    sesionIniciada = true;
-
-                } catch (IngresoIncorrectoException e){
-                    e.getMessage();
-                } catch (FileNotFoundException e){
-                    e.getMessage();
-                }
-                if (sesionIniciada) {
-                    System.out.println("¡Inicio de sesión exitoso!");
-                }
-            } catch (IngresoIncorrectoException e) {
-                intentosRestantes--;
-                System.out.println(e.getMessage());
-                if (intentosRestantes > 0) {
-                    System.out.println("Te quedan " + intentosRestantes + " intentos.");
-                } else {
-                    System.out.println("Demasiados intentos fallidos. Intenta más tarde.");
-                }
-            }
-        }
-
-        if(sesionIniciada){
-            return enSesion;
-        } else {
-            return null;
-        }
-    }
-*/
-
 
     public static Usuario iniciarSesion(Usuario usuario) throws FileNotFoundException {
 
@@ -221,7 +151,6 @@ public class LoginManager implements com.example.Interfaces.iMetodosHotel {
                 break;
             }
         }
-
         return null;  // Si los intentos se agotaron o hubo un error, retorna null
     }
 
@@ -234,5 +163,4 @@ public class LoginManager implements com.example.Interfaces.iMetodosHotel {
         java.util.Scanner scanner = new java.util.Scanner(System.in);
         return scanner.nextLine();
     }
-
 }

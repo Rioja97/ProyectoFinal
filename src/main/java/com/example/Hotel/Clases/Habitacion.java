@@ -45,7 +45,7 @@ public class Habitacion {
         this.reparacion=false;
     }
 
-    public void actualizarEstadoReserva(Reserva reserva, Estado nuevoEstado) {reserva.getHabitacion().setEstado(nuevoEstado);}
+
 
     public int getNumero() {
         return numero;

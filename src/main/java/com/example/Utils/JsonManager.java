@@ -19,10 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeSet;
+import java.util.*;
 
 
 public class JsonManager {
@@ -243,6 +240,53 @@ public class JsonManager {
         }
     }
 
+
+
+    public static Pasajero encontrarPasajero(String userName) {
+
+        boolean flag = false;
+        // Leer el arreglo JSON del archivo
+        JSONArray array = JsonManager.FileAJsonArray("usuarios.json");
+
+        // Convertir el arreglo JSON a una lista de objetos Usuario
+        TreeSet<Usuario> listaUsuarios = new TreeSet<>(JsonManager.jsonArrayAListaUsuarios(array));
+
+        // Iterar sobre la lista de usuarios
+        for (Usuario usuario : listaUsuarios) {
+            // Comprobar si el usuario es una instancia de Pasajero y si el nombre de usuario coincide
+            if (usuario instanceof Pasajero && usuario.getUsername().equals(userName)) {
+                // Realizar el casting a Pasajero y devolverlo
+                flag = true;
+                return (Pasajero) usuario;
+            }
+        }
+        if(!flag){
+            throw new NoSuchElementException("No se ha encontrado el usuario especificado.");
+        }
+
+        // Devolver null si no se encuentra un Pasajero que coincida
+        return null;
+    }
+
+
+    public static Habitacion encontrarHabitacion(int idHabitacion) {
+
+        boolean flag = false;
+        JSONArray array = JsonManager.FileAJsonArray("habitaciones.json");
+
+        ArrayList<Habitacion> listaHabitaciones = new ArrayList<>(JsonManager.jsonArrayAHabitaciones(array));
+
+        for (Habitacion habitacion : listaHabitaciones) {
+            if (habitacion.getNumero() == idHabitacion) {
+                flag = true;
+                return habitacion;
+            }
+        }
+        if(!flag){
+            throw new NoSuchElementException("No se ha encontrado la habitacion especificada.");
+        }
+        return null;
+    }
 
 
 }
