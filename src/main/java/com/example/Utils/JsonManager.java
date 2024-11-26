@@ -80,18 +80,26 @@ public class JsonManager {
             // Convertir datos de habitacion (todos los atributos)
             JSONObject habitacionJson = new JSONObject();
             habitacionJson.put("numero", reserva.getHabitacion().getNumero());
-            habitacionJson.put("tipo", reserva.getHabitacion().getTipo().toString());  // Asegúrate de convertir a String
-            habitacionJson.put("estado", reserva.getHabitacion().getEstado().toString()); // Agregado estado
-            habitacionJson.put("precio", reserva.getHabitacion().getPrecio());  // Agregado precio
-            habitacionJson.put("limpia", reserva.getHabitacion().getLimpia()); // Agregado limpia
-            habitacionJson.put("reparacion", reserva.getHabitacion().getReparacion());  // Agregado reparacion
+            habitacionJson.put("tipo", reserva.getHabitacion().getTipo().toString());
+            habitacionJson.put("estado", reserva.getHabitacion().getEstado().toString());
+            habitacionJson.put("precio", reserva.getHabitacion().getPrecio());
+            habitacionJson.put("limpia", reserva.getHabitacion().getLimpia());
+            habitacionJson.put("reparacion", reserva.getHabitacion().getReparacion());
+
+            // Convertir consumos
+            JSONObject consumosJson = new JSONObject();
+            for (Map.Entry<Integer, String> consumoEntry : reserva.getConsumos().entrySet()) {
+                consumosJson.put(String.valueOf(consumoEntry.getKey()), consumoEntry.getValue());
+            }
 
             // Agregar atributos a reservaJson
             reservaJson.put("pasajero", pasajeroJson);
-            reservaJson.put("fechaInicio", reserva.getFechaInicio().toString());  // Convertir la fecha de inicio
-            reservaJson.put("fechaFin", reserva.getFechaFin().toString());  // Convertir la fecha de fin
+            reservaJson.put("fechaInicio", reserva.getFechaInicio().toString());
+            reservaJson.put("fechaFin", reserva.getFechaFin().toString());
             reservaJson.put("habitacion", habitacionJson);
+            reservaJson.put("consumos", consumosJson);
 
+            // Agregar reservaJson al arreglo
             jsonArray.put(reservaJson);
         }
         return jsonArray;
@@ -220,6 +228,14 @@ public class JsonManager {
             // Crear una instancia de Reserva y agregarla al mapa
             Reserva reserva = new Reserva(pasajero, fechaInicio, fechaFin, habitacion);
             reservas.put(id, reserva);
+
+            JSONObject consumosJson = reservaJson.getJSONObject("serviciosExtras");
+            Map<Integer, String> consumos = new HashMap<>();
+            for (String key : consumosJson.keySet()) {
+                consumos.put(Integer.parseInt(key), consumosJson.getString(key));
+            }
+            reserva.setConsumos(consumos);
+
         }
         return reservas;
     }

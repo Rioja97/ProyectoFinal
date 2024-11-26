@@ -52,5 +52,11 @@
         "passworHash": "jorge123",
         "tipoIngreso": "CLIENTE",
         "username": "jorge02"
+    },
+    {
+        "nombreApellido": "Santiago Sala",
+        "passworHash": "123",
+        "tipoIngreso": "CLIENTE",
+        "username": "santi"
     }
 ]
