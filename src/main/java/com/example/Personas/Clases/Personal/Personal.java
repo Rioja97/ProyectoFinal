@@ -39,11 +39,11 @@ public class Personal extends Usuario {
     }
 
 
-    public String hacerCheckOut(Reserva reserva){
-        reserva.getHabitacion().setEstado(Estado.DISPONIBLE);
+    public String hacerCheckOut(Habitacion habitacion){
+        habitacion.setEstado(Estado.DISPONIBLE);
         Random rand = new Random();
-        reserva.getHabitacion().setReparacion(rand.nextBoolean());
-        reserva.getHabitacion().setLimpia(false);
+        habitacion.setReparacion(rand.nextBoolean());
+        habitacion.setLimpia(false);
 
         return "La habitacion ahora se desocupado";
     }

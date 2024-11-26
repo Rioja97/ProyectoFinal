@@ -305,5 +305,16 @@ public class JsonManager {
     }
 
 
+    public static Reserva encontrarReservaHotel(int idHabitacion, Hotel hotel) {
+
+        for (Reserva reserva : hotel.getReservas().values()) {
+            if (reserva.getHabitacion().getNumero() == idHabitacion) {
+                return reserva;
+            }
+        }
+        throw new NoSuchElementException("No se ha encontrado la reserva especificada.");
+    }
+
+
 }
 
