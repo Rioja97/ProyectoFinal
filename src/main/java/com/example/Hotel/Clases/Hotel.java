@@ -118,7 +118,7 @@ public class Hotel {
         for(Reserva reserva1 : reservas.values()){
             if(reserva1.getHabitacion().getNumero() == reserva.getHabitacion().getNumero()){
                 reserva1.getHabitacion().setEstado(Estado.OCUPADO);
-                reservas.remove(reserva);
+                reservas.remove(reserva.getHabitacion().getNumero());
             }else{
                 throw new HabitacionNoDisponibleException("Esta habitacion no existe.");
             }
