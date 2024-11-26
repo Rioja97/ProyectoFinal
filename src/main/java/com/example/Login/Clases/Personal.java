@@ -1,6 +1,7 @@
 package com.example.Login.Clases;
 
 import com.example.Hotel.Clases.Habitacion;
+import com.example.Hotel.Clases.Hotel;
 import com.example.Hotel.Clases.Reserva;
 import com.example.Hotel.Enum.Estado;
 import com.example.Interfaces.MetodosPersonal;
@@ -30,7 +31,8 @@ public class Personal extends Usuario{
 
     }
 
-    public void hacerCheckIn(Reserva reserva){
+    public void hacerCheckIn(Reserva reserva, Hotel hotel){
+
 
         reserva.getHabitacion().setEstado(Estado.OCUPADO);
 

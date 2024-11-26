@@ -28,6 +28,15 @@
         "nacionalidad": "Argentino"
     },
     {
+        "password": "123",
+        "nombreApellido": "Emmanuel",
+        "direccion": "Brown",
+        "tipoIngreso": "CLIENTE",
+        "dni": 39700261,
+        "username": "emma5",
+        "nacionalidad": "Argentino"
+    },
+    {
         "password": "2004",
         "nombreApellido": "Nahuel Ramirez",
         "tipoIngreso": "ADMINISTRADOR",

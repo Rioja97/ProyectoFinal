@@ -9,7 +9,7 @@
     "fechaFin": "2024-11-27",
     "habitacion": {
         "tipo": "SIMPLE",
-        "estado": "RESERVADO",
+        "estado": "DISPONIBLE",
         "precio": 25000,
         "numero": 2,
         "reparacion": false,

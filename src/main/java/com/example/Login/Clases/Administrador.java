@@ -3,6 +3,7 @@ package com.example.Login.Clases;
 import com.example.Hotel.Clases.Hotel;
 import com.example.Login.Enums.Rol;
 import com.example.Login.LoginExceptions.UsuarioRepetidoException;
+import com.example.Utils.JsonManager;
 
 import java.util.NoSuchElementException;
 import java.util.TreeSet;
@@ -22,16 +23,12 @@ public class Administrador extends Usuario {
 
         TreeSet<Usuario> listaUsuarios = new TreeSet<>(hotel.getUsuarios());
 
-        for(Usuario u: listaUsuarios){
+        if(listaUsuarios.add(usuario)){
+            hotel.setUsuarios(listaUsuarios);
+            return "Se ha agregado el usuario exitosamente";
+        };
 
-            if(u.getUsername().equals(usuario.getUsername())){
-                throw new UsuarioRepetidoException("Usuario repetido");
-            }
-        }
-        listaUsuarios.add(usuario);
-        hotel.setUsuarios(listaUsuarios);
-
-        return "Se ha agregado el usuario exitosamente";
+        throw new UsuarioRepetidoException("Usuario ya existe");
 
     }
 

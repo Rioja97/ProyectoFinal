@@ -3,10 +3,9 @@ import java.util.*;
 
 import com.example.Excepciones.HabitacionNoDisponibleException;
 import com.example.Hotel.Enum.Estado;
-import com.example.Interfaces.MetodosUsuarios;
 import com.example.Login.Clases.Administrador;
-import com.example.Login.Clases.LoginManager;
 import com.example.Login.Clases.Usuario;
+import com.example.Utils.JsonManager;
 
 
 public class Hotel {
@@ -90,21 +89,47 @@ public class Hotel {
     }
 
 
-    public String realizarReserva(Reserva reserva) {
+    //Revisar que no esta agregando la reserva al map
+    public String realizarReserva(Reserva reserva) throws HabitacionNoDisponibleException {
 
-        if(reserva.getHabitacion().getEstado().name() == "RESERVADO" || reserva.getHabitacion().getEstado().name() == "OCUPADO"){
-            throw new NoSuchElementException("No se puede realizar la reserva. Habitación no disponible");
+        // Verificar si la habitación ya está reservada u ocupada.
+        if (reserva.getHabitacion().getEstado() == Estado.RESERVADO ||
+                reserva.getHabitacion().getEstado() == Estado.OCUPADO) {
+            throw new HabitacionNoDisponibleException("No se puede realizar la reserva. Habitación no disponible.");
         }
+
+        // Cambiar el estado de la habitación a "RESERVADO"
         reserva.getHabitacion().setEstado(Estado.RESERVADO);
-        reservas.put(reserva.getHabitacion().getNumero(),reserva);
-        return "Se ha realizado la reserva correctamente";
+
+        // Comprobar si ya existe una reserva para la misma habitación.
+        if (reservas.containsKey(reserva.getHabitacion().getNumero())) {
+            throw new HabitacionNoDisponibleException("Ya existe una reserva para esta habitación.");
+        }
+
+        // Registrar la reserva en el mapa de reservas.
+        reservas.put(reserva.getHabitacion().getNumero(), reserva);
+
+        return "Se ha realizado la reserva correctamente.";
     }
 
+    //Este metodo tiene que quitar la reserva del map, y cambiar el estado de esa habitacion a ocupada.
+    public String hacerChechIn(Reserva reserva){
 
-    public String cancerlarReserva(Reserva reserva) {
+        return "";
+    }
 
-        reserva.getHabitacion().setEstado(Estado.DISPONIBLE);
-        reservas.remove(reserva);
+    //Revisar que no esta quitando la reserva al map
+    public String cancerlarReserva(int numeroHabitacion, Hotel hotel) {
+
+        JsonManager.encontrarHabitacionHotel(numeroHabitacion, hotel);
+
+        for(Reserva reserva: hotel.getReservas().values()){
+            if(reserva.getHabitacion().getEstado() == Estado.RESERVADO && reserva.getHabitacion().getNumero() == numeroHabitacion){
+                reserva.getHabitacion().setEstado(Estado.DISPONIBLE);
+                reservas.remove(reserva);
+            }
+        }
+        hotel.setReservas(reservas);
         return "Se ha cancelado la reserva correctamente";
     }
 
@@ -112,7 +137,7 @@ public class Hotel {
     public List<Habitacion> obtenerHabitacionesDisponibles() {
         List<Habitacion> habitacionesDisponibles = new ArrayList<>();
         for (Habitacion habitacion : habitaciones) {
-            if (habitacion.getEstado().equals(Estado.DISPONIBLE)) {
+            if (habitacion.getEstado().name().equals("DISPONIBLE")) {
                 habitacionesDisponibles.add(habitacion);
             }
         }
@@ -167,7 +192,7 @@ public class Hotel {
         return habitaciones;
     }
 
-    public Map<Integer, Reserva> getReservas() {
+    public HashMap<Integer, Reserva> getReservas() {
         return reservas;
     }
 
