@@ -1,5 +1,6 @@
 package com.example.Login.Clases;
 
+import com.example.Interfaces.MetodosUsuarios;
 import com.example.Login.LoginExceptions.IngresoIncorrectoException;
 import com.example.Login.LoginExceptions.UsuarioRepetidoException;
 import com.example.Utils.JsonManager;
@@ -9,10 +10,10 @@ import java.io.FileNotFoundException;
 import java.util.NoSuchElementException;
 import java.util.TreeSet;
 
-public class LoginManager implements com.example.Interfaces.iMetodosHotel {
+public class LoginManager implements MetodosUsuarios {
 
 
-    public String agregarUsuario(Usuario usuario) throws UsuarioRepetidoException{
+    public void agregarUsuario(Usuario usuario) throws UsuarioRepetidoException{
         JSONArray arr = JsonManager.FileAJsonArray("usuarios.json");
         TreeSet<Usuario> listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
 
@@ -26,12 +27,10 @@ public class LoginManager implements com.example.Interfaces.iMetodosHotel {
 
         arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
         JsonManager.JsonArrayAFile(arr,"usuarios.json");
-
-        return "Usuario agregado exitósamente";
     }
 
 
-    public String modificarUsuario(Usuario modificado,String nombreUsuario){
+    public void modificarUsuario(Usuario modificado,String nombreUsuario){
 
         boolean encontrado = false;
         JSONArray arr = JsonManager.FileAJsonArray("usuarios.json");
@@ -50,16 +49,14 @@ public class LoginManager implements com.example.Interfaces.iMetodosHotel {
             if(encontrado == true){
                 arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
                 JsonManager.JsonArrayAFile(arr,"usuarios.json");
-                return "Usuario modificado exitosamente";
             } else{
                 throw new NoSuchElementException("Usuario no encontrado");
             }
         }
-        return null;
     }
 
 
-    public String eliminarUsuario(String nombreUsuario){
+    public void eliminarUsuario(String nombreUsuario){
 
         JSONArray arr = JsonManager.FileAJsonArray("usuarios.json");
         TreeSet<Usuario> listaUsuarios = JsonManager.jsonArrayAListaUsuarios(arr);
@@ -73,12 +70,10 @@ public class LoginManager implements com.example.Interfaces.iMetodosHotel {
             if(eliminado == true){
                 arr = JsonManager.listaUsuariosAJsonArray(listaUsuarios);
                 JsonManager.JsonArrayAFile(arr,"usuarios.json");
-                return "Usuario eliminado exitosamente";
             } else{
                 throw new NoSuchElementException("Usuario no encontrado");
             }
         }
-        return null;
     }
 
 

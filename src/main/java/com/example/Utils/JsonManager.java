@@ -62,7 +62,7 @@ public class JsonManager {
         return jsonArray;
     }
 
-    public static JSONArray mapAJsonArray(Map<Integer, Reserva> reservas) {
+    public static JSONArray reservasAJsonArray(Map<Integer, Reserva> reservas) {
         JSONArray jsonArray = new JSONArray();
 
         for (Map.Entry<Integer, Reserva> entry : reservas.entrySet()) {
@@ -177,7 +177,7 @@ public class JsonManager {
     }
 
 
-    public static HashMap<Integer, Reserva> jsonArrayAMap(JSONArray jsonArray) {
+    public static HashMap<Integer, Reserva> jsonArrayAResevas(JSONArray jsonArray) {
         HashMap<Integer, Reserva> reservas = new HashMap<>();
 
         for (int i = 0; i < jsonArray.length(); i++) {

@@ -217,7 +217,7 @@ public final class GestionHotel {
         Scanner scan = new Scanner(System.in);
 
         JSONArray array = JsonManager.FileAJsonArray("reservas.json");
-        HashMap<Integer, Reserva> reservas = new HashMap<>(JsonManager.jsonArrayAMap(array));
+        HashMap<Integer, Reserva> reservas = new HashMap<>(JsonManager.jsonArrayAResevas(array));
 
 
         while (opcionMenuPersonal != 0) {
@@ -271,7 +271,7 @@ public final class GestionHotel {
                     System.out.println("Opción no válida, por favor intente nuevamente.");
             }
         }
-        array = JsonManager.mapAJsonArray(reservas);
+        array = JsonManager.reservasAJsonArray(reservas);
         JsonManager.JsonArrayAFile(array, "reservas.json");
     }
 
@@ -283,7 +283,7 @@ public final class GestionHotel {
 
         int opcionMenuReservas = -1;
         JSONArray array = new JSONArray(JsonManager.FileAJsonArray("reservas.json"));
-        HashMap<Integer, Reserva> reservas = new HashMap<>(JsonManager.jsonArrayAMap(array));
+        HashMap<Integer, Reserva> reservas = new HashMap<>(JsonManager.jsonArrayAResevas(array));
         lasVegas.setReservas(reservas);
 
         JSONArray arrayHabitaciones = new JSONArray(JsonManager.FileAJsonArray("habitaciones.json"));
@@ -333,7 +333,7 @@ public final class GestionHotel {
             }
         }
 
-        array = JsonManager.mapAJsonArray(reservas);
+        array = JsonManager.reservasAJsonArray(reservas);
         JsonManager.JsonArrayAFile(array, "reservas.json");
 
         arrayHabitaciones = JsonManager.habitacionesAJsonArray(habitaciones);

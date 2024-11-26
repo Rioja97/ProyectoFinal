@@ -2,11 +2,12 @@ package com.example.Hotel.Clases;
 import java.util.*;
 
 import com.example.Hotel.Enum.Estado;
+import com.example.Interfaces.MetodosUsuarios;
 import com.example.Login.Clases.LoginManager;
 import com.example.Login.Clases.Usuario;
 
 
-public class Hotel implements com.example.Interfaces.iMetodosHotel {
+public class Hotel implements MetodosUsuarios{
     private String nombre;
     private String direccion;
     private ArrayList<Habitacion> habitaciones;
@@ -23,26 +24,29 @@ public class Hotel implements com.example.Interfaces.iMetodosHotel {
         this.usuarios = new TreeSet<>();
     }
 
-    public String modificarUsuario(Usuario usuario,String username){
-        LoginManager gestorLogin = new LoginManager();
+    @Override
+    public void modificarUsuario(Usuario usuario,String username){
 
-        String msj = gestorLogin.modificarUsuario(usuario,username);
-        return msj;
+        LoginManager login = new LoginManager();
+        login.modificarUsuario(usuario,username);
     }
 
-    public String agregarUsuario(Usuario usuario){
-        LoginManager gestorLogin = new LoginManager();
+    @Override
+    public void agregarUsuario(Usuario usuario){
 
-        String msj = gestorLogin.agregarUsuario(usuario);
-        return msj;
+        LoginManager login = new LoginManager();
+        login.agregarUsuario(usuario);
     }
 
-    public String eliminarUsuario(String idUsuario) {
-        usuarios.remove(idUsuario);
-        return "Usuario eliminado correctamente!";
+    @Override
+    public void eliminarUsuario(String idUsuario) {
+
+        LoginManager login = new LoginManager();
+        login.eliminarUsuario(idUsuario);
     }
 
     public void agregarHabitacion(Habitacion habitacion) {
+
         habitaciones.add(habitacion);
     }
 
@@ -83,6 +87,9 @@ public class Hotel implements com.example.Interfaces.iMetodosHotel {
         }
         return habitacionesNoDisponibles;
     }
+
+
+
 
 
     public String getNombre() {

@@ -3,11 +3,12 @@ package com.example.Login.Clases;
 import com.example.Hotel.Clases.Habitacion;
 import com.example.Hotel.Clases.Reserva;
 import com.example.Hotel.Enum.Estado;
+import com.example.Interfaces.MetodosPersonal;
 import com.example.Login.Enums.Rol;
 
 import java.util.Random;
 
-public class Personal extends Usuario {
+public class Personal extends Usuario{
 
     public Personal(String username, String passwordHash, Rol tipoIngreso, String nombreApellido) {
         super(username, passwordHash, tipoIngreso, nombreApellido);
@@ -18,32 +19,31 @@ public class Personal extends Usuario {
         this.setTipoIngreso(Rol.PERSONAL_LIMPIEZA);
     }
 
-    public String limpiarHabitacion(Habitacion habitacion){
-        habitacion.setLimpia(true);
+    public void limpiarHabitacion(Habitacion habitacion){
 
-        return "La habitacion se ha limpiado";
+        habitacion.setLimpia(true);
     }
 
-    public String repararHabitacion(Habitacion habitacion){
+    public void repararHabitacion(Habitacion habitacion){
+
         habitacion.setReparacion(false);
 
-        return "La habitacion se ha reparado";
     }
 
-    public String hacerCheckIn(Reserva reserva){
+    public void hacerCheckIn(Reserva reserva){
+
         reserva.getHabitacion().setEstado(Estado.OCUPADO);
 
-        return "La habitacion ahora se encuentra ocupada";
     }
 
 
-    public String hacerCheckOut(Habitacion habitacion){
+    public void hacerCheckOut(Habitacion habitacion){
+
         habitacion.setEstado(Estado.DISPONIBLE);
         Random rand = new Random();
         habitacion.setReparacion(rand.nextBoolean());
         habitacion.setLimpia(false);
 
-        return "La habitacion ahora se desocupado";
     }
 
 }
