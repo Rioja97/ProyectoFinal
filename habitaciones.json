@@ -17,7 +17,7 @@
     },
     {
         "tipo": "SIMPLE",
-        "estado": "RESERVADO",
+        "estado": "DISPONIBLE",
         "precio": 25000,
         "numero": 3,
         "reparacion": false,
