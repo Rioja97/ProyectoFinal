@@ -93,6 +93,7 @@ public class Validaciones{
     }
 
 
+
     public static int validarNumeroEntero(String entrada) throws NumeroInvalidoException {
         if (entrada == null || entrada.trim().isEmpty()) {
             throw new NumeroInvalidoException("La entrada no puede ser nula o vacía.");
@@ -104,7 +105,6 @@ public class Validaciones{
             throw new NumeroInvalidoException("La entrada no es un número entero válido.");
         }
     }
-
 }
 
 

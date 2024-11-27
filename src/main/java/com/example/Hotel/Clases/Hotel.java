@@ -118,26 +118,18 @@ public class Hotel implements MetodosAdministrador {
 
     }
 
+    //METODO PARA CANCELAR LA RESERVA
     public String cancelarReserva(int numeroHabitacion, Hotel hotel) {
         // Obtener el mapa de reservas
         HashMap<Integer, Reserva> reservas = hotel.getReservas();
 
         // Verificar si la reserva existe
         if (reservas.containsKey(numeroHabitacion)) {
-            Reserva reserva = reservas.get(numeroHabitacion);
-
-            // Verificar si la habitación ya está disponible
-            if (reserva.getHabitacion().getEstado() == Estado.DISPONIBLE) {
-                return "La habitación " + numeroHabitacion + " ya está disponible, no es necesario cancelar.";
-            }
-
+            Reserva reserva = reservas.remove(numeroHabitacion);
             // Cambiar el estado de la habitación a disponible
             reserva.getHabitacion().setEstado(Estado.DISPONIBLE);
 
-            // Eliminar la reserva
-            reservas.remove(numeroHabitacion);
-
-            // Actualizar el mapa de reservas en el hotel (si es necesario)
+            // Actualizar el mapa en el hotel
             hotel.setReservas(reservas);
 
             return "Se ha cancelado la reserva correctamente para la habitación " + numeroHabitacion;
@@ -146,14 +138,13 @@ public class Hotel implements MetodosAdministrador {
         }
     }
 
-
     //METODO PARA MOSTRAR LAS RESERVAS QUE TIENE EL PASAJERO
     public ArrayList filtrarReservasPasajero(Pasajero pasajero){
 
         ArrayList<Reserva> filtradas = new ArrayList<>();
 
         for (Reserva reserva: reservas.values()){
-            if (reserva.getPasajero().equals(pasajero)){
+            if (reserva.getPasajero().getUsername().equals(pasajero.getUsername())){
                 filtradas.add(reserva);
             }
         }
@@ -175,39 +166,16 @@ public class Hotel implements MetodosAdministrador {
     }
 
 
-    public ArrayList<Habitacion> obtenerHabitacionesNoDisponibles() {
-        ArrayList<Habitacion> habitacionesNoDisponibles = new ArrayList<>();
-
-        for (Habitacion habitacion : habitaciones) {
-            if (habitacion.getEstado().equals(Estado.OCUPADO)) {
-                habitacionesNoDisponibles.add(habitacion);
+    public List<Habitacion> obtenerHabitacionesNoDisponibles() {
+        List<Habitacion> habitacionesNoDisponibles = new ArrayList<>();
+        for (Map.Entry<Integer, Reserva> entrada : reservas.entrySet()) {
+            Reserva reserva = entrada.getValue();
+            if (reserva.getHabitacion().getEstado().equals(Estado.OCUPADO)) {
+                habitacionesNoDisponibles.add(reserva.getHabitacion());
             }
         }
         return habitacionesNoDisponibles;
     }
-
-    public ArrayList<Habitacion> obtenerHabitacionesSucias() {
-        ArrayList<Habitacion> habitacionesNoDisponibles = new ArrayList<>();
-
-        for (Habitacion habitacion : habitaciones) {
-            if (habitacion.getLimpia() == false) {
-                habitacionesNoDisponibles.add(habitacion);
-            }
-        }
-        return habitacionesNoDisponibles;
-    }
-
-    public ArrayList<Habitacion> obtenerHabitacionesRotas() {
-        ArrayList<Habitacion> habitacionesNoDisponibles = new ArrayList<>();
-
-        for (Habitacion habitacion : habitaciones) {
-            if (habitacion.getReparacion() == true) {
-                habitacionesNoDisponibles.add(habitacion);
-            }
-        }
-        return habitacionesNoDisponibles;
-    }
-
 
 
     //GETTERS Y SETTERS

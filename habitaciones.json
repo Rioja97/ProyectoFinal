@@ -9,7 +9,7 @@
     },
     {
         "tipo": "SIMPLE",
-        "estado": "DISPONIBLE",
+        "estado": "RESERVADO",
         "precio": 25000,
         "numero": 2,
         "reparacion": false,
@@ -17,7 +17,7 @@
     },
     {
         "tipo": "SIMPLE",
-        "estado": "RESERVADO",
+        "estado": "DISPONIBLE",
         "precio": 25000,
         "numero": 3,
         "reparacion": false,
@@ -113,7 +113,7 @@
     },
     {
         "tipo": "DOBLE",
-        "estado": "RESERVADO",
+        "estado": "DISPONIBLE",
         "precio": 45000,
         "numero": 15,
         "reparacion": false,
