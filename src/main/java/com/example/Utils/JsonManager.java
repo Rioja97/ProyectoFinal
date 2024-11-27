@@ -71,7 +71,7 @@ public class JsonManager {
         return jsonArray;
     }
 
-    /*//Metodo para convertir HashMap a JsonArray
+    //Metodo para convertir HashMap a JsonArray
     public static JSONArray reservasAJsonArray(HashMap<Integer, Reserva> reservas) {
         JSONArray jsonArray = new JSONArray();
 
@@ -110,50 +110,7 @@ public class JsonManager {
             jsonArray.put(reservaJson);
         }
         return jsonArray;
-    }*/
-
-
-    // Metodo para convertir HashMap a JsonArray
-    public static JSONArray reservasAJsonArray(HashMap<Integer, Reserva> reservas) {
-        JSONArray jsonArray = new JSONArray();
-
-        for (HashMap.Entry<Integer, Reserva> entry : reservas.entrySet()) {
-            JSONObject reservaJson = new JSONObject();
-            reservaJson.put("id", entry.getKey());
-
-            Reserva reserva = entry.getValue();
-
-            // Convertir datos de pasajero
-            JSONObject pasajeroJson = new JSONObject();
-            pasajeroJson.put("username", reserva.getPasajero().getUsername());
-            pasajeroJson.put("password", reserva.getPasajero().getPassword());
-            pasajeroJson.put("nombreApellido", reserva.getPasajero().getNombreApellido());
-            pasajeroJson.put("dni", reserva.getPasajero().getDni());
-            pasajeroJson.put("direccion", reserva.getPasajero().getDireccion());
-            pasajeroJson.put("nacionalidad", reserva.getPasajero().getNacionalidad());
-
-            // Convertir datos de habitacion (todos los atributos)
-            JSONObject habitacionJson = new JSONObject();
-            habitacionJson.put("numero", reserva.getHabitacion().getNumero());
-            habitacionJson.put("tipo", reserva.getHabitacion().getTipo().toString());
-            habitacionJson.put("estado", reserva.getHabitacion().getEstado().toString());
-            habitacionJson.put("precio", reserva.getHabitacion().getPrecio()); // Precio de la habitación
-            habitacionJson.put("limpia", reserva.getHabitacion().getLimpia());
-            habitacionJson.put("reparacion", reserva.getHabitacion().getReparacion());
-
-            // Agregar atributos a reservaJson
-            reservaJson.put("pasajero", pasajeroJson);
-            reservaJson.put("fechaInicio", reserva.getFechaInicio().toString());
-            reservaJson.put("fechaFin", reserva.getFechaFin().toString());
-            reservaJson.put("habitacion", habitacionJson);
-            reservaJson.put("precioReserva", reserva.getPrecio()); // Agregar el precio de la reserva
-
-            // Agregar reservaJson al arreglo
-            jsonArray.put(reservaJson);
-        }
-        return jsonArray;
     }
-
 
 
     //Metodo para convertir JsonArray a File
@@ -269,7 +226,7 @@ public class JsonManager {
     }
 
 
-    /*//Metodo para convertir JsonArray a HashMap(Reservas)
+    //Metodo para convertir JsonArray a HashMap(Reservas)
     public static HashMap<Integer, Reserva> jsonArrayAResevas(JSONArray jsonArray) {
         HashMap<Integer, Reserva> reservas = new HashMap<>();
 
@@ -314,57 +271,6 @@ public class JsonManager {
             Reserva reserva = new Reserva(pasajero, fechaInicio, fechaFin, habitacion);
             reservas.put(id, reserva);
         }
-        return reservas;
-    }*/
-
-
-    public static HashMap<Integer, Reserva> jsonArrayAResevas(JSONArray jsonArray) {
-        HashMap<Integer, Reserva> reservas = new HashMap<>();
-
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject reservaJson = jsonArray.getJSONObject(i);
-
-            if(jsonArray == null){
-                System.out.println("No se ha encontrado el archivo origen");
-                return null;
-            }
-
-            // Obtener la clave "id" para el mapa
-            int id = reservaJson.getInt("id");
-
-            // Obtener los datos de pasajero
-            JSONObject pasajeroJson = reservaJson.getJSONObject("pasajero");
-            String username = pasajeroJson.getString("username");
-            String password = pasajeroJson.getString("password");
-            String nombreApellido = pasajeroJson.getString("nombreApellido");
-            int dni = pasajeroJson.getInt("dni");
-            String direccion = pasajeroJson.getString("direccion");
-            String nacionalidad = pasajeroJson.getString("nacionalidad");
-
-            Usuario usuario = new Usuario(username, password, nombreApellido);
-            Pasajero pasajero = new Pasajero(usuario.getUsername(), usuario.getPassword(), usuario.getNombreApellido(), dni, direccion, nacionalidad);
-
-            // Obtener los datos de habitacion (todos los atributos)
-            JSONObject habitacionJson = reservaJson.getJSONObject("habitacion");
-            int numeroHabitacion = habitacionJson.getInt("numero");
-            Tipo tipo = Tipo.valueOf(habitacionJson.getString("tipo"));
-            Estado estado = Estado.valueOf(habitacionJson.getString("estado"));  // Convertir el estado de String a Estado
-            double precio = habitacionJson.getDouble("precio");  // Obtener el precio
-            boolean limpia = habitacionJson.getBoolean("limpia");  // Obtener el estado de limpieza
-            boolean reparacion = habitacionJson.getBoolean("reparacion");  // Obtener el estado de reparación
-            Habitacion habitacion = new Habitacion(numeroHabitacion, tipo, estado, precio, limpia, reparacion);
-
-            // Obtener las fechas de la reserva
-            LocalDate fechaInicio = LocalDate.parse(reservaJson.getString("fechaInicio"));
-            LocalDate fechaFin = LocalDate.parse(reservaJson.getString("fechaFin"));
-
-            // Crear una instancia de Reserva (el precio será calculado en el constructor)
-            Reserva reserva = new Reserva(pasajero, fechaInicio, fechaFin, habitacion);
-
-            // Agregar la reserva al mapa
-            reservas.put(id, reserva);
-        }
-
         return reservas;
     }
 
