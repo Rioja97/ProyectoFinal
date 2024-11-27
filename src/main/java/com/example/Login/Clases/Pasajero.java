@@ -1,15 +1,16 @@
 package com.example.Login.Clases;
 
 import com.example.Login.Enums.Rol;
-
 import java.util.Objects;
-
+//CLASE PARA PASAJERO
 public class Pasajero extends Usuario {
 
     private int dni;
     private String direccion;
     private String nacionalidad;
 
+
+    //IMPLEMENTA VARIOS CONSTRUCTORES PARA DIFERENTES FORMAS DE CREACION DE PASAJEROS
     public Pasajero(String username, String password, Rol tipoIngreso, String nombreApellido) {
         super(username, password, tipoIngreso, nombreApellido);
 
@@ -40,6 +41,8 @@ public class Pasajero extends Usuario {
     }
 
 
+
+    //GETTERS Y SETTERS
     public int getDni() {
         return dni;
     }

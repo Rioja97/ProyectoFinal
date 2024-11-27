@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.example.Login.Clases.Pasajero;
 
+//CLASE DE RESERVAS
 public class Reserva {
     private Pasajero pasajero;
     private LocalDate fechaInicio;
@@ -12,7 +13,7 @@ public class Reserva {
     private Habitacion habitacion;
     private Map<Integer,String> consumos;
 
-
+//UNICO Y NECESARIO CONSTRUCTOR.
     public Reserva(Pasajero pasajero, LocalDate fechaInicio, LocalDate fechaFin, Habitacion habitacion) {
         this.pasajero = pasajero;
         this.fechaInicio = fechaInicio;
@@ -20,14 +21,15 @@ public class Reserva {
         this.habitacion = habitacion;
     }
 
+    //METODO PARA CALCULAR LOS DIAS DE LA RESERVA
     public int calcularDiasEstancia() {
         return (int) ChronoUnit.DAYS.between(fechaInicio, fechaFin);
     }
-
+    //METODO PARA REGISTRAR CONSUMO
     public void registrarConsumo(String descripcion,int monto) {
         consumos.put(monto,descripcion);
     }
-
+    //METODO PARA CALCULAR CONSUMOS
     public int calcularConsumos(){
         return consumos.keySet().stream().mapToInt(Integer::intValue).sum();
     }
@@ -41,6 +43,7 @@ public class Reserva {
     }
 
 
+    //GETTERS Y SETTERS
     public Pasajero getPasajero() {
         return pasajero;
     }

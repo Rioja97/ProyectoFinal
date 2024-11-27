@@ -1,12 +1,13 @@
 package com.example.Hotel.Clases;
-import java.util.*;
 
+import java.util.*;
 import com.example.Excepciones.HabitacionNoDisponibleException;
 import com.example.Hotel.Enum.Estado;
 import com.example.Login.Clases.Administrador;
+import com.example.Login.Clases.Pasajero;
 import com.example.Login.Clases.Usuario;
-import com.example.Utils.JsonManager;
 
+//CLASE HOTEL. CON RESPECTIVOS ATRIBUTOS DE HOTEL Y LAS COLECCIONES CORRESPONDIENTES.
 
 public class Hotel {
     private String nombre;
@@ -26,31 +27,34 @@ public class Hotel {
     }
 
 
+    //ACA SE IMPLEMENTÓ LA SOBRECARGA DE MÉTODOS.
+    //LLAMA A AGREGAR USUARIO DE ADMINISTRADOR. UTILIZADO PARA AGREGAR ADMIN O PERSONAL
     public String agregarUsuario(Usuario usuario, Administrador admin, Hotel hotel){
 
         return admin.agregarUsuario(usuario, hotel);
     }
 
+    //LLAMA A AGREGAR USUARIO DE ADMINISTRADOR. UTILIZADO PARA REGISTRO DE PASAJEROS.
     public String agregarUsuario(Usuario usuario, Hotel hotel){
 
         Administrador admin = new Administrador();
         return admin.agregarUsuario(usuario, hotel);
     }
 
-
+    //LLAMA A MODIFICAR USUARIO DE ADMINISTRADOR
     public String modificarUsuario(Usuario usuario,String username, Administrador admin, Hotel hotel){
 
         return admin.modificarUsuario(usuario,username, hotel);
     }
 
 
-
+    //LLAMA A ELIMINAR USUARIO DE ADMINISTRADOR
     public String eliminarUsuario(String idUsuario, Administrador admin, Hotel hotel) {
 
         return admin.eliminarUsuario(idUsuario, hotel);
     }
 
-
+    //METODO PARA AGREGAR HABITACION
     public String agregarHabitacion(Habitacion habitacion) throws HabitacionNoDisponibleException{
 
         for (Habitacion h : habitaciones) {
@@ -62,7 +66,7 @@ public class Hotel {
         return "Se ha agregado la habitacion correctamente";
     }
 
-
+    //METODO PARA MODIFICAR HABITACION
     public String modificarHabitacion(int numeroHabitacion, Habitacion habitacion) {
 
         for(Habitacion h: habitaciones){
@@ -75,9 +79,8 @@ public class Hotel {
         throw new NoSuchElementException("No se encontro la habitación");
     }
 
-
+    //METODO PARA ELIMINAR HABITACION
     public String eliminarHabitacion(int habitacion){
-
 
         for(Habitacion h: habitaciones){
             if(h.getNumero() == habitacion){
@@ -89,7 +92,7 @@ public class Hotel {
     }
 
 
-    //Revisar que no esta agregando la reserva al map
+    //METODO PARA AGREGAR LA RESERVA AL MAP
     public void realizarReserva(Reserva reserva) throws HabitacionNoDisponibleException {
 
         // Verificar si la habitación ya está reservada u ocupada.
@@ -111,7 +114,7 @@ public class Hotel {
 
     }
 
-    //Revisar que no esta quitando la reserva al map
+    //METODO PARA CANCELAR LA RESERVA
     public String cancelarReserva(int numeroHabitacion, Hotel hotel) {
         // Obtener el mapa de reservas
         HashMap<Integer, Reserva> reservas = hotel.getReservas();
@@ -129,6 +132,22 @@ public class Hotel {
         } else {
             return "No se encontró una reserva para la habitación " + numeroHabitacion;
         }
+    }
+
+    //METODO PARA MOSTRAR LAS RESERVAS QUE TIENE EL PASAJERO
+    public ArrayList filtrarReservasPasajero(Pasajero pasajero){
+
+        ArrayList<Reserva> filtradas = new ArrayList<>();
+
+        for (Reserva reserva: reservas.values()){
+            if (reserva.getPasajero().getUsername().equals(pasajero.getUsername())){
+                filtradas.add(reserva);
+            }
+        }
+        if(filtradas.isEmpty()){
+            throw new NoSuchElementException("El pasajero no tiene reservas");
+        }
+        return filtradas;
     }
 
 
@@ -155,21 +174,7 @@ public class Hotel {
     }
 
 
-    public ArrayList verReservasCliente(String username){
-        ArrayList reservasCliente=new ArrayList();
-        if(reservas.values().isEmpty()){
-            System.out.println("No hay reservas");
-            return null;
-        }
-        for (Reserva reserva:reservas.values()){
-            if(reserva.getPasajero().getUsername().equals(username)){
-                reservasCliente.add(reserva);
-            }
-        }
-        return reservasCliente;
-    }
-
-
+    //GETTERS Y SETTERS
     public String getNombre() {
         return nombre;
     }

@@ -25,7 +25,7 @@ import java.util.*;
 public class JsonManager {
 
 
-    // Convertir TreeSet a JSONArray
+    //Metodo para convertir TreeSet a JSONArray
     public static JSONArray listaUsuariosAJsonArray(TreeSet<Usuario> listaUsuarios) {
         JSONArray jsonArray = new JSONArray();
 
@@ -49,12 +49,10 @@ public class JsonManager {
             // Agregar el objeto usuario al JSONArray
             jsonArray.put(obj);
         }
-
         return jsonArray;
     }
 
-
-
+    //Metodo para convertir ArrayList a JsonArray
     public static JSONArray habitacionesAJsonArray(ArrayList<Habitacion> listaHabitaciones) {
         JSONArray jsonArray = new JSONArray();
 
@@ -73,6 +71,7 @@ public class JsonManager {
         return jsonArray;
     }
 
+    //Metodo para convertir HashMap a JsonArray
     public static JSONArray reservasAJsonArray(Map<Integer, Reserva> reservas) {
         JSONArray jsonArray = new JSONArray();
 
@@ -114,8 +113,7 @@ public class JsonManager {
     }
 
 
-
-
+    //Metodo para convertir JsonArray a File
     public static void JsonArrayAFile(JSONArray jsonArray, String nombreArchivo) {
         try (FileWriter fileWriter = new FileWriter(nombreArchivo)) {
 
@@ -130,6 +128,7 @@ public class JsonManager {
     }
 
 
+    //Metodo para convertir File a JsonArray
     public static JSONArray FileAJsonArray(String filePath) {
 
         try (FileReader fileReader = new FileReader(filePath)) {
@@ -145,6 +144,7 @@ public class JsonManager {
     }
 
 
+    //Metodo para convertir JsonArray a Treeset(Usuarios
     public static TreeSet<Usuario> jsonArrayAListaUsuarios(JSONArray jsonArray) {
         TreeSet<Usuario> listaUsuarios = new TreeSet<>();
 
@@ -196,9 +196,7 @@ public class JsonManager {
     }
 
 
-
-
-
+    //Metodo para convertir JsonArray a ArrayList(Habitaciones)
     public static ArrayList<Habitacion> jsonArrayAHabitaciones(JSONArray jsonArray) {
         ArrayList<Habitacion> listaHabitaciones = new ArrayList<>();
 
@@ -228,7 +226,7 @@ public class JsonManager {
     }
 
 
-
+    //Metodo para convertir JsonArray a HashMap(Reservas)
     public static HashMap<Integer, Reserva> jsonArrayAResevas(JSONArray jsonArray) {
         HashMap<Integer, Reserva> reservas = new HashMap<>();
 
@@ -277,74 +275,7 @@ public class JsonManager {
     }
 
 
-
-
-    public static boolean comprobarExistenciaArchivo(String nombreArchivo) {
-        Path path = Paths.get(nombreArchivo);
-        boolean exists = Files.exists(path);
-
-        return exists;
-    }
-
-    public static void crearArchivo(String nombreArchivo) {
-        try {
-            File file = new File(nombreArchivo);
-            if (file.createNewFile()) {
-                System.out.println("Archivo creado exitosamente: " + file.getAbsolutePath());
-            } else {
-                System.out.println("El archivo ya existe: " + file.getAbsolutePath());
-            }
-        } catch (IOException e) {
-            System.err.println("Error al crear el archivo: " + e.getMessage());
-        }
-    }
-
-    public static void administrarArchivos(String nombreArchivo) {
-        if (!comprobarExistenciaArchivo(nombreArchivo)) {
-
-            crearArchivo(nombreArchivo);
-        } else {
-            System.out.println("El archivo ya existe.");
-        }
-    }
-
-
-
-    public static Pasajero encontrarPasajeroArchivo(String userName) {
-
-        // Leer el arreglo JSON del archivo
-        JSONArray array = JsonManager.FileAJsonArray("usuarios.json");
-
-        // Convertir el arreglo JSON a una lista de objetos Usuario
-        TreeSet<Usuario> listaUsuarios = new TreeSet<>(JsonManager.jsonArrayAListaUsuarios(array));
-
-        // Iterar sobre la lista de usuarios
-        for (Usuario usuario : listaUsuarios) {
-            // Comprobar si el usuario es una instancia de Pasajero y si el nombre de usuario coincide
-            if (usuario instanceof Pasajero && usuario.getUsername().equals(userName)) {
-                // Realizar el casting a Pasajero y devolverlo
-                return (Pasajero) usuario;
-            }
-        }
-        throw new NoSuchElementException("No se ha encontrado el usuario especificado.");
-    }
-
-
-    public static Habitacion encontrarHabitacionArchivo(int idHabitacion) {
-
-        JSONArray array = JsonManager.FileAJsonArray("habitaciones.json");
-
-        ArrayList<Habitacion> listaHabitaciones = new ArrayList<>(JsonManager.jsonArrayAHabitaciones(array));
-
-        for (Habitacion habitacion : listaHabitaciones) {
-            if (habitacion.getNumero() == idHabitacion) {
-                return habitacion;
-            }
-        }
-            throw new NoSuchElementException("No se ha encontrado la habitacion especificada.");
-    }
-
-
+    //Metodo para facilitar la busqueda del pasajero.
     public static Pasajero encontrarPasajeroHotel(String userName, Hotel hotel) {
 
         TreeSet<Usuario> listaUsuarios = hotel.getUsuarios();
@@ -361,7 +292,7 @@ public class JsonManager {
     }
 
 
-
+    //Metodo para facilitar la busqueda de la habitacion.
     public static Habitacion encontrarHabitacionHotel(int idHabitacion, Hotel hotel) {
 
         for (Habitacion habitacion : hotel.getHabitaciones()) {
@@ -372,7 +303,7 @@ public class JsonManager {
         throw new NoSuchElementException("No se ha encontrado la habitacion especificada.");
     }
 
-
+    //Metodo para facilitar la busqueda de la reserva.
     public static Reserva encontrarReservaHotel(int idHabitacion, Hotel hotel) {
 
         for (Reserva reserva : hotel.getReservas().values()) {

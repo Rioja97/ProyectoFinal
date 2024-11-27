@@ -4,6 +4,7 @@ import com.example.Hotel.Enum.Tipo;
 
 import static com.example.Hotel.Enum.Estado.DISPONIBLE;
 
+//CLASE DE HABITACIONES
 public class Habitacion {
     private int numero;
     private Tipo tipo;
@@ -12,6 +13,8 @@ public class Habitacion {
     private boolean limpia;
     private boolean reparacion;
 
+
+    //DIVERSOS CONSTRUCTORES QUE SURGIERON A LO LARGO DEL PROYECTO
     public Habitacion(int numero,Tipo tipo){
         this.numero = numero;
         this.tipo = tipo;
@@ -42,7 +45,7 @@ public class Habitacion {
     }
 
 
-
+    //GETTERS Y SETTERS
     public int getNumero() {
         return numero;
     }

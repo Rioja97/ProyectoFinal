@@ -7,8 +7,9 @@ import java.io.FileNotFoundException;
 import java.util.TreeSet;
 public class LoginManager{
 
+    //ESTA CLASE SE PENSÓ PARA LA PARTE DEL LOGUEO Y LOS MÉTODOS QUE ESTÉN RELACIONADOS CON EL MISMO.
 
-
+    //METODO QUE REALIZA LA PARTE LÓGICA DEL INICIO DE SESIÓN
     public static Usuario iniciarSesion(Usuario usuario) throws FileNotFoundException {
 
         TreeSet<Usuario> usuarios = new TreeSet<>();
@@ -29,6 +30,8 @@ public class LoginManager{
     }
 
 
+    //METODO QUE REALIZA LOS INGRESOS POR CONSOLA DEL INICIO DE SESIÓN, LLAMA AL METODO ANTERIOR
+    //Y AGREGA LOS INTENTOS.
     public static Usuario iniciarSesionConReintentos() {
 
         int intentosRestantes = 3; // Máximo de intentos
@@ -70,6 +73,7 @@ public class LoginManager{
         }
         return null;  // Si los intentos se agotaron o hubo un error, retorna null
     }
+
 
     //Metodo para ingresar los datos al usuario
     private static String solicitarEntrada(String mensaje) {
