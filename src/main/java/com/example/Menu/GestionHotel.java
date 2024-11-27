@@ -419,7 +419,7 @@ public final class GestionHotel {
                     leer.nextLine();
 
                     try {
-                        String resultado = lasVegas.cancerlarReserva(numeroHabitacion, lasVegas);
+                        String resultado = lasVegas.cancelarReserva(numeroHabitacion, lasVegas);
                         System.out.println(resultado);
 
                         // Guardar reservas actualizadas en el archivo JSON

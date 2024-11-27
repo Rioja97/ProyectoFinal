@@ -127,18 +127,23 @@ public class Hotel {
     }
 
     //Revisar que no esta quitando la reserva al map
-    public String cancerlarReserva(int numeroHabitacion, Hotel hotel) {
+    public String cancelarReserva(int numeroHabitacion, Hotel hotel) {
+        // Obtener el mapa de reservas
+        HashMap<Integer, Reserva> reservas = hotel.getReservas();
 
-        JsonManager.encontrarHabitacionHotel(numeroHabitacion, hotel);
+        // Verificar si la reserva existe
+        if (reservas.containsKey(numeroHabitacion)) {
+            Reserva reserva = reservas.remove(numeroHabitacion);
+            // Cambiar el estado de la habitación a disponible
+            reserva.getHabitacion().setEstado(Estado.DISPONIBLE);
 
-        for(Reserva reserva: hotel.getReservas().values()){
-            if(reserva.getHabitacion().getEstado() == Estado.RESERVADO && reserva.getHabitacion().getNumero() == numeroHabitacion){
-                reserva.getHabitacion().setEstado(Estado.DISPONIBLE);
-                reservas.remove(reserva.getHabitacion().getNumero());
-            }
+            // Actualizar el mapa en el hotel
+            hotel.setReservas(reservas);
+
+            return "Se ha cancelado la reserva correctamente para la habitación " + numeroHabitacion;
+        } else {
+            return "No se encontró una reserva para la habitación " + numeroHabitacion;
         }
-        hotel.setReservas(reservas);
-        return "Se ha cancelado la reserva correctamente";
     }
 
 
