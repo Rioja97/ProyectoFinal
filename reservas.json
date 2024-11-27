@@ -1,0 +1,44 @@
+[
+    {
+        "pasajero": {
+            "password": "123",
+            "nombreApellido": "Emmanuel Fossati",
+            "direccion": "Brown 4146",
+            "dni": 3970261,
+            "username": "emma2",
+            "nacionalidad": "Argentino"
+        },
+        "fechaInicio": "2024-11-10",
+        "id": 15,
+        "fechaFin": "2024-11-15",
+        "habitacion": {
+            "tipo": "DOBLE",
+            "estado": "RESERVADO",
+            "precio": 45000,
+            "numero": 15,
+            "reparacion": false,
+            "limpia": true
+        }
+    },
+    {
+        "pasajero": {
+            "password": "123",
+            "nombreApellido": "Santiago Sala",
+            "direccion": "san lorenzo 4743",
+            "dni": 47156620,
+            "username": "santi",
+            "nacionalidad": "Argentina"
+        },
+        "fechaInicio": "2024-11-28",
+        "id": 3,
+        "fechaFin": "2024-11-29",
+        "habitacion": {
+            "tipo": "SIMPLE",
+            "estado": "RESERVADO",
+            "precio": 25000,
+            "numero": 3,
+            "reparacion": false,
+            "limpia": true
+        }
+    }
+]
