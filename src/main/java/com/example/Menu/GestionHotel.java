@@ -505,7 +505,7 @@ public final class GestionHotel {
                     try {
                         Reserva nuevaReserva = crearReserva(usuario, lasVegas);
                         lasVegas.realizarReserva(nuevaReserva);
-
+                        System.out.println("Precio final: "+nuevaReserva.precioFinal());
                         // Guardar reservas actualizadas en el archivo JSON
                         array = JsonManager.reservasAJsonArray(lasVegas.getReservas());
                         JsonManager.JsonArrayAFile(array, "reservas.json");
@@ -520,6 +520,7 @@ public final class GestionHotel {
                     } catch (NullPointerException e){
                         System.out.println(e.getMessage());
                     }
+
                     break;
 
                 case 3:
@@ -717,10 +718,7 @@ public final class GestionHotel {
             return null; // O puedes lanzar una excepción personalizada si lo prefieres
         }
 
-        Reserva reserva=new Reserva(pasajero, fechaInicio, fechaFin, habitacion1);
-        reserva.precioFinal();
-
-        return reserva;
+        return new Reserva(pasajero, fechaInicio, fechaFin, habitacion1);
     }
 
 }
