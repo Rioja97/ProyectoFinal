@@ -367,12 +367,11 @@ public final class GestionHotel {
                     int numeroHabitacion3 = scan.nextInt();
                     scan.nextLine();
                     for(Habitacion h : lasVegas.getHabitaciones()){
-                        if(h.getLimpia()==false){
+                        if(h.getLimpia()==false && h.getNumero()==numeroHabitacion3){
                             personal.limpiarHabitacion(JsonManager.encontrarHabitacionHotel(numeroHabitacion3, lasVegas));
                             break;
                         }
                     }
-                    System.out.println("La habitacion ya esta limpia");
                     break;
                 case 4:
                     System.out.println(lasVegas.obtenerHabitacionesNoDisponibles());
@@ -380,12 +379,11 @@ public final class GestionHotel {
                     int numeroHabitacion4 = scan.nextInt();
                     scan.nextLine();
                     for(Habitacion h : lasVegas.getHabitaciones()){
-                        if(h.getReparacion()==true){
+                        if(h.getReparacion()==true && h.getNumero()==numeroHabitacion4){
                             personal.repararHabitacion(JsonManager.encontrarHabitacionHotel(numeroHabitacion4, lasVegas));
                             break;
                         }
                     }
-                    System.out.println("La habitacion no necesita reparacion");
                     break;
                 case 0:
                     System.out.println("Volviendo al Menú Principal...");
