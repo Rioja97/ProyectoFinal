@@ -3,13 +3,14 @@ package com.example.Hotel.Clases;
 import java.util.*;
 import com.example.Excepciones.HabitacionNoDisponibleException;
 import com.example.Hotel.Enum.Estado;
+import com.example.Interfaces.MetodosAdministrador;
 import com.example.Login.Clases.Administrador;
 import com.example.Login.Clases.Pasajero;
 import com.example.Login.Clases.Usuario;
 
 //CLASE HOTEL. CON RESPECTIVOS ATRIBUTOS DE HOTEL Y LAS COLECCIONES CORRESPONDIENTES.
 
-public class Hotel {
+public class Hotel implements MetodosAdministrador {
     private String nombre;
     private String direccion;
     private ArrayList<Habitacion> habitaciones;
@@ -29,6 +30,7 @@ public class Hotel {
 
     //ACA SE IMPLEMENTÓ LA SOBRECARGA DE MÉTODOS.
     //LLAMA A AGREGAR USUARIO DE ADMINISTRADOR. UTILIZADO PARA AGREGAR ADMIN O PERSONAL
+    @Override
     public String agregarUsuario(Usuario usuario, Administrador admin, Hotel hotel){
 
         return admin.agregarUsuario(usuario, hotel);
@@ -42,6 +44,7 @@ public class Hotel {
     }
 
     //LLAMA A MODIFICAR USUARIO DE ADMINISTRADOR
+    @Override
     public String modificarUsuario(Usuario usuario,String username, Administrador admin, Hotel hotel){
 
         return admin.modificarUsuario(usuario,username, hotel);
@@ -49,6 +52,7 @@ public class Hotel {
 
 
     //LLAMA A ELIMINAR USUARIO DE ADMINISTRADOR
+    @Override
     public String eliminarUsuario(String idUsuario, Administrador admin, Hotel hotel) {
 
         return admin.eliminarUsuario(idUsuario, hotel);

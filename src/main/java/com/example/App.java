@@ -14,4 +14,4 @@ public class App {
 
 //Han surgido muchos problemas en el desarrolo de nuestro proyecto, que con paciencia y tiempo de mas lo
 //hemos trabajado. Intentamos agregar la mayor cantidad de funcionalidades posibles que estaban a nuestro
-//ancalce. 
+//ancalce.
