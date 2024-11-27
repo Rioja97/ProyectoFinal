@@ -362,7 +362,7 @@ public final class GestionHotel {
                     break;
 
                 case 3:
-                    System.out.println(lasVegas.obtenerHabitacionesNoDisponibles());
+                    System.out.println(lasVegas.obtenerHabitacionesSucias());
                     System.out.println("Ingrese el numero de la habitación: ");
                     int numeroHabitacion3 = scan.nextInt();
                     scan.nextLine();
@@ -374,7 +374,7 @@ public final class GestionHotel {
                     }
                     break;
                 case 4:
-                    System.out.println(lasVegas.obtenerHabitacionesNoDisponibles());
+                    System.out.println(lasVegas.obtenerHabitacionesRotas());
                     System.out.println("Ingrese el numero de la habitación: ");
                     int numeroHabitacion4 = scan.nextInt();
                     scan.nextLine();
@@ -459,6 +459,10 @@ public final class GestionHotel {
                         System.out.println("Fecha invalida");
                     } catch (HabitacionNoDisponibleException e) {
                         System.out.println("Habitacion no disponible");;
+                    } catch(NoSuchElementException e){
+                        System.out.println(e.getMessage());
+                    } catch (NullPointerException e){
+                        System.out.println(e.getMessage());
                     }
                     break;
 
@@ -615,7 +619,11 @@ public final class GestionHotel {
         Habitacion habitacion1 = null;
         try {
             // Buscar la habitación en el hotel
-            habitacion1 = JsonManager.encontrarHabitacionHotel(numeroHabitacion, hotel);
+            try {
+                habitacion1 = JsonManager.encontrarHabitacionHotel(numeroHabitacion, hotel);
+            }catch (NoSuchElementException e){
+                System.out.println(e.getMessage());
+            }
             // Si no se encuentra la habitación, lanzamos una excepción personalizada o mostramos un mensaje
             if (habitacion1 == null) {
                 throw new NoSuchElementException("La habitación con el número " + numeroHabitacion + " no fue encontrada.");

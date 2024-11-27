@@ -72,10 +72,10 @@ public class JsonManager {
     }
 
     //Metodo para convertir HashMap a JsonArray
-    public static JSONArray reservasAJsonArray(Map<Integer, Reserva> reservas) {
+    public static JSONArray reservasAJsonArray(HashMap<Integer, Reserva> reservas) {
         JSONArray jsonArray = new JSONArray();
 
-        for (Map.Entry<Integer, Reserva> entry : reservas.entrySet()) {
+        for (HashMap.Entry<Integer, Reserva> entry : reservas.entrySet()) {
             JSONObject reservaJson = new JSONObject();
             reservaJson.put("id", entry.getKey());
 
@@ -83,9 +83,9 @@ public class JsonManager {
 
             // Convertir datos de pasajero
             JSONObject pasajeroJson = new JSONObject();
-            /*pasajeroJson.put("username", reserva.getPasajero().getUsername());
+            pasajeroJson.put("username", reserva.getPasajero().getUsername());
             pasajeroJson.put("password", reserva.getPasajero().getPassword());
-            pasajeroJson.put("nombreApellido", reserva.getPasajero().getNombreApellido());*/
+            pasajeroJson.put("nombreApellido", reserva.getPasajero().getNombreApellido());
             pasajeroJson.put("dni", reserva.getPasajero().getDni());
             pasajeroJson.put("direccion", reserva.getPasajero().getDireccion());
             pasajeroJson.put("nacionalidad", reserva.getPasajero().getNacionalidad());
@@ -243,15 +243,15 @@ public class JsonManager {
 
             // Obtener los datos de pasajero
             JSONObject pasajeroJson = reservaJson.getJSONObject("pasajero");
-            /*String username = pasajeroJson.getString("username");
+            String username = pasajeroJson.getString("username");
             String password = pasajeroJson.getString("password");
-            String nombreApellido = pasajeroJson.getString("nombreApellido");*/
+            String nombreApellido = pasajeroJson.getString("nombreApellido");
             int dni = pasajeroJson.getInt("dni");
             String direccion = pasajeroJson.getString("direccion");
             String nacionalidad = pasajeroJson.getString("nacionalidad");
 
-            //Usuario usuario = new Usuario (username, password, nombreApellido);
-            Pasajero pasajero = new Pasajero(/*usuario.getUsername(), usuario.getPassword(), usuario.getNombreApellido(),*/ dni, direccion, nacionalidad);
+            Usuario usuario = new Usuario (username, password, nombreApellido);
+            Pasajero pasajero = new Pasajero(usuario.getUsername(), usuario.getPassword(), usuario.getNombreApellido(), dni, direccion, nacionalidad);
 
             // Obtener los datos de habitacion (todos los atributos)
             JSONObject habitacionJson = reservaJson.getJSONObject("habitacion");

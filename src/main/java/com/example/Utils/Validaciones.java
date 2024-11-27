@@ -89,6 +89,16 @@ public class Validaciones{
             throw new PermisoNoPermitidoException("El administrador no tiene permiso para hacer check-in.");
         }
     }
+
+    public static boolean esEntero(String valor) {
+        try {
+            Integer.parseInt(valor); // Intenta convertir el valor a entero
+            return true;  // Si la conversión es exitosa, es un número entero
+        } catch (NumberFormatException e) {
+            return false; // Si ocurre una excepción, no es un número entero
+        }
+    }
+
 }
 
 

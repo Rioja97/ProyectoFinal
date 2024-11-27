@@ -8,7 +8,7 @@ public class App {
     }
 }
 //El sistema de gestión de hoteles que creamos, está pensado para poder ser funcional tanto a los clientes
-//que serán los usuarios de mayor frecuencia, pero tambien para los administradores y el personal del hotel.
+//que serán los usuarios de mayor frecuencia, pero también para los administradores y el personal del hotel.
 //Utiliza 3 tipos distintos de colecciones: ArrayList(Para las habitaciones), Treeset(Para los usuarios
 //evitando usuername repetidos) y HashMap(Para las reservas: <NumeroHabitacion, Reserva>.
 
