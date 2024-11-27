@@ -54,14 +54,19 @@ public final class GestionHotel {
             System.out.println("    2. Registrarse");
             System.out.println("    3. Salir");
 
-            System.out.println("Su opcion: ");
-            try {
-                opcion=Validaciones.validarNumeroEntero(sc.nextLine());
-            }catch (NumeroInvalidoException e){
-                System.out.println("Error. Ingrese nuevamente un numero: ");
+            boolean entradaValida = false;
+
+            while (!entradaValida) { // Sigue preguntando hasta que el usuario ingrese un entero válido
+                System.out.print("Su opcion: ");
+                String entrada = sc.nextLine(); // Leer entrada solo una vez
+                try {
+                    opcion = Validaciones.validarNumeroEntero(entrada);
+                    entradaValida = true; // Salir del bucle cuando la entrada sea válida
+                } catch (NumeroInvalidoException e) {
+                    System.out.println("Error: " + e.getMessage() + " Intente nuevamente.");
+                }
             }
 
-            sc.nextLine();
 
             switch (opcion) {
                 case 1:
@@ -134,13 +139,18 @@ public final class GestionHotel {
             System.out.println("---------------------------------------");
 
             Scanner leer = new Scanner(System.in);
-            System.out.println("Su opcion: ");
-            try {
-                Validaciones.validarNumeroEntero(leer.nextLine());
-            }catch (NumeroInvalidoException e){
-                System.out.println("Error. Ingrese nuevamente un numero: ");
+            boolean entradaValida = false;
+
+            while (!entradaValida) { // Sigue preguntando hasta que el usuario ingrese un entero válido
+                System.out.print("Su opcion: ");
+                String entrada = leer.nextLine(); // Leer entrada solo una vez
+                try {
+                    opcionMenuUsuarios = Validaciones.validarNumeroEntero(entrada);
+                    entradaValida = true; // Salir del bucle cuando la entrada sea válida
+                } catch (NumeroInvalidoException e) {
+                    System.out.println("Error: " + e.getMessage() + " Intente nuevamente.");
+                }
             }
-            leer.nextLine(); // Limpiar el buffer
 
             //DERIVACIONES
             switch (opcionMenuUsuarios) {
@@ -178,12 +188,18 @@ public final class GestionHotel {
             System.out.println("---------------------------------------");
 
             Scanner leer = new Scanner(System.in);
-            try {
-                Validaciones.validarNumeroEntero(leer.nextLine());
-            }catch (NumeroInvalidoException e){
-                System.out.println("Error. Ingrese nuevamente un numero: ");
+            boolean entradaValida = false;
+
+            while (!entradaValida) { // Sigue preguntando hasta que el usuario ingrese un entero válido
+                System.out.print("Su opcion: ");
+                String entrada = leer.nextLine(); // Leer entrada solo una vez
+                try {
+                    opcionMenuUsuarios = Validaciones.validarNumeroEntero(entrada);
+                    entradaValida = true; // Salir del bucle cuando la entrada sea válida
+                } catch (NumeroInvalidoException e) {
+                    System.out.println("Error: " + e.getMessage() + " Intente nuevamente.");
+                }
             }
-            leer.nextLine(); // Limpiar el buffer
 
             switch (opcionMenuUsuarios) {
                 case 1:
@@ -258,12 +274,18 @@ public final class GestionHotel {
             System.out.println("---------------------------------------");
 
             Scanner leer = new Scanner(System.in);
-            try {
-                Validaciones.validarNumeroEntero(leer.nextLine());
-            }catch (NumeroInvalidoException e){
-                System.out.println("Error. Ingrese nuevamente un numero: ");
+            boolean entradaValida = false;
+
+            while (!entradaValida) { // Sigue preguntando hasta que el usuario ingrese un entero válido
+                System.out.print("Su opcion: ");
+                String entrada = leer.nextLine(); // Leer entrada solo una vez
+                try {
+                    opcionMenuUsuarios = Validaciones.validarNumeroEntero(entrada);
+                    entradaValida = true; // Salir del bucle cuando la entrada sea válida
+                } catch (NumeroInvalidoException e) {
+                    System.out.println("Error: " + e.getMessage() + " Intente nuevamente.");
+                }
             }
-            leer.nextLine(); // Limpiar el buffer
 
             switch (opcionMenuUsuarios) {
                 case 1:
@@ -348,12 +370,18 @@ public final class GestionHotel {
             System.out.println("0. Volver al Menú Principal");
             System.out.println("---------------------------------------");
 
-            try {
-                Validaciones.validarNumeroEntero(scan.nextLine());
-            }catch (NumeroInvalidoException e){
-                System.out.println("Error. Ingrese nuevamente un numero: ");
+            boolean entradaValida = false;
+
+            while (!entradaValida) { // Sigue preguntando hasta que el usuario ingrese un entero válido
+                System.out.print("Su opcion: ");
+                String entrada = scan.nextLine(); // Leer entrada solo una vez
+                try {
+                    opcionMenuPersonal = Validaciones.validarNumeroEntero(entrada);
+                    entradaValida = true; // Salir del bucle cuando la entrada sea válida
+                } catch (NumeroInvalidoException e) {
+                    System.out.println("Error: " + e.getMessage() + " Intente nuevamente.");
+                }
             }
-            scan.nextLine(); // Limpiar el buffer
 
             switch (opcionMenuPersonal) {
                 case 1:
@@ -451,12 +479,18 @@ public final class GestionHotel {
             System.out.println("0. Volver al menú principal");
             System.out.println("---------------------------------------");
 
-            try {
-                Validaciones.validarNumeroEntero(leer.nextLine());
-            }catch (NumeroInvalidoException e){
-                System.out.println("Error. Ingrese nuevamente un numero: ");
+            boolean entradaValida = false;
+
+            while (!entradaValida) { // Sigue preguntando hasta que el usuario ingrese un entero válido
+                System.out.print("Su opcion: ");
+                String entrada = leer.nextLine(); // Leer entrada solo una vez
+                try {
+                    opcionMenuReservas = Validaciones.validarNumeroEntero(entrada);
+                    entradaValida = true; // Salir del bucle cuando la entrada sea válida
+                } catch (NumeroInvalidoException e) {
+                    System.out.println("Error: " + e.getMessage() + " Intente nuevamente.");
+                }
             }
-            leer.nextLine();
 
             switch (opcionMenuReservas) {
                 case 1:
