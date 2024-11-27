@@ -30,21 +30,28 @@ public class Personal extends Usuario{
         habitacion.setReparacion(false);
     }
 
-    public String hacerCheckIn(Reserva reserva,Hotel hotel)throws HabitacionNoDisponibleException {
-        HashMap<Integer,Reserva> reservas=new HashMap<>();
+    public String hacerCheckIn(Reserva reserva, Hotel hotel) throws HabitacionNoDisponibleException {
+        // Obtener las reservas actuales del hotel
+        HashMap<Integer, Reserva> reservas = hotel.getReservas();
 
-        for(Reserva reserva1 : reservas.values()){
-            if(reserva1.getHabitacion().getNumero() == reserva.getHabitacion().getNumero()){
-                reserva1.getHabitacion().setEstado(Estado.OCUPADO);
-                reservas.remove(reserva.getHabitacion().getNumero());
-            }else{
-                throw new HabitacionNoDisponibleException("Esta habitacion no existe.");
+        // Verificar si existe la reserva para la habitación
+        if (reservas.containsKey(reserva.getHabitacion().getNumero())) {
+            for (Habitacion habitacion : hotel.getHabitaciones()) {
+                if (habitacion.getNumero() == reserva.getHabitacion().getNumero()) {
+                    habitacion.setEstado(Estado.OCUPADO);
+                    break;
+                }
             }
 
-        }
-        return "Check In realizado con exito.";
-    }
+            reservas.remove(reserva.getHabitacion().getNumero());
 
+            hotel.setReservas(new HashMap<>(reservas));
+
+            return "Check In realizado con éxito.";
+        } else {
+            throw new HabitacionNoDisponibleException("Esta habitación no tiene una reserva activa.");
+        }
+    }
 
     public void hacerCheckOut(Habitacion habitacion){
 

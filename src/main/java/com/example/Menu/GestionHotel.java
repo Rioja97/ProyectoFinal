@@ -312,7 +312,7 @@ public final class GestionHotel {
                     scan.nextLine();
                     try{
                         personal.hacerCheckIn(JsonManager.encontrarReservaHotel(numeroHabitacion, lasVegas), lasVegas);
-                    }catch(NoSuchElementException e){
+                    }catch(HabitacionNoDisponibleException e){
                         System.out.println("Numero de habitacion invalido");
                     }
                     break;
