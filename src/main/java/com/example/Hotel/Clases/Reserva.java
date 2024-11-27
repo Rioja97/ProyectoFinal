@@ -34,11 +34,7 @@ public class Reserva {
         return consumos.keySet().stream().mapToInt(Integer::intValue).sum();
     }
 
-    public double precioFinalConsumo(){
-        return getHabitacion().getPrecio()*(calcularDiasEstancia())+calcularConsumos();
-    }
-
-    public double precioFinalSinConsumo(){
+    public double precioFinal(){
         return getHabitacion().getPrecio()*(calcularDiasEstancia());
     }
 

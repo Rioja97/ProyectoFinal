@@ -1,9 +1,6 @@
 package com.example.Menu;
 
-import com.example.Excepciones.DNIInvalidoException;
-import com.example.Excepciones.FechaInvalidaException;
-import com.example.Excepciones.HabitacionNoDisponibleException;
-import com.example.Excepciones.SoloLetrasException;
+import com.example.Excepciones.*;
 import com.example.Hotel.Clases.Habitacion;
 import com.example.Hotel.Clases.Hotel;
 import com.example.Hotel.Clases.Reserva;
@@ -58,7 +55,12 @@ public final class GestionHotel {
             System.out.println("    3. Salir");
 
             System.out.println("Su opcion: ");
-            opcion = sc.nextInt();
+            try {
+                opcion=Validaciones.validarNumeroEntero(sc.nextLine());
+            }catch (NumeroInvalidoException e){
+                System.out.println("Error. Ingrese nuevamente un numero: ");
+            }
+
             sc.nextLine();
 
             switch (opcion) {
@@ -132,7 +134,12 @@ public final class GestionHotel {
             System.out.println("---------------------------------------");
 
             Scanner leer = new Scanner(System.in);
-            opcionMenuUsuarios = leer.nextInt();
+            System.out.println("Su opcion: ");
+            try {
+                Validaciones.validarNumeroEntero(leer.nextLine());
+            }catch (NumeroInvalidoException e){
+                System.out.println("Error. Ingrese nuevamente un numero: ");
+            }
             leer.nextLine(); // Limpiar el buffer
 
             //DERIVACIONES
@@ -171,7 +178,11 @@ public final class GestionHotel {
             System.out.println("---------------------------------------");
 
             Scanner leer = new Scanner(System.in);
-            opcionMenuUsuarios = leer.nextInt();
+            try {
+                Validaciones.validarNumeroEntero(leer.nextLine());
+            }catch (NumeroInvalidoException e){
+                System.out.println("Error. Ingrese nuevamente un numero: ");
+            }
             leer.nextLine(); // Limpiar el buffer
 
             switch (opcionMenuUsuarios) {
@@ -247,7 +258,11 @@ public final class GestionHotel {
             System.out.println("---------------------------------------");
 
             Scanner leer = new Scanner(System.in);
-            opcionMenuUsuarios = leer.nextInt();
+            try {
+                Validaciones.validarNumeroEntero(leer.nextLine());
+            }catch (NumeroInvalidoException e){
+                System.out.println("Error. Ingrese nuevamente un numero: ");
+            }
             leer.nextLine(); // Limpiar el buffer
 
             switch (opcionMenuUsuarios) {
@@ -333,9 +348,12 @@ public final class GestionHotel {
             System.out.println("0. Volver al Menú Principal");
             System.out.println("---------------------------------------");
 
-            Scanner leer = new Scanner(System.in);
-            opcionMenuPersonal = leer.nextInt();
-            leer.nextLine(); // Limpiar el buffer
+            try {
+                Validaciones.validarNumeroEntero(scan.nextLine());
+            }catch (NumeroInvalidoException e){
+                System.out.println("Error. Ingrese nuevamente un numero: ");
+            }
+            scan.nextLine(); // Limpiar el buffer
 
             switch (opcionMenuPersonal) {
                 case 1:
@@ -433,7 +451,11 @@ public final class GestionHotel {
             System.out.println("0. Volver al menú principal");
             System.out.println("---------------------------------------");
 
-            opcionMenuReservas = leer.nextInt();
+            try {
+                Validaciones.validarNumeroEntero(leer.nextLine());
+            }catch (NumeroInvalidoException e){
+                System.out.println("Error. Ingrese nuevamente un numero: ");
+            }
             leer.nextLine();
 
             switch (opcionMenuReservas) {
@@ -661,8 +683,10 @@ public final class GestionHotel {
             return null; // O puedes lanzar una excepción personalizada si lo prefieres
         }
 
-        // Crear y devolver la nueva reserva
-        return new Reserva(pasajero, fechaInicio, fechaFin, habitacion1);
+        Reserva reserva=new Reserva(pasajero, fechaInicio, fechaFin, habitacion1);
+        reserva.precioFinal();
+
+        return reserva;
     }
 
 }

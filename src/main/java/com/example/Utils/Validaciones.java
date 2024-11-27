@@ -1,7 +1,9 @@
 package com.example.Utils;
 
 import java.time.LocalDate;
+import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Scanner;
 import java.util.regex.Pattern;
 import com.example.Excepciones.*;
 import com.example.Hotel.Clases.Habitacion;
@@ -90,12 +92,16 @@ public class Validaciones{
         }
     }
 
-    public static boolean esEntero(String valor) {
+
+    public static int validarNumeroEntero(String entrada) throws NumeroInvalidoException {
+        if (entrada == null || entrada.trim().isEmpty()) {
+            throw new NumeroInvalidoException("La entrada no puede ser nula o vacía.");
+        }
+
         try {
-            Integer.parseInt(valor); // Intenta convertir el valor a entero
-            return true;  // Si la conversión es exitosa, es un número entero
+            return Integer.parseInt(entrada); // Intenta convertir la entrada a entero
         } catch (NumberFormatException e) {
-            return false; // Si ocurre una excepción, no es un número entero
+            throw new NumeroInvalidoException("La entrada no es un número entero válido.");
         }
     }
 
