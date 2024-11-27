@@ -1,7 +1,9 @@
 package com.example.Menu;
 
+import com.example.Excepciones.DNIInvalidoException;
 import com.example.Excepciones.FechaInvalidaException;
 import com.example.Excepciones.HabitacionNoDisponibleException;
+import com.example.Excepciones.SoloLetrasException;
 import com.example.Hotel.Clases.Habitacion;
 import com.example.Hotel.Clases.Hotel;
 import com.example.Hotel.Clases.Reserva;
@@ -15,6 +17,7 @@ import com.example.Login.Clases.Pasajero;
 import com.example.Login.Clases.Personal;
 import com.example.Login.LoginExceptions.UsuarioRepetidoException;
 import com.example.Utils.JsonManager;
+import com.example.Utils.Validaciones;
 import org.json.JSONArray;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -63,12 +66,18 @@ public final class GestionHotel {
                     }
 
                 case 2:
-                    Pasajero pasajero = crearPasajero();
+
                     try {
+                        Pasajero pasajero = crearPasajero();
                         lasVegas.agregarUsuario(pasajero, lasVegas);
                     } catch (UsuarioRepetidoException e) {
                         System.out.println(e.getMessage());
+                    }catch (SoloLetrasException e){
+                        System.out.println(e.getMessage());
+                    }catch (DNIInvalidoException e){
+                        System.out.println(e.getMessage());
                     }
+
                     usuarios = lasVegas.getUsuarios();
                     array = JsonManager.listaUsuariosAJsonArray(usuarios);
                     JsonManager.JsonArrayAFile(array, "usuarios.json");
@@ -150,6 +159,8 @@ public final class GestionHotel {
                         System.out.println(lasVegas.agregarUsuario(crearPersonaloAdmin(), administrador, lasVegas));
                     } catch (UsuarioRepetidoException e) {
                         System.out.println(e.getMessage());
+                    } catch (SoloLetrasException e) {
+                        System.out.println(e.getMessage());;
                     }
                     break;
 
@@ -159,6 +170,8 @@ public final class GestionHotel {
                         String username = leer.nextLine();
                         System.out.println(lasVegas.modificarUsuario(crearPersonaloAdmin(),username, administrador, lasVegas));
                     } catch (NoSuchElementException e) {
+                        System.out.println(e.getMessage());
+                    } catch (SoloLetrasException e){
                         System.out.println(e.getMessage());
                     }
                     break;
@@ -454,7 +467,7 @@ public final class GestionHotel {
     }
 
 
-     private  Pasajero crearPasajero(){
+     private  Pasajero crearPasajero() throws SoloLetrasException, DNIInvalidoException {
 
         Pasajero pasajero = new Pasajero();
         Scanner leer = new Scanner(System.in);
@@ -467,21 +480,28 @@ public final class GestionHotel {
 
         System.out.println("Ingrese su nombre y apellido:");
         pasajero.setNombreApellido(leer.nextLine());
+        Validaciones.validarNombre(pasajero.getNombreApellido());
+
 
         System.out.println("Ingrese su DNI:");
-        pasajero.setDni(leer.nextInt());
-        leer.nextLine();
+         String dni = leer.nextLine();
+         Validaciones.validarDNI(dni);
+         pasajero.setDni(Integer.parseInt(dni));
 
         System.out.println("Ingrese su direccion:");
         pasajero.setDireccion(leer.nextLine());
 
         System.out.println("Ingrese su nacionalidad:");
         pasajero.setNacionalidad(leer.nextLine());
+         if(!(pasajero.getNacionalidad().matches("^[a-zA-Z]+"))){
+             throw new SoloLetrasException("Solo se permiten letras.");
+         }
+
 
         return pasajero;
     }
 
-    public <T extends Usuario> Usuario crearPersonaloAdmin(){
+    public <T extends Usuario> Usuario crearPersonaloAdmin()throws SoloLetrasException{
 
         Scanner scan = new Scanner(System.in);
 
@@ -494,6 +514,8 @@ public final class GestionHotel {
 
         System.out.println("    Ingrese el nombre y apellido del usuario: ");
         String nombreApellido = scan.nextLine();
+        Validaciones.validarNombre(nombreApellido);
+
 
         System.out.println("Ingrese el rol del usuario nuevo: ");
         System.out.println("    1. Personal general del hotel");

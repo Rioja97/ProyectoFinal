@@ -20,6 +20,9 @@ public class Validaciones{
         if (nombre.length() < 3 || nombre.length() > 50) {
             throw new NombreInvalidoException("El nombre debe tener entre 3 y 50 caracteres.");
         }
+        if(!(nombre.matches("^[a-zA-Z\\s]+$"))){
+            throw new NombreInvalidoException("Solo se permiten letras.");
+        }
     }
     public static void validarDNI(String dni) throws DNIInvalidoException {
         if (dni == null || dni.trim().isEmpty()) {

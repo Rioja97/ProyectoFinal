@@ -1,7 +1,7 @@
 package com.example.Excepciones;
 
-public class NombreInvalidoException extends Exception {
-    public NombreInvalidoException(String mensaje) {
-        super(mensaje);
+public class NombreInvalidoException extends RuntimeException {
+    public NombreInvalidoException(String message) {
+        super(message);
     }
 }
