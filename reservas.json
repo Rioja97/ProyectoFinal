@@ -7,6 +7,7 @@
         "username": "emma2",
         "nacionalidad": "Argentino"
     },
+    "precioReserva": 225000,
     "fechaInicio": "2024-11-10",
     "id": 15,
     "fechaFin": "2024-11-15",

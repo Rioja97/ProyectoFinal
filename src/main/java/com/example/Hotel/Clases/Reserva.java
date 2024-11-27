@@ -11,6 +11,7 @@ public class Reserva {
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private Habitacion habitacion;
+    private double precio;
     private Map<Integer,String> consumos;
 
 //UNICO Y NECESARIO CONSTRUCTOR.
@@ -19,6 +20,7 @@ public class Reserva {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.habitacion = habitacion;
+        this.precio = precioFinal();
     }
 
     //METODO PARA CALCULAR LOS DIAS DE LA RESERVA
@@ -78,6 +80,14 @@ public class Reserva {
 
     public void setConsumos(Map<Integer, String> consumos) {
         this.consumos = consumos;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 
     @Override
