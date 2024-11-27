@@ -90,7 +90,7 @@ public class Hotel {
 
 
     //Revisar que no esta agregando la reserva al map
-    public String realizarReserva(Reserva reserva) throws HabitacionNoDisponibleException {
+    public void realizarReserva(Reserva reserva) throws HabitacionNoDisponibleException {
 
         // Verificar si la habitación ya está reservada u ocupada.
         if (reserva.getHabitacion().getEstado() == Estado.RESERVADO ||
@@ -109,7 +109,6 @@ public class Hotel {
         // Registrar la reserva en el mapa de reservas.
         reservas.put(reserva.getHabitacion().getNumero(), reserva);
 
-        return "Se ha realizado la reserva correctamente.";
     }
 
     //Este metodo tiene que quitar la reserva del map, y cambiar el estado de esa habitacion a ocupada.

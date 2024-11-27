@@ -379,7 +379,7 @@ public final class GestionHotel {
             System.out.println("---------------------------------------");
             System.out.println("1. Ver Reservas");
             System.out.println("2. Realizar Reserva");
-            System.out.println("2. Cancelar Reserva");
+            System.out.println("3. Cancelar Reserva");
             System.out.println("4. Ver Habitaciones disponibles");
             System.out.println("0. Volver al menú principal");
             System.out.println("---------------------------------------");
@@ -398,20 +398,38 @@ public final class GestionHotel {
 
                 case 2:
                     try {
-                        lasVegas.realizarReserva(crearReserva(usuario, lasVegas));
+                        Reserva nuevaReserva = crearReserva(usuario, lasVegas);
+                        lasVegas.realizarReserva(nuevaReserva);
+
+                        // Guardar reservas actualizadas en el archivo JSON
+                        array = JsonManager.reservasAJsonArray(lasVegas.getReservas());
+                        JsonManager.JsonArrayAFile(array, "reservas.json");
+
+                        System.out.println("Reserva realizada y guardada correctamente.");
                     } catch (FechaInvalidaException e) {
-                        System.out.println(e.getMessage());
-                        break;
-                    } catch (HabitacionNoDisponibleException e){
-                        System.out.println(e.getMessage());
+                        System.out.println("Fecha invalida");
+                    } catch (HabitacionNoDisponibleException e) {
+                        System.out.println("Habitacion no disponible");;
                     }
                     break;
 
                 case 3:
-                    System.out.println("Ingrese el numero de la habitación: ");
-                    int numeroHabitacion2 = leer.nextInt();
+                    System.out.println("Ingrese el número de la habitación para cancelar la reserva: ");
+                    int numeroHabitacion = leer.nextInt();
                     leer.nextLine();
-                    System.out.println(lasVegas.cancerlarReserva(numeroHabitacion2, lasVegas));
+
+                    try {
+                        String resultado = lasVegas.cancerlarReserva(numeroHabitacion, lasVegas);
+                        System.out.println(resultado);
+
+                        // Guardar reservas actualizadas en el archivo JSON
+                        array = JsonManager.reservasAJsonArray(lasVegas.getReservas());
+                        JsonManager.JsonArrayAFile(array, "reservas.json");
+
+                        System.out.println("Reserva cancelada y guardada correctamente.");
+                    } catch (NoSuchElementException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
 
                 case 4:
@@ -546,9 +564,6 @@ public final class GestionHotel {
             System.err.println(e.getMessage());
             return null; // O puedes lanzar la excepción si lo prefieres
         }
-
-        // Cambiar el estado de la habitación
-        habitacion1.setEstado(Estado.RESERVADO);
 
         // Solicitamos las fechas al usuario
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
