@@ -1,25 +1,5 @@
 [{
     "pasajero": {
-
-        "direccion": "Brown 4146",
-        "dni": 3970261,
-        "nacionalidad": "Argentino"
-    },
-
-    "fechaInicio": "2024-11-20",
-    "id": 15,
-    "fechaFin": "2024-11-21",
-
-    "fechaInicio": "2024-11-26",
-    "id": 2,
-    "fechaFin": "2024-11-27",
-
-    "habitacion": {
-        "tipo": "SIMPLE",
-        "estado": "DISPONIBLE",
-        "precio": 25000,
-        "numero": 2,
-
         "password": "123",
         "nombreApellido": "Emmanuel Fossati",
         "direccion": "Brown 4146",
@@ -27,15 +7,14 @@
         "username": "emma2",
         "nacionalidad": "Argentino"
     },
-    "fechaInicio": "2024-11-20",
+    "fechaInicio": "2024-11-12",
     "id": 15,
-    "fechaFin": "2024-11-21",
+    "fechaFin": "2024-11-13",
     "habitacion": {
         "tipo": "DOBLE",
         "estado": "RESERVADO",
         "precio": 45000,
         "numero": 15,
-
         "reparacion": false,
         "limpia": true
     }
