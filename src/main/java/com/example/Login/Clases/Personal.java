@@ -1,5 +1,6 @@
 package com.example.Login.Clases;
 
+import com.example.Excepciones.HabitacionNoDisponibleException;
 import com.example.Hotel.Clases.Habitacion;
 import com.example.Hotel.Clases.Hotel;
 import com.example.Hotel.Clases.Reserva;
@@ -7,6 +8,7 @@ import com.example.Hotel.Enum.Estado;
 import com.example.Interfaces.MetodosPersonal;
 import com.example.Login.Enums.Rol;
 
+import java.util.HashMap;
 import java.util.Random;
 
 public class Personal extends Usuario{
@@ -28,8 +30,19 @@ public class Personal extends Usuario{
         habitacion.setReparacion(false);
     }
 
-    public void hacerCheckIn(Reserva reserva, Hotel hotel){
-        reserva.getHabitacion().setEstado(Estado.OCUPADO);
+    public String hacerCheckIn(Reserva reserva,Hotel hotel)throws HabitacionNoDisponibleException {
+        HashMap<Integer,Reserva> reservas=new HashMap<>();
+
+        for(Reserva reserva1 : reservas.values()){
+            if(reserva1.getHabitacion().getNumero() == reserva.getHabitacion().getNumero()){
+                reserva1.getHabitacion().setEstado(Estado.OCUPADO);
+                reservas.remove(reserva.getHabitacion().getNumero());
+            }else{
+                throw new HabitacionNoDisponibleException("Esta habitacion no existe.");
+            }
+
+        }
+        return "Check In realizado con exito.";
     }
 
 

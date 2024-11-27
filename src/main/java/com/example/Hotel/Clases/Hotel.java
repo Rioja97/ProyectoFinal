@@ -111,21 +111,6 @@ public class Hotel {
 
     }
 
-    //Este metodo tiene que quitar la reserva del map, y cambiar el estado de esa habitacion a ocupada.
-    public String hacerCheckIn(Reserva reserva)throws HabitacionNoDisponibleException{
-
-        for(Reserva reserva1 : reservas.values()){
-            if(reserva1.getHabitacion().getNumero() == reserva.getHabitacion().getNumero()){
-                reserva1.getHabitacion().setEstado(Estado.OCUPADO);
-                reservas.remove(reserva.getHabitacion().getNumero());
-            }else{
-                throw new HabitacionNoDisponibleException("Esta habitacion no existe.");
-            }
-
-        }
-        return "Check In realizado con exito.";
-    }
-
     //Revisar que no esta quitando la reserva al map
     public String cancelarReserva(int numeroHabitacion, Hotel hotel) {
         // Obtener el mapa de reservas
