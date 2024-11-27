@@ -25,22 +25,35 @@ import java.util.*;
 
 public final class GestionHotel {
 
+    //Esta es la clase donde se arma el menú principal, llamado en app.java.
+    // Toda la lógica del menu esta aquí.
+
+
+    //Instanciacion de nuestro hotel
     Hotel lasVegas = new Hotel();
 
+
+    //En el constructor, se llama al primer menú de logueo, y se deriva a los otros submenús.
     public GestionHotel() {
 
+        //Se traen los archivos correspondientes.
         JSONArray array = new JSONArray(JsonManager.FileAJsonArray("usuarios.json"));
         TreeSet<Usuario> usuarios = new TreeSet<>(JsonManager.jsonArrayAListaUsuarios(array));
-        lasVegas.setUsuarios(usuarios);
+        lasVegas.setUsuarios(usuarios); //Se van a guardar temporalmente en las colecciones del hotel.
 
         Scanner sc = new Scanner(System.in);
         int opcion = -1;
         while (opcion != 0) {
 
+            //Menú de inicio - Logueo, Registro.
             System.out.println("-------------------------------------------------------");
             System.out.println("BIENVENIDO AL GESTOR DE HOTELES");
             System.out.println("¿Que desea hacer?: ");
+
             System.out.println("    1. Iniciar Sesión");
+            //Acá sólo se puede crear un Pasajero (o cliente), ya que la creación de
+            //personal del hotel y administrador, va a estar a cargo de los administradores únicamente.
+
             System.out.println("    2. Registrarse");
             System.out.println("    3. Salir");
 
@@ -50,8 +63,16 @@ public final class GestionHotel {
 
             switch (opcion) {
                 case 1:
+                    //Método para iniciar sesion con intentos (si se superan los 3 intentos, se sale).
                     Usuario usuario = LoginManager.iniciarSesionConReintentos();
 
+                    //EN ESTA PARTE, VA A LOGUEAR TANTO CLIENTE, PERSONAL Y ADMINISTRADOR.
+                    //EN CADA CASO, SE VA A DERIVAR A UN SUBMENÚ DIFERENTE PREPARADO PARA
+                    //CADA TIPO DE INGRESO.
+
+                    //A CADA SUBMENÚ SE LE PASA EL USUARIO CON EL QUE LOGUEÓ, PARCEANDOLO A
+                    //SU CORRESPONDIENTE CLASE. YA SEA EMPLEADO, ADMIN O CLIENTE HACIENDO MAS FÁCIL EL USO
+                    // DE LOS MÉTODOS
                     if(usuario.getTipoIngreso().name().equals("CLIENTE")){
                         System.out.println("Aca va el menu de usuarios");
                         mostrarMenuClienteReservas((Pasajero) usuario);
@@ -63,10 +84,11 @@ public final class GestionHotel {
                     } else {
                         System.out.println("Aca va el menu de personal");
                         mostrarMenuPersonal((Personal) usuario);
+
                     }
-
+                    break;
                 case 2:
-
+                    //Registro de Pasajero
                     try {
                         Pasajero pasajero = crearPasajero();
                         lasVegas.agregarUsuario(pasajero, lasVegas);
@@ -77,7 +99,7 @@ public final class GestionHotel {
                     }catch (DNIInvalidoException e){
                         System.out.println(e.getMessage());
                     }
-
+                    //Guardado automático en archivo.
                     usuarios = lasVegas.getUsuarios();
                     array = JsonManager.listaUsuariosAJsonArray(usuarios);
                     JsonManager.JsonArrayAFile(array, "usuarios.json");
@@ -89,13 +111,15 @@ public final class GestionHotel {
                     break;
 
                 default:
-                    System.out.println("Opcion inválida");
+                    //System.out.println("Opcion inválida");
+                    // Estos mensajes están comentados, ya que son muy tediosos
                     break;
             }
         }
     }
 
 
+    //MENU PRINCIPAL DE ADMINISTRADOR. DERIVA A SUBMENU DE GESTION DE USUARIOS O GESTION DE HOTEL.
     private void mostrarMenuAdministradores(Administrador administrador) {
 
         int opcionMenuUsuarios = -1;
@@ -111,6 +135,7 @@ public final class GestionHotel {
             opcionMenuUsuarios = leer.nextInt();
             leer.nextLine(); // Limpiar el buffer
 
+            //DERIVACIONES
             switch (opcionMenuUsuarios) {
                 case 1:
                     mostrarMenuGestionUsuarios(administrador);
@@ -121,15 +146,17 @@ public final class GestionHotel {
                     break;
 
                 default:
-                    System.out.println("Opción no válida, por favor intente nuevamente.");
+                    //System.out.println("Opción no válida, por favor intente nuevamente.");
             }
         }
     }
 
-
+    //MENU DE GESTION DE USUARIOS. SE REALIZA ALTA, BAJA, MODIFICACIÓN Y CARGADO DE USUARIOS.
+    //UNICAMENTE SE AGREGAN PERSONAL O ADMINISTRADORES, YA QUE EN EL REGISTRO SE AGREGAN PASAJEROS.
     private void mostrarMenuGestionUsuarios(Administrador administrador) {
         int opcionMenuUsuarios = -1;
 
+        //CARGADO DE DATOS DESDE FILE.JSON
         JSONArray array = new JSONArray(JsonManager.FileAJsonArray("usuarios.json"));
         TreeSet<Usuario> usuarios = new TreeSet<>(JsonManager.jsonArrayAListaUsuarios(array));
         lasVegas.setUsuarios(usuarios);
@@ -140,8 +167,6 @@ public final class GestionHotel {
             System.out.println("2. Agregar Usuario");
             System.out.println("3. Modificar Usuario");
             System.out.println("4. Eliminar Usuario");
-            System.out.println("\n");
-            System.out.println("5. Aplicar cambios");
             System.out.println("0. Volver al menú anterior");
             System.out.println("---------------------------------------");
 
@@ -189,6 +214,7 @@ public final class GestionHotel {
                 default:
                     //System.out.println("Opción no válida, por favor intente nuevamente.");
             }
+                //GUARDADO AUTOMÁTICO CADA VEZ QUE FINALIZA UN CASO.
                 usuarios = lasVegas.getUsuarios();
                 array = JsonManager.listaUsuariosAJsonArray(usuarios);
                 JsonManager.JsonArrayAFile(array, "usuarios.json");
@@ -196,13 +222,16 @@ public final class GestionHotel {
     }
 
 
+    //MENU DE GESTIÓN DE HOTEL.
     private void mostrarMenuGestionHotel() {
         int opcionMenuUsuarios = -1;
 
+        //CARGADO DE DATOS DESDE FILE.JSON
         JSONArray array = JsonManager.FileAJsonArray("habitaciones.json");
         ArrayList<Habitacion> habitaciones = new ArrayList(JsonManager.jsonArrayAHabitaciones(array));
         lasVegas.setHabitaciones(habitaciones);
 
+        //CARGADO DE DATOS DESDE FILE.JSON
         JSONArray array1 = JsonManager.FileAJsonArray("reservas.json");
         HashMap<Integer, Reserva> reservas = new HashMap<>(JsonManager.jsonArrayAResevas(array1));
         lasVegas.setReservas(reservas);
@@ -271,22 +300,25 @@ public final class GestionHotel {
                     break;
             }
 
-        habitaciones = lasVegas.getHabitaciones();
-        array = JsonManager.habitacionesAJsonArray(habitaciones);
-        JsonManager.JsonArrayAFile(array, "habitaciones.json");
+            //GUARDADO AUTOMÁTICO DESPUES DE CADA CASE
+            habitaciones = lasVegas.getHabitaciones();
+            array = JsonManager.habitacionesAJsonArray(habitaciones);
+            JsonManager.JsonArrayAFile(array, "habitaciones.json");
         }
     }
 
-
+    //MENU PRINCIPAL DEL PERSONAL DEL HOTEL
     private void mostrarMenuPersonal(Personal personal) {
 
         int opcionMenuPersonal = -1;
         Scanner scan = new Scanner(System.in);
 
+        //CARGADO DE ARCHIVOS DESDE FILE.JSON
         JSONArray array = JsonManager.FileAJsonArray("habitaciones.json");
         ArrayList<Habitacion> habitaciones = new ArrayList(JsonManager.jsonArrayAHabitaciones(array));
         lasVegas.setHabitaciones(habitaciones);
 
+        //CARGADO DE ARCHIVOS DESDE FILE.JSON
         JSONArray array1 = JsonManager.FileAJsonArray("reservas.json");
         HashMap<Integer, Reserva> reservas = new HashMap<>(JsonManager.jsonArrayAResevas(array1));
         lasVegas.setReservas(reservas);
@@ -360,34 +392,40 @@ public final class GestionHotel {
                     break;
 
                 default:
-                    System.out.println("Opción no válida, por favor intente nuevamente.");
+                    //System.out.println("Opción no válida, por favor intente nuevamente.");
             }
+
+            //GUARDADO AUTOMATICO DE ARCHIVOS DESPUES DE CADA CASE
             habitaciones = lasVegas.getHabitaciones();
             array = JsonManager.habitacionesAJsonArray(habitaciones);
             JsonManager.JsonArrayAFile(array, "habitaciones.json");
 
+            //GUARDADO AUTOMATICO DE ARCHIVOS DESPUES DE CADA CASE
             reservas = lasVegas.getReservas();
-            array = JsonManager.reservasAJsonArray(reservas);
-            JsonManager.JsonArrayAFile(array, "reservas.json");
+            array1 = JsonManager.reservasAJsonArray(reservas);
+            JsonManager.JsonArrayAFile(array1, "reservas.json");
         }
     }
 
 
-
+    //MENU PRINCIPAL PARA CLIENTES
     private  void mostrarMenuClienteReservas(Pasajero usuario) {
 
         Scanner leer = new Scanner(System.in);
 
         int opcionMenuReservas = -1;
+        //CARGA DE ARCHIVOS FILE.JSON
         JSONArray array = new JSONArray(JsonManager.FileAJsonArray("reservas.json"));
         HashMap<Integer, Reserva> reservas = new HashMap<>(JsonManager.jsonArrayAResevas(array));
         lasVegas.setReservas(reservas);
 
+        //CARGA DE ARCHIVOS FILE.JSON
         JSONArray arrayHabitaciones = new JSONArray(JsonManager.FileAJsonArray("habitaciones.json"));
         ArrayList<Habitacion> habitaciones = new ArrayList<>(JsonManager.jsonArrayAHabitaciones(arrayHabitaciones));
         lasVegas.setHabitaciones(habitaciones);
 
 
+        //AL CLLIENTE SOLO SE LE PERMITIRÁ VER, REALIZAR Y/O CANCELAR LAS RESERVAS QUE EL MISMO TENGA.
         while (opcionMenuReservas != 0) {
             System.out.println("---------------------------------------");
             System.out.println("1. Ver Reservas");
@@ -402,10 +440,10 @@ public final class GestionHotel {
 
             switch (opcionMenuReservas) {
                 case 1:
-                    if(lasVegas.getReservas().isEmpty()){
-                        System.out.println("No hay ninguna reserva, realice una para verlas");
-                    } else{
-                        System.out.println(lasVegas.getReservas().toString());
+                    try {
+                        System.out.println(lasVegas.filtrarReservasPasajero(usuario));
+                    } catch (NoSuchElementException e){
+                        System.out.println(e.getMessage());
                     }
                     break;
 
@@ -454,19 +492,20 @@ public final class GestionHotel {
                     break;
 
                 default:
-                    System.out.println("Opción no válida, por favor intente nuevamente.");
+                    //System.out.println("Opción no válida, por favor intente nuevamente.");
             }
-        array = JsonManager.reservasAJsonArray(reservas);
-        JsonManager.JsonArrayAFile(array, "reservas.json");
+            //GUARDADO AUTOMATICO EN CADA CASE
+            array = JsonManager.reservasAJsonArray(reservas);
+            JsonManager.JsonArrayAFile(array, "reservas.json");
 
-        arrayHabitaciones = JsonManager.habitacionesAJsonArray(habitaciones);
-        JsonManager.JsonArrayAFile(arrayHabitaciones, "habitaciones.json");
+            //GUARDADO AUTOMATICO EN CADA CASE
+            arrayHabitaciones = JsonManager.habitacionesAJsonArray(habitaciones);
+            JsonManager.JsonArrayAFile(arrayHabitaciones, "habitaciones.json");
         }
-
 
     }
 
-
+    //METODO PARA CREAR Y RETORAR PASAJERO (UTILIZADO EN EL REGISTRO Y MODIFICACIÓN)
      private  Pasajero crearPasajero() throws SoloLetrasException, DNIInvalidoException {
 
         Pasajero pasajero = new Pasajero();
@@ -482,7 +521,6 @@ public final class GestionHotel {
         pasajero.setNombreApellido(leer.nextLine());
         Validaciones.validarNombre(pasajero.getNombreApellido());
 
-
         System.out.println("Ingrese su DNI:");
          String dni = leer.nextLine();
          Validaciones.validarDNI(dni);
@@ -496,11 +534,10 @@ public final class GestionHotel {
          if(!(pasajero.getNacionalidad().matches("^[a-zA-Z]+"))){
              throw new SoloLetrasException("Solo se permiten letras.");
          }
-
-
         return pasajero;
     }
 
+    //METODO PARA CREAR USUARIO DE TIPO ADMIN O PERSONAL. DEVUELVE YA SEA USUARIO O HERENCIA DE USUARIO
     public <T extends Usuario> Usuario crearPersonaloAdmin()throws SoloLetrasException{
 
         Scanner scan = new Scanner(System.in);
@@ -525,6 +562,7 @@ public final class GestionHotel {
         int opcion = scan.nextInt();
         scan.nextLine();
 
+        //ACA CREA LA INSTANCIA SEGÚN CORRESPONDA EL ROL
         if(opcion == 1){
             Personal personal = new Personal(username, password, Rol.PERSONAL_LIMPIEZA, nombreApellido);
             return (Personal)personal;
@@ -535,6 +573,7 @@ public final class GestionHotel {
     }
 
 
+    //METODO PARA CREAR Y RETORNAR HABITACION. UTILIZADO EN LA CARGA Y MODIFICACION.
     public static Habitacion crearHabitacion(){
 
         Scanner scan = new Scanner(System.in);
@@ -567,6 +606,7 @@ public final class GestionHotel {
         return habitacion;
     }
 
+    //METODO PARA CREAR RESERVA.
     private static Reserva crearReserva(Pasajero pasajero, Hotel hotel) throws FechaInvalidaException {
         Scanner sc = new Scanner(System.in);
 
